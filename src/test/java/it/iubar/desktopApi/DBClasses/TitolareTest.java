@@ -11,12 +11,29 @@ public class TitolareTest {
 
     @Before
     public void before(){
-        titolare = new Titolare(11072, 0, "SQLMRC59M30G999Z", "SQLMRC59M30", "Studio Squilloni", "Marco", "Via Lorenzo il Magnifico, 28/a", "", "0558798780", 5, 13, 100004, 0, "2012-05-08 15:20:16", "2012-05-08 15:20:16", "");
+        titolare = new Titolare(123123, 0, "123123123", "qweasdzxc", "Studio Eccol", "Tommaso", "Via Sant'Antonio", "", "4674567567", 123, 123, 123, 0, "12307799987934", "1273559797681729539", "");
     }
 
     @Test
     public void testToJSon() throws Exception{
-        String str = "{\"idtitolare\":11072,\"idtipo\":0,\"cf\":\"SQLMRC59M30G999Z\",\"piva\":\"SQLMRC59M30\",\"denom\":\"Studio Squilloni\",\"cognome\":\"Marco\",\"indirizzo\":\"Via Lorenzo il Magnifico, 28/a\",\"email\":\"\",\"tel\":\"0558798780\",\"datori\":5,\"lavoratori\":13,\"idcomune\":100004,\"idprovincia\":0,\"info_added\":\"2012-05-08 15:20:16\",\"info_updated\":\"2012-05-08 15:20:16\",\"chiave_pubblica\":\"\"}";
+        String str = "{\n" +
+                "  \"idtitolare\" : 123123,\n" +
+                "  \"idtipo\" : 0,\n" +
+                "  \"cf\" : \"123123123\",\n" +
+                "  \"piva\" : \"qweasdzxc\",\n" +
+                "  \"denom\" : \"Studio Eccol\",\n" +
+                "  \"cognome\" : \"Tommaso\",\n" +
+                "  \"indirizzo\" : \"Via Sant'Antonio\",\n" +
+                "  \"email\" : \"\",\n" +
+                "  \"tel\" : \"4674567567\",\n" +
+                "  \"datori\" : 123,\n" +
+                "  \"lavoratori\" : 123,\n" +
+                "  \"idcomune\" : 123,\n" +
+                "  \"idprovincia\" : 0,\n" +
+                "  \"info_added\" : \"12307799987934\",\n" +
+                "  \"info_updated\" : \"1273559797681729539\",\n" +
+                "  \"chiave_pubblica\" : \"\"\n" +
+                "}";
         assertEquals(str, titolare.toJson());
     }
 

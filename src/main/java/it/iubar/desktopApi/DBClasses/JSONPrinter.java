@@ -9,7 +9,7 @@ public abstract class JSONPrinter {
     public String toJson() throws JsonProcessingException, CloneNotSupportedException {
         ObjectMapper mapper = new ObjectMapper();
         mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
-        return mapper.writeValueAsString(this.clone());
+        return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(this.clone());
     }
 
 }
