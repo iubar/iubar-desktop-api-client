@@ -1,6 +1,6 @@
-package it.iubar.desktopApi.DBClasses;
+package it.iubar.desktopApi.models;
 
-public class Client extends JSONPrinter{
+public class Client{
 
     private int idclient;
     private String mac;
@@ -236,9 +236,4 @@ public class Client extends JSONPrinter{
         return info_uploaded;
     }
 
-    @Override
-    protected Object clone() throws CloneNotSupportedException {
-        Client client = new Client(getIdclient(), getMac(), getIdapp(), getVersion(), getPlatform(), getOs_name(), getOs_version(), getJava_version(), getTitolari(), getDatori(), getLavoratori(), getIp_wan(), getIp_local(), getHost_name(), getUser_name(), getServer_ip(), getServer_name(), getReg_key(), getAct_key(), getDb_date(), getDb_version(), getInfo_added(), getInfo_uploaded());
-        return client;
-    }
 }

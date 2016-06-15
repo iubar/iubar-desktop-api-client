@@ -1,6 +1,6 @@
-package it.iubar.desktopApi.DBClasses;
+package it.iubar.desktopApi.models;
 
-public class Titolare extends JSONPrinter{
+public class Titolare{
     private int idtitolare;
     private int idtipo;
     private String cf;
@@ -165,9 +165,4 @@ public class Titolare extends JSONPrinter{
         this.chiave_pubblica = chiave_pubblica;
     }
 
-    @Override
-    protected Object clone() throws CloneNotSupportedException {
-        Titolare titolare = new Titolare(getIdtitolare(),getIdtipo(),getCf(),getPiva(),getDenom(),getCognome(),getIndirizzo(),getEmail(),getTel(),getDatori(),getLavoratori(),getIdcomune(),getIdprovincia(),getInfo_added(),getInfo_updated(),getChiave_pubblica());
-        return titolare;
-    }
 }

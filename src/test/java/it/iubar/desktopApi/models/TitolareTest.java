@@ -1,5 +1,6 @@
-package it.iubar.desktopApi.DBClasses;
+package it.iubar.desktopApi.models;
 
+import it.iubar.desktopApi.services.JSONPrinter;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -34,7 +35,7 @@ public class TitolareTest {
                 "  \"info_updated\" : \"1273559797681729539\",\n" +
                 "  \"chiave_pubblica\" : \"\"\n" +
                 "}";
-        assertEquals(str, titolare.toJson());
+        assertEquals(str, JSONPrinter.toJson(titolare));
     }
 
 }

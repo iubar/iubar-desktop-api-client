@@ -1,5 +1,6 @@
-package it.iubar.desktopApi.DBClasses;
+package it.iubar.desktopApi.models;
 
+import it.iubar.desktopApi.services.JSONPrinter;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -28,7 +29,7 @@ public class DatoreTest {
                 "  \"idcomune\" : 2,\n" +
                 "  \"idprovincia\" : 4\n" +
                 "}";
-        assertEquals(string, datore.toJson());
+        assertEquals(string, JSONPrinter.toJson(datore));
     }
 
 }
