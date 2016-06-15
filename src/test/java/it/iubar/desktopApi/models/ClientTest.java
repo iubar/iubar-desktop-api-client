@@ -1,6 +1,6 @@
-package it.iubar.desktopApi.DBClasses;
+package it.iubar.desktopApi.models;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+import it.iubar.desktopApi.services.JSONPrinter;
 import org.junit.Before;
 import org.junit.Test;
 

@@ -1,5 +1,6 @@
-package it.iubar.desktopApi.DBClasses;
+package it.iubar.desktopApi.models;
 
+import it.iubar.desktopApi.services.JSONPrinter;
 import org.junit.Before;
 import org.junit.Test;
 
