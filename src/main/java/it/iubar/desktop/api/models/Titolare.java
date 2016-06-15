@@ -18,30 +18,17 @@ public class Titolare{
     private String info_updated;
     private String chiave_pubblica;
 
-    public Titolare(int idtitolare, int idtipo, String cf, String piva, String denom, String cognome, String indirizzo, String email, String tel, int datori, int lavoratori, int idcomune, int idprovincia, String info_added, String info_updated, String chiave_pubblica) {
+    public Titolare(int idtitolare, int idcomune, int idprovincia) {
         this.setIdtitolare(idtitolare);
-        this.setIdtipo(idtipo);
-        this.setCf(cf);
-        this.setPiva(piva);
-        this.setDenom(denom);
-        this.setCognome(cognome);
-        this.setIndirizzo(indirizzo);
-        this.setEmail(email);
-        this.setTel(tel);
-        this.setDatori(datori);
-        this.setLavoratori(lavoratori);
         this.setIdcomune(idcomune);
         this.setIdprovincia(idprovincia);
-        this.setInfo_added(info_added);
-        this.setInfo_updated(info_updated);
-        this.setChiave_pubblica(chiave_pubblica);
     }
 
     public int getIdtitolare() {
         return idtitolare;
     }
 
-    private void setIdtitolare(int idtitolare) {
+    public void setIdtitolare(int idtitolare) {
         this.idtitolare = idtitolare;
     }
 
@@ -49,7 +36,7 @@ public class Titolare{
         return idtipo;
     }
 
-    private void setIdtipo(int idtipo) {
+    public void setIdtipo(int idtipo) {
         this.idtipo = idtipo;
     }
 
@@ -57,7 +44,7 @@ public class Titolare{
         return cf;
     }
 
-    private void setCf(String cf) {
+    public void setCf(String cf) {
         this.cf = cf;
     }
 
@@ -65,7 +52,7 @@ public class Titolare{
         return piva;
     }
 
-    private void setPiva(String piva) {
+    public void setPiva(String piva) {
         this.piva = piva;
     }
 
@@ -73,7 +60,7 @@ public class Titolare{
         return denom;
     }
 
-    private void setDenom(String denom) {
+    public void setDenom(String denom) {
         this.denom = denom;
     }
 
@@ -81,7 +68,7 @@ public class Titolare{
         return cognome;
     }
 
-    private void setCognome(String cognome) {
+    public void setCognome(String cognome) {
         this.cognome = cognome;
     }
 
@@ -89,7 +76,7 @@ public class Titolare{
         return indirizzo;
     }
 
-    private void setIndirizzo(String indirizzo) {
+    public void setIndirizzo(String indirizzo) {
         this.indirizzo = indirizzo;
     }
 
@@ -97,7 +84,7 @@ public class Titolare{
         return email;
     }
 
-    private void setEmail(String email) {
+    public void setEmail(String email) {
         this.email = email;
     }
 
@@ -105,7 +92,7 @@ public class Titolare{
         return tel;
     }
 
-    private void setTel(String tel) {
+    public void setTel(String tel) {
         this.tel = tel;
     }
 
@@ -113,7 +100,7 @@ public class Titolare{
         return datori;
     }
 
-    private void setDatori(int datori) {
+    public void setDatori(int datori) {
         this.datori = datori;
     }
 
@@ -121,7 +108,7 @@ public class Titolare{
         return lavoratori;
     }
 
-    private void setLavoratori(int lavoratori) {
+    public void setLavoratori(int lavoratori) {
         this.lavoratori = lavoratori;
     }
 
@@ -129,7 +116,7 @@ public class Titolare{
         return idcomune;
     }
 
-    private void setIdcomune(int idcomune) {
+    public void setIdcomune(int idcomune) {
         this.idcomune = idcomune;
     }
 
@@ -137,7 +124,7 @@ public class Titolare{
         return idprovincia;
     }
 
-    private void setIdprovincia(int idprovincia) {
+    public void setIdprovincia(int idprovincia) {
         this.idprovincia = idprovincia;
     }
 
@@ -145,7 +132,7 @@ public class Titolare{
         return info_added;
     }
 
-    private void setInfo_added(String info_added) {
+    public void setInfo_added(String info_added) {
         this.info_added = info_added;
     }
 
@@ -153,7 +140,7 @@ public class Titolare{
         return info_updated;
     }
 
-    private void setInfo_updated(String info_updated) {
+    public void setInfo_updated(String info_updated) {
         this.info_updated = info_updated;
     }
 
@@ -161,7 +148,7 @@ public class Titolare{
         return chiave_pubblica;
     }
 
-    private void setChiave_pubblica(String chiave_pubblica) {
+    public void setChiave_pubblica(String chiave_pubblica) {
         this.chiave_pubblica = chiave_pubblica;
     }
 

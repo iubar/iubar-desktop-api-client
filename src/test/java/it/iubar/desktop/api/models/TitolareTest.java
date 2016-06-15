@@ -11,7 +11,20 @@ public class TitolareTest {
 
     @Before
     public void before(){
-        titolare = new Titolare(123123, 0, "123123123", "qweasdzxc", "Studio Eccol", "Tommaso", "Via Sant'Antonio", "", "4674567567", 123, 123, 123, 0, "12307799987934", "1273559797681729539", "");
+        titolare = new Titolare(123123, 123, 0);
+        titolare.setIdtipo(0);
+        titolare.setCf("123123123");
+        titolare.setPiva("qweasdzxc");
+        titolare.setDenom("Studio Eccol");
+        titolare.setCognome("Tommaso");
+        titolare.setIndirizzo("Via Sant'Antonio");
+        titolare.setEmail("");
+        titolare.setTel("4674567567");
+        titolare.setDatori(123);
+        titolare.setLavoratori(123);
+        titolare.setInfo_added("12307799987934");
+        titolare.setInfo_updated("1273559797681729539");
+        titolare.setChiave_pubblica("");
     }
 
     @Test

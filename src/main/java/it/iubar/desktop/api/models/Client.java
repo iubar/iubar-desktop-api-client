@@ -26,121 +26,103 @@ public class Client{
     private String info_added;
     private String info_uploaded;
 
-    public Client(int idclient, String mac, int idApp, String version, String platform, String osName, String osVersion, String javaVersion, int titolari, int datori, int lavoratori, String ipWan, String ipLocal, String hostName, String userName, String serverIp, String serverName, String regKey, String actKey, String dbDate, String dbVersion, String infoAdded, String infoUploaded) {
+    public Client(int idclient, String mac, int idapp, String version, String ip_wan){
         this.setIdclient(idclient);
         this.setMac(mac);
-        this.setIdapp(idApp);
+        this.setIdapp(idapp);
         this.setVersion(version);
-        this.setPlatform(platform);
-        this.setOs_name(osName);
-        this.setOs_version(osVersion);
-        this.setJava_version(javaVersion);
-        this.setTitolari(titolari);
-        this.setDatori(datori);
-        this.setLavoratori(lavoratori);
-        this.setIp_wan(ipWan);
-        this.setIp_local(ipLocal);
-        this.setHost_name(hostName);
-        this.setUser_name(userName);
-        this.setServer_ip(serverIp);
-        this.setServer_name(serverName);
-        this.setReg_key(regKey);
-        this.setAct_key(actKey);
-        this.setDb_date(dbDate);
-        this.setDb_version(dbVersion);
-        this.setInfo_added(infoAdded);
-        this.setInfo_uploaded(infoUploaded);
+        this.setIp_wan(ip_wan);
     }
 
-    private void setIdclient(int idclient) {
+    public void setIdclient(int idclient) {
         this.idclient = idclient;
     }
 
-    private void setMac(String mac) {
+    public void setMac(String mac) {
         this.mac = mac;
     }
 
-    private void setIdapp(int idapp) {
+    public void setIdapp(int idapp) {
         this.idapp = idapp;
     }
 
-    private void setVersion(String version) {
+    public void setVersion(String version) {
         this.version = version;
     }
 
-    private void setPlatform(String platform) {
+    public void setPlatform(String platform) {
         this.platform = platform;
     }
 
-    private void setOs_name(String os_name) {
+    public void setOs_name(String os_name) {
         this.os_name = os_name;
     }
 
-    private void setOs_version(String os_version) {
+    public void setOs_version(String os_version) {
         this.os_version = os_version;
     }
 
-    private void setJava_version(String java_version) {
+    public void setJava_version(String java_version) {
         this.java_version = java_version;
     }
 
-    private void setTitolari(int titolari) {
+    public void setTitolari(int titolari) {
         this.titolari = titolari;
     }
 
-    private void setDatori(int datori) {
+    public void setDatori(int datori) {
         this.datori = datori;
     }
 
-    private void setLavoratori(int lavoratori) {
+    public void setLavoratori(int lavoratori) {
         this.lavoratori = lavoratori;
     }
 
-    private void setIp_wan(String ip_wan) {
+    public void setIp_wan(String ip_wan) {
         this.ip_wan = ip_wan;
     }
 
-    private void setIp_local(String ip_local) {
+    public void setIp_local(String ip_local) {
         this.ip_local = ip_local;
     }
 
-    private void setHost_name(String host_name) {
+    public void setHost_name(String host_name) {
         this.host_name = host_name;
     }
 
-    private void setUser_name(String user_name) {
+    public void setUser_name(String user_name) {
         this.user_name = user_name;
     }
 
-    private void setServer_ip(String server_ip) {
+    public void setServer_ip(String server_ip) {
         this.server_ip = server_ip;
     }
 
-    private void setServer_name(String server_name) {
+    public void setServer_name(String server_name) {
         this.server_name = server_name;
     }
 
-    private void setReg_key(String reg_key) {
+    public void setReg_key(String reg_key) {
         this.reg_key = reg_key;
     }
 
-    private void setAct_key(String act_key) {
+    public void setAct_key(String act_key) {
         this.act_key = act_key;
     }
 
-    private void setDb_date(String db_date) {
+    public void setDb_date(String db_date) {
         this.db_date = db_date;
     }
 
-    private void setDb_version(String db_version) {
+    public void setDb_version(String db_version) {
         this.db_version = db_version;
     }
 
-    private void setInfo_added(String info_added) {
+    public void setInfo_added(String info_added) {
         this.info_added = info_added;
     }
 
-    private void setInfo_uploaded(String info_uploaded) {
+    public void setInfo_uploaded(String info_uploaded) {
         this.info_uploaded = info_uploaded;
     }
 

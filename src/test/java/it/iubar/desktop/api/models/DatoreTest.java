@@ -11,7 +11,14 @@ public class DatoreTest {
 
     @Before
     public void before(){
-        datore = new Datore(2, "AIHDUAWHDOU", "obaojwdboawdb", "AWDBAWJDBJLA", "ADWADAWD", "EBOLA", "awdnaowdj@gmail.com", "0129300823", 2, 4);
+        datore = new Datore(2, 2, 4);
+        datore.setCf("AIHDUAWHDOU");
+        datore.setPiva("obaojwdboawdb");
+        datore.setDenom("AWDBAWJDBJLA");
+        datore.setSub("ADWADAWD");
+        datore.setPara("EBOLA");
+        datore.setEmail("awdnaowdj@gmail.com");
+        datore.setTel("0129300823");
     }
 
     @Test

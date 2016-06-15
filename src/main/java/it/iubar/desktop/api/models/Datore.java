@@ -12,15 +12,8 @@ public class Datore {
     private int idcomune;
     private int idprovincia;
 
-    public Datore(int iddatore, String cf, String piva, String denom, String sub, String para, String email, String tel, int idcomune, int idprovincia) {
+    public Datore(int iddatore, int idcomune, int idprovincia) {
         this.setIddatore(iddatore);
-        this.setCf(cf);
-        this.setPiva(piva);
-        this.setDenom(denom);
-        this.setSub(sub);
-        this.setPara(para);
-        this.setEmail(email);
-        this.setTel(tel);
         this.setIdcomune(idcomune);
         this.setIdprovincia(idprovincia);
     }
