@@ -1,6 +1,6 @@
 package it.iubar.desktopApi.DBClasses;
 
-public class Datore extends JSONPrinter {
+public class Datore {
     private int iddatore;
     private String cf;
     private String piva;
@@ -105,9 +105,4 @@ public class Datore extends JSONPrinter {
         this.idprovincia = idprovincia;
     }
 
-    @Override
-    protected Object clone() throws CloneNotSupportedException {
-        Datore datore = new Datore(getIddatore(), getCf(), getPiva(), getDenom(), getSub(), getPara(), getEmail(), getTel(), getIdcomune(), getIdprovincia());
-        return datore;
-    }
 }

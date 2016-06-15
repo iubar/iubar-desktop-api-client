@@ -60,12 +60,12 @@ public class ClientTest {
                 "  \"info_added\" : \"2009-08-18 16:37:54\",\n" +
                 "  \"info_uploaded\" : \"2009-08-18 20:33:47\"\n" +
                 "}";
-        assertEquals(str, client.toJson());
+        assertEquals(str, JSONPrinter.toJson(client));
     }
 
     @Test(expected = CloneNotSupportedException.class)
     public void testBrokenToJson() throws Exception{
-        brokenClient.toJson();
+        JSONPrinter.toJson(brokenClient);
     }
 
 }

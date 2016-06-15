@@ -28,7 +28,7 @@ public class DatoreTest {
                 "  \"idcomune\" : 2,\n" +
                 "  \"idprovincia\" : 4\n" +
                 "}";
-        assertEquals(string, datore.toJson());
+        assertEquals(string, JSONPrinter.toJson(datore));
     }
 
 }
