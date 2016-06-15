@@ -1,4 +1,4 @@
-package it.iubar.desktopApi.services;
+package it.iubar.desktop.api.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

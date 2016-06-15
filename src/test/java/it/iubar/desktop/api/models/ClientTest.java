@@ -1,6 +1,6 @@
-package it.iubar.desktopApi.models;
+package it.iubar.desktop.api.models;
 
-import it.iubar.desktopApi.services.JSONPrinter;
+import it.iubar.desktop.api.services.JSONPrinter;
 import org.junit.Before;
 import org.junit.Test;
 

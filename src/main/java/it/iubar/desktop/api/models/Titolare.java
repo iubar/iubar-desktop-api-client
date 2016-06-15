@@ -1,4 +1,4 @@
-package it.iubar.desktopApi.models;
+package it.iubar.desktop.api.models;
 
 public class Titolare{
     private int idtitolare;

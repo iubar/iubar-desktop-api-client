@@ -1,10 +1,9 @@
-package it.iubar.desktopApi.models;
+package it.iubar.desktop.api.models;
 
-import it.iubar.desktopApi.services.JSONPrinter;
+import it.iubar.desktop.api.services.JSONPrinter;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 public class DatoreTest {
 
@@ -29,7 +28,7 @@ public class DatoreTest {
                 "  \"idcomune\" : 2,\n" +
                 "  \"idprovincia\" : 4\n" +
                 "}";
-        assertEquals(string, JSONPrinter.toJson(datore));
+        Assert.assertEquals(string, JSONPrinter.toJson(datore));
     }
 
 }

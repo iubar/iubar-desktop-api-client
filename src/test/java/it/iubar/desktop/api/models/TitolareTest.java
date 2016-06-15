@@ -1,10 +1,9 @@
-package it.iubar.desktopApi.models;
+package it.iubar.desktop.api.models;
 
-import it.iubar.desktopApi.services.JSONPrinter;
+import it.iubar.desktop.api.services.JSONPrinter;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 public class TitolareTest {
 
@@ -35,7 +34,7 @@ public class TitolareTest {
                 "  \"info_updated\" : \"1273559797681729539\",\n" +
                 "  \"chiave_pubblica\" : \"\"\n" +
                 "}";
-        assertEquals(str, JSONPrinter.toJson(titolare));
+        Assert.assertEquals(str, JSONPrinter.toJson(titolare));
     }
 
 }
