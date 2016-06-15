@@ -1,0 +1,6 @@
+; This is a sample configuration file
+; Comments start with ';'
+
+[CONFIG]
+;this sets if the auth factor is active
+is_auth = false;
