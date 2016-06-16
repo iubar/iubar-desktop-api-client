@@ -1,7 +1,6 @@
 package it.iubar.desktop.api.models;
 
 public class Titolare{
-    private int idtitolare;
     private int idtipo;
     private String cf;
     private String piva;
@@ -18,18 +17,9 @@ public class Titolare{
     private String info_updated;
     private String chiave_pubblica;
 
-    public Titolare(int idtitolare, int idcomune, int idprovincia) {
-        this.setIdtitolare(idtitolare);
+    public Titolare(int idcomune, int idprovincia) {
         this.setIdcomune(idcomune);
         this.setIdprovincia(idprovincia);
-    }
-
-    public int getIdtitolare() {
-        return idtitolare;
-    }
-
-    public void setIdtitolare(int idtitolare) {
-        this.idtitolare = idtitolare;
     }
 
     public int getIdtipo() {

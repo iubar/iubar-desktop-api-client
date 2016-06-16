@@ -2,7 +2,6 @@ package it.iubar.desktop.api.models;
 
 public class Client{
 
-    private int idclient;
     private String mac;
     private int idapp;
     private String version;
@@ -26,16 +25,11 @@ public class Client{
     private String info_added;
     private String info_uploaded;
 
-    public Client(int idclient, String mac, int idapp, String version, String ip_wan){
-        this.setIdclient(idclient);
+    public Client(String mac, int idapp, String version, String ip_wan){
         this.setMac(mac);
         this.setIdapp(idapp);
         this.setVersion(version);
         this.setIp_wan(ip_wan);
-    }
-
-    public void setIdclient(int idclient) {
-        this.idclient = idclient;
     }
 
     public void setMac(String mac) {
@@ -124,10 +118,6 @@ public class Client{
 
     public void setInfo_uploaded(String info_uploaded) {
         this.info_uploaded = info_uploaded;
-    }
-
-    public int getIdclient() {
-        return idclient;
     }
 
     public String getMac() {

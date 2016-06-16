@@ -11,7 +11,7 @@ public class TitolareTest {
 
     @Before
     public void before(){
-        titolare = new Titolare(123123, 123, 0);
+        titolare = new Titolare(123, 0);
         titolare.setIdtipo(0);
         titolare.setCf("123123123");
         titolare.setPiva("qweasdzxc");
@@ -30,7 +30,6 @@ public class TitolareTest {
     @Test
     public void testToJSon() throws Exception{
         String str = "{\n" +
-                "  \"idtitolare\" : 123123,\n" +
                 "  \"idtipo\" : 0,\n" +
                 "  \"cf\" : \"123123123\",\n" +
                 "  \"piva\" : \"qweasdzxc\",\n" +

@@ -11,7 +11,7 @@ public class DatoreTest {
 
     @Before
     public void before(){
-        datore = new Datore(2, 2, 4);
+        datore = new Datore(2, 4);
         datore.setCf("AIHDUAWHDOU");
         datore.setPiva("obaojwdboawdb");
         datore.setDenom("AWDBAWJDBJLA");
@@ -24,7 +24,6 @@ public class DatoreTest {
     @Test
     public void testToJson() throws Exception{
         String string = "{\n" +
-                "  \"iddatore\" : 2,\n" +
                 "  \"cf\" : \"AIHDUAWHDOU\",\n" +
                 "  \"piva\" : \"obaojwdboawdb\",\n" +
                 "  \"denom\" : \"AWDBAWJDBJLA\",\n" +

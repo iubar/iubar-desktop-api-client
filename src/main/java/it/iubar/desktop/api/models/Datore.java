@@ -1,7 +1,6 @@
 package it.iubar.desktop.api.models;
 
 public class Datore {
-    private int iddatore;
     private String cf;
     private String piva;
     private String denom;
@@ -12,18 +11,9 @@ public class Datore {
     private int idcomune;
     private int idprovincia;
 
-    public Datore(int iddatore, int idcomune, int idprovincia) {
-        this.setIddatore(iddatore);
+    public Datore(int idcomune, int idprovincia) {
         this.setIdcomune(idcomune);
         this.setIdprovincia(idprovincia);
-    }
-
-    public int getIddatore() {
-        return iddatore;
-    }
-
-    public void setIddatore(int iddatore) {
-        this.iddatore = iddatore;
     }
 
     public String getCf() {
