@@ -2,5 +2,12 @@
 ; Comments start with ';'
 
 [CONFIG]
-;this sets if the auth factor is active
-is_auth = false;
+;uncomment to activate auth factor
+;is_auth = true
+
+;all the values for target server
+[SERVER]
+host = "localhost"
+;uncomment if you want a different port
+;port = "80"
+path = "/yo/
