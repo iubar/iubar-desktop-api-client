@@ -1,17 +1,17 @@
 package it.iubar.desktop.api.models;
 
 import it.iubar.desktop.api.services.JSONPrinter;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
 public class ClientTest {
 
-    Client client;
+    static Client client;
 
-    @Before
-    public void before(){
+    @BeforeClass
+    public static void before(){
         client = new Client("123325345234134", 2323, "8697623", "151.21.219.26");
         client.setPlatform("");
         client.setOs_name("Windows Vista");

@@ -2,15 +2,15 @@ package it.iubar.desktop.api.models;
 
 import it.iubar.desktop.api.services.JSONPrinter;
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class DatoreTest {
 
-    Datore datore;
+    static Datore datore;
 
-    @Before
-    public void before(){
+    @BeforeClass
+    public static void before(){
         datore = new Datore(2, 4);
         datore.setCf("AIHDUAWHDOU");
         datore.setPiva("obaojwdboawdb");
