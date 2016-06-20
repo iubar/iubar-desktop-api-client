@@ -1,11 +1,13 @@
 package it.iubar.desktop.api;
 
+import it.iubar.desktop.api.exceptions.ClientException;
 import it.iubar.desktop.api.models.Ccnl;
 import it.iubar.desktop.api.models.Client;
 import it.iubar.desktop.api.models.Datore;
 import it.iubar.desktop.api.models.Titolare;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.BufferedWriter;
@@ -55,7 +57,8 @@ public class MasterClientTest {
         testIni = File.createTempFile("testIni", ".ini");
         BufferedWriter bwTest = new BufferedWriter(new FileWriter(testIni));
         bwTest.write("host = httpbin.org\n" +
-                "path = /post");
+                "path = /post\n" +
+                "is_unique = true");
         bwTest.close();
 
         brokenIni = File.createTempFile("brokenIni", ".ini");
@@ -167,17 +170,31 @@ public class MasterClientTest {
         assertEquals("/yo", method.invoke(masterClient, "yo"));
     }
 
-//    @Test
-//    public void sendClientTestLocal() throws Exception {
-//        MasterClient masterClient = new MasterClient("src/main/resources/config.ini");
-//        masterClient.send(client);
-//    }
-//
-//    @Test
-//    public void sendClientTest() throws Exception {
-//        MasterClient masterClient = new MasterClient(testIni.getAbsolutePath());
-//        masterClient.send(titolare);
-//    }
+    @Ignore("Ignoring test until the service is online")
+    @Test
+    public void sendClientTestLocal() throws Exception {
+        MasterClient masterClient = new MasterClient("src/main/resources/config.ini");
+        masterClient.send(client);
+    }
+
+    @Test
+    public void sendClientTest() throws Exception {
+        MasterClient masterClient = new MasterClient(testIni.getAbsolutePath());
+        try {
+            masterClient.send(client);
+            masterClient.send(titolare);
+            masterClient.send(datore);
+            masterClient.send(ccnl);
+        } catch (ClientException e) {
+            fail();
+        }
+    }
+
+    @Test
+    public void sendClientTestTwo() throws Exception {
+        MasterClient masterClient = new MasterClient(testIni.getAbsolutePath());
+        masterClient.send(null);
+    }
 
 
     @AfterClass
