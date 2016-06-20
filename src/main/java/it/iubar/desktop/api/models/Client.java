@@ -23,7 +23,7 @@ public class Client{
     private String db_date;
     private String db_version;
     private String info_added;
-    private String info_uploaded;
+    private String info_updated;
 
     public Client(String mac, int idapp, String version, String ip_wan){
         this.setMac(mac);
@@ -116,8 +116,8 @@ public class Client{
         this.info_added = info_added;
     }
 
-    public void setInfo_uploaded(String info_uploaded) {
-        this.info_uploaded = info_uploaded;
+    public void setInfo_updated(String info_updated) {
+        this.info_updated = info_updated;
     }
 
     public String getMac() {
@@ -204,8 +204,8 @@ public class Client{
         return info_added;
     }
 
-    public String getInfo_uploaded() {
-        return info_uploaded;
+    public String getInfo_updated() {
+        return info_updated;
     }
 
 }
