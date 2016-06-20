@@ -185,17 +185,11 @@ public class MasterClientTest {
             masterClient.send(titolare);
             masterClient.send(datore);
             masterClient.send(ccnl);
+            masterClient.send(null);
         } catch (ClientException e) {
             fail();
         }
     }
-
-    @Test
-    public void sendClientTestTwo() throws Exception {
-        MasterClient masterClient = new MasterClient(testIni.getAbsolutePath());
-        masterClient.send(null);
-    }
-
 
     @AfterClass
     public static void delFiles(){
