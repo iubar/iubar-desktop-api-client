@@ -23,17 +23,7 @@ public class DatoreTest {
 
     @Test
     public void testToJson() throws Exception{
-        String string = "{\n" +
-                "  \"cf\" : \"AIHDUAWHDOU\",\n" +
-                "  \"piva\" : \"obaojwdboawdb\",\n" +
-                "  \"denom\" : \"AWDBAWJDBJLA\",\n" +
-                "  \"sub\" : \"ADWADAWD\",\n" +
-                "  \"para\" : \"EBOLA\",\n" +
-                "  \"email\" : \"awdnaowdj@gmail.com\",\n" +
-                "  \"tel\" : \"0129300823\",\n" +
-                "  \"idcomune\" : 2,\n" +
-                "  \"idprovincia\" : 4\n" +
-                "}";
+        String string = "{\"cf\":\"AIHDUAWHDOU\",\"piva\":\"obaojwdboawdb\",\"denom\":\"AWDBAWJDBJLA\",\"sub\":\"ADWADAWD\",\"para\":\"EBOLA\",\"email\":\"awdnaowdj@gmail.com\",\"tel\":\"0129300823\",\"idcomune\":2,\"idprovincia\":4}";
         Assert.assertEquals(string, JSONPrinter.toJson(datore));
     }
 

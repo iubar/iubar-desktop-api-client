@@ -30,23 +30,7 @@ public class TitolareTest {
 
     @Test
     public void testToJSon() throws Exception{
-        String str = "{\n" +
-                "  \"idtipo\" : 0,\n" +
-                "  \"cf\" : \"123123123\",\n" +
-                "  \"piva\" : \"qweasdzxc\",\n" +
-                "  \"denom\" : \"Studio Eccol\",\n" +
-                "  \"cognome\" : \"Tommaso\",\n" +
-                "  \"indirizzo\" : \"Via Sant'Antonio\",\n" +
-                "  \"email\" : \"\",\n" +
-                "  \"tel\" : \"4674567567\",\n" +
-                "  \"datori\" : 123,\n" +
-                "  \"lavoratori\" : 123,\n" +
-                "  \"idcomune\" : 123,\n" +
-                "  \"idprovincia\" : 0,\n" +
-                "  \"info_added\" : \"12307799987934\",\n" +
-                "  \"info_updated\" : \"1273559797681729539\",\n" +
-                "  \"chiave_pubblica\" : \"\"\n" +
-                "}";
+        String str = "{\"idtipo\":0,\"cf\":\"123123123\",\"piva\":\"qweasdzxc\",\"denom\":\"Studio Eccol\",\"cognome\":\"Tommaso\",\"indirizzo\":\"Via Sant'Antonio\",\"email\":\"\",\"tel\":\"4674567567\",\"datori\":123,\"lavoratori\":123,\"idcomune\":123,\"idprovincia\":0,\"info_added\":\"12307799987934\",\"info_updated\":\"1273559797681729539\",\"chiave_pubblica\":\"\"}";
         assertEquals(str, JSONPrinter.toJson(titolare));
     }
 

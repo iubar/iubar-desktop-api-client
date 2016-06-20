@@ -18,9 +18,7 @@ public class CcnlTest {
 
     @Test
     public void testToJson() throws JsonProcessingException, CloneNotSupportedException {
-        String str = "{\n" +
-                "  \"idccnl\" : 123\n" +
-                "}";
+        String str = "{\"idccnl\":123}";
         assertEquals(str, JSONPrinter.toJson(ccnl));
     }
 
