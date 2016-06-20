@@ -28,6 +28,11 @@ public class MasterClient {
     private final String PORT_VALUE = "port";
     private final String PATH_VALUE = "path";
 
+    private final String INSERT_CLIENT = "/insertClient";
+    private final String INSERT_TITOLARE = "/insertTitolare";
+    private final String INSERT_DATORE = "/insertDatore";
+    private final String INSERT_CCNL = "/insertCcnl";
+
     private String configDir;
     private String authValue;
     private boolean isAuth;
@@ -138,16 +143,15 @@ public class MasterClient {
         Client client = Client.create();
         //set destination url
         WebResource webResource = null;
-
-        //FIXME : remove manual data
+        
         if(obj instanceof it.iubar.desktop.api.models.Client)
-            url += "/insertClient";
+            url += INSERT_CLIENT;
         else if (obj instanceof Datore)
-            url += "/insertDatore";
+            url += INSERT_DATORE;
         else if(obj instanceof Titolare)
-            url += "/insertTitolare";
+            url += INSERT_TITOLARE;
         else if(obj instanceof Ccnl)
-            url += "/insertCcnl";
+            url += INSERT_CCNL;
 
         webResource = client.resource(url);
 
