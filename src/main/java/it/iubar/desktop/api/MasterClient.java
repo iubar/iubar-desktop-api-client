@@ -10,11 +10,16 @@ import it.iubar.desktop.api.models.Datore;
 import it.iubar.desktop.api.models.Titolare;
 import it.iubar.desktop.api.services.JSONPrinter;
 import org.json.JSONObject;
+import org.apache.commons.codec.binary.Base64;
 
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
 import javax.ws.rs.core.MediaType;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,49 +33,57 @@ public class MasterClient {
     private final String PORT_VALUE = "port";
     private final String PATH_VALUE = "path";
     private final String IS_UNIQUE_VALUE = "is_unique";
+    private final String USER_VALUE = "user";
+    private final String API_KEY_VALUE = "api_key";
+
 
     private final String INSERT_CLIENT = "/insertClient";
     private final String INSERT_TITOLARE = "/insertTitolare";
     private final String INSERT_DATORE = "/insertDatore";
     private final String INSERT_CCNL = "/insertCcnl";
 
+    private String user;
+    private String apiKey;
     private String configDir;
-    private String authValue;
     private boolean isAuth;
 
     private String url;
     private boolean unique_url;
 
     public MasterClient(String configDir) throws IOException {
-        this.setAuthValue(IS_AUTH_VALUE);
         this.setConfigDir(configDir);
-        this.url = getUrl();
+        this.isAuth = isAuth();
+        this.url = setUrl();
         this.unique_url = isUnique();
+        this.apiKey = setApiKey();
+        this.user = setUser();
     }
 
     public MasterClient(String configDir, String isAuthValue) throws IOException {
-        this.setAuthValue(isAuthValue);
         this.setConfigDir(configDir);
-        this.url = getUrl();
-        this.unique_url = isUnique();
-    }
-
-    public void setAuthValue(String authValue) {
-        this.authValue = authValue;
-    }
-
-    public void setConfigDir(String path) throws IOException{
-        this.configDir = path;
         this.isAuth = isAuth();
+        this.url = setUrl();
+        this.unique_url = isUnique();
+        this.apiKey = setApiKey();
+        this.user = setUser();
     }
 
-    public String getConfigDir() {
+    private void setConfigDir(String path) {
+        this.configDir = path;
+    }
+
+    private String getConfigDir(){
         return configDir;
     }
 
-    public String getAuthValue() {
-        return authValue;
+    private String getUser() {
+        return user;
     }
+
+    private String getApiKey(){
+        return apiKey;
+    }
+
 
     private boolean isAuth() throws IOException {
 
@@ -114,7 +127,34 @@ public class MasterClient {
         return isUnique;
     }
 
-    private String getUrl() throws IOException {
+    private String setUser() throws IOException {
+        Properties prop = new Properties();
+        InputStream input = new FileInputStream(this.getConfigDir());
+        prop.load(input);
+        String user = prop.getProperty(USER_VALUE, "test@test.it");
+        LOGGER.log(Level.FINE, "Auth Factor : " + user);
+        if (input != null) {
+            input.close();
+            LOGGER.log(Level.FINE, "File closed.");
+        }
+        return user;
+    }
+
+    private String setApiKey() throws IOException {
+        Properties prop = new Properties();
+        InputStream input = new FileInputStream(this.getConfigDir());
+        prop.load(input);
+        String apiKey = prop.getProperty(API_KEY_VALUE);
+        LOGGER.log(Level.FINE, "Auth Factor : " + apiKey);
+        if (input != null) {
+            input.close();
+            LOGGER.log(Level.FINE, "File closed.");
+        }
+
+        return apiKey;
+    }
+
+    private String setUrl() throws IOException {
         Properties properties = new Properties();
         InputStream inputStream = new FileInputStream(this.getConfigDir());
         properties.load(inputStream);

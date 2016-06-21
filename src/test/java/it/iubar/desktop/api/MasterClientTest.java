@@ -114,7 +114,7 @@ public class MasterClientTest {
     }
 
     @Test
-    public void masterClientTrue() throws IOException, NoSuchFieldException, IllegalAccessException {
+    public void masterClientTrue() throws Exception {
         MasterClient masterClient = new MasterClient(trueIni.getAbsolutePath());
         Field fieldAuth = MasterClient.class.getDeclaredField("isAuth");
         fieldAuth.setAccessible(true);
@@ -125,7 +125,7 @@ public class MasterClientTest {
     }
 
     @Test
-    public void masterClientFalse() throws IOException, NoSuchFieldException, IllegalAccessException {
+    public void masterClientFalse() throws Exception {
         MasterClient masterClient = new MasterClient(falseIni.getAbsolutePath());
         Field field = MasterClient.class.getDeclaredField("isAuth");
         field.setAccessible(true);
@@ -133,7 +133,7 @@ public class MasterClientTest {
     }
 
     @Test
-    public void masterClientEdit() throws IOException, NoSuchFieldException, IllegalAccessException {
+    public void masterClientEdit() throws Exception {
         MasterClient masterClient = new MasterClient(editedIni.getAbsolutePath(), "is");
         Field field = MasterClient.class.getDeclaredField("isAuth");
         field.setAccessible(true);
@@ -175,6 +175,9 @@ public class MasterClientTest {
     public void sendClientTestLocal() throws Exception {
         MasterClient masterClient = new MasterClient("src/main/resources/config.ini");
         masterClient.send(client);
+        masterClient.send(titolare);
+        masterClient.send(datore);
+        masterClient.send(ccnl);
     }
 
     @Test
