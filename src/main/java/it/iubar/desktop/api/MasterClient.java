@@ -111,24 +111,27 @@ public class MasterClient {
 
         String user, apiKey, host;
 
+        String auth = properties.getProperty(IS_AUTH_VALUE, "false");
+
         try {
-            user = properties.getProperty(USER_VALUE);
-            apiKey = properties.getProperty(API_KEY_VALUE);
+            if(fromStringToBool(auth)){
+                apiKey = properties.getProperty(API_KEY_VALUE);
+                user = properties.getProperty(USER_VALUE);
+                this.setUser(user);
+                this.setApiKey(apiKey);
+            }
             host = properties.getProperty(HOST_VALUE);
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, this.getConfigDir() + " is not well-formatted");
             throw new RuntimeException("config.ini file is not well-formatted");
         }
 
-        String auth = properties.getProperty(IS_AUTH_VALUE, "false");
         String unique = properties.getProperty(IS_UNIQUE_VALUE, "false");
         String port = properties.getProperty(PORT_VALUE, "80");
         String path = properties.getProperty(PATH_VALUE, "/");
 
         LOGGER.log(Level.FINE, this.getConfigDir() + " parsed succesfully");
-
-        this.setUser(user);
-        this.setApiKey(apiKey);
+        
         this.setAuth(fromStringToBool(auth));
         this.setUniqueUrl(fromStringToBool(unique));
 
