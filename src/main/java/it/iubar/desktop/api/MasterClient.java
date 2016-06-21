@@ -9,12 +9,17 @@ import it.iubar.desktop.api.models.Ccnl;
 import it.iubar.desktop.api.models.Datore;
 import it.iubar.desktop.api.models.Titolare;
 import it.iubar.desktop.api.services.JSONPrinter;
+import org.apache.commons.codec.binary.Base64;
 import org.json.JSONObject;
 
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
 import javax.ws.rs.core.MediaType;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -206,6 +211,25 @@ public class MasterClient {
             LOGGER.log(Level.SEVERE, "Error found in response: CODE " + stat);
             throw new ClientException(response.getStatus(), jsonResponse.get("response").toString());
         }
+    }
+
+    private String encryptedData(String data){
+        String payload = this.getUrl() + this.getUser() + this.getTimeStamp() + this.getApiKey() + data;
+        String algo = "HmacSHA256";
+        String keyString = this.getApiKey();
+        try{
+            Mac sha256_HMAC = Mac.getInstance(algo);
+            SecretKeySpec secret_key = new SecretKeySpec(keyString.getBytes(), algo);
+            sha256_HMAC.init(secret_key);
+            return Base64.encodeBase64String(sha256_HMAC.doFinal(payload.getBytes()));
+        }catch (Exception e){
+            LOGGER.log(Level.SEVERE, "Unable to generate encypted data.");
+            throw new RuntimeException("Unable to generate encypted data.");
+        }
+    }
+
+    private String getTimeStamp(){
+        return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX").format(new Date());
     }
 
 }
