@@ -23,7 +23,6 @@ public class MasterClientTest {
 
     static File falseIni;
     static File trueIni;
-    static File editedIni;
     static File testIni;
     static File brokenIni;
 
@@ -47,12 +46,6 @@ public class MasterClientTest {
         bwFalse.write("host = localhost\n" +
                 "is_auth = 0");
         bwFalse.close();
-
-        editedIni = File.createTempFile("editedIni", ".ini");
-        BufferedWriter bwEdited = new BufferedWriter(new FileWriter(editedIni));
-        bwEdited.write("host = localhost\n" +
-                ";is = true");
-        bwEdited.close();
 
         testIni = File.createTempFile("testIni", ".ini");
         BufferedWriter bwTest = new BufferedWriter(new FileWriter(testIni));
@@ -114,7 +107,7 @@ public class MasterClientTest {
     }
 
     @Test
-    public void masterClientTrue() throws IOException, NoSuchFieldException, IllegalAccessException {
+    public void masterClientTrue() throws Exception {
         MasterClient masterClient = new MasterClient(trueIni.getAbsolutePath());
         Field fieldAuth = MasterClient.class.getDeclaredField("isAuth");
         fieldAuth.setAccessible(true);
@@ -125,16 +118,8 @@ public class MasterClientTest {
     }
 
     @Test
-    public void masterClientFalse() throws IOException, NoSuchFieldException, IllegalAccessException {
+    public void masterClientFalse() throws Exception {
         MasterClient masterClient = new MasterClient(falseIni.getAbsolutePath());
-        Field field = MasterClient.class.getDeclaredField("isAuth");
-        field.setAccessible(true);
-        assertFalse((boolean) field.get(masterClient));
-    }
-
-    @Test
-    public void masterClientEdit() throws IOException, NoSuchFieldException, IllegalAccessException {
-        MasterClient masterClient = new MasterClient(editedIni.getAbsolutePath(), "is");
         Field field = MasterClient.class.getDeclaredField("isAuth");
         field.setAccessible(true);
         assertFalse((boolean) field.get(masterClient));
@@ -172,30 +157,34 @@ public class MasterClientTest {
 
     @Ignore("Ignoring test until the service is online")
     @Test
-    public void sendClientTestLocal() throws Exception {
+    public void sendTestLocal() throws Exception {
         MasterClient masterClient = new MasterClient("src/main/resources/config.ini");
         masterClient.send(client);
     }
 
     @Test
-    public void sendClientTest() throws Exception {
+    public void sendTest() throws Exception {
         MasterClient masterClient = new MasterClient(testIni.getAbsolutePath());
         try {
             masterClient.send(client);
             masterClient.send(titolare);
             masterClient.send(datore);
             masterClient.send(ccnl);
-            masterClient.send(null);
         } catch (ClientException e) {
             fail();
         }
+    }
+
+    @Test (expected = RuntimeException.class)
+    public void sendTestNull() throws Exception{
+        MasterClient masterClient = new MasterClient(testIni.getAbsolutePath());
+        masterClient.send(null);
     }
 
     @AfterClass
     public static void delFiles(){
         falseIni.delete();
         trueIni.delete();
-        editedIni.delete();
         testIni.delete();
         brokenIni.delete();
     }
