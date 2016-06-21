@@ -18,7 +18,6 @@ import javax.ws.rs.core.MediaType;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.text.RuleBasedCollator;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Properties;
@@ -55,51 +54,51 @@ public class MasterClient {
         this.setUpIni();
     }
 
-    public String getUser() {
+    private String getUser() {
         return user;
     }
 
-    public void setUser(String user) {
+    private void setUser(String user) {
         this.user = user;
     }
 
-    public String getApiKey() {
+    private String getApiKey() {
         return apiKey;
     }
 
-    public void setApiKey(String apiKey) {
+    private void setApiKey(String apiKey) {
         this.apiKey = apiKey;
     }
 
-    public String getConfigDir() {
+    private String getConfigDir() {
         return configDir;
     }
 
-    public void setConfigDir(String configDir) {
+    private void setConfigDir(String configDir) {
         this.configDir = configDir;
     }
 
-    public boolean isAuth() {
+    private boolean isAuth() {
         return isAuth;
     }
 
-    public void setAuth(boolean auth) {
+    private void setAuth(boolean auth) {
         isAuth = auth;
     }
 
-    public String getUrl() {
+    private String getUrl() {
         return url;
     }
 
-    public void setUrl(String url) {
+    private void setUrl(String url) {
         this.url = url;
     }
 
-    public boolean isUniqueUrl() {
+    private boolean isUniqueUrl() {
         return uniqueUrl;
     }
 
-    public void setUniqueUrl(boolean uniqueUrl) {
+    private void setUniqueUrl(boolean uniqueUrl) {
         this.uniqueUrl = uniqueUrl;
     }
 
@@ -143,10 +142,7 @@ public class MasterClient {
     }
 
     private boolean fromStringToBool(String s){
-        if(s.equalsIgnoreCase("true"))
-            return true;
-        else
-            return false;
+        return s.equalsIgnoreCase("true");
     }
 
     private String normalizePath(String s) {
@@ -185,9 +181,9 @@ public class MasterClient {
         //Initialization jersey client
         Client client = Client.create();
         //set destination url
-        WebResource webResource = null;
+        WebResource webResource;
 
-        if (!uniqueUrl) {
+        if (!this.isUniqueUrl()) {
             if(obj instanceof it.iubar.desktop.api.models.Client)
                 url += INSERT_CLIENT;
             else if (obj instanceof Datore)
@@ -200,7 +196,7 @@ public class MasterClient {
 
         webResource = client.resource(this.getUrl());
 
-        JSONObject jsonObject = null;
+        JSONObject jsonObject;
 
         try {
             if(this.isAuth()){
