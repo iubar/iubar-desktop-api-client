@@ -5,10 +5,7 @@ import it.iubar.desktop.api.models.Ccnl;
 import it.iubar.desktop.api.models.Client;
 import it.iubar.desktop.api.models.Datore;
 import it.iubar.desktop.api.models.Titolare;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -21,18 +18,18 @@ import static org.junit.Assert.*;
 
 public class MasterClientTest {
 
-    static File falseIni;
-    static File trueIni;
-    static File testIni;
-    static File brokenIni;
+    File falseIni;
+    File trueIni;
+    File testIni;
+    File brokenIni;
 
-    static Client client;
-    static Datore datore;
-    static Titolare titolare;
-    static Ccnl ccnl;
+    Client client;
+    Datore datore;
+    Titolare titolare;
+    Ccnl ccnl;
 
-    @BeforeClass
-    public static void genFiles() throws IOException {
+    @Before
+    public void genFiles() throws IOException {
 
         trueIni = File.createTempFile("trueIni", ".ini");
         BufferedWriter bwTrue = new BufferedWriter(new FileWriter(trueIni));
@@ -127,7 +124,7 @@ public class MasterClientTest {
 
     @Test (expected = RuntimeException.class)
     public void masterClientFail() throws Exception {
-        MasterClient masterClient = new MasterClient(brokenIni.getAbsolutePath());
+        new MasterClient(brokenIni.getAbsolutePath());
     }
 
     @Test
@@ -181,8 +178,8 @@ public class MasterClientTest {
         masterClient.send(null);
     }
 
-    @AfterClass
-    public static void delFiles(){
+    @After
+    public void delFiles(){
         falseIni.delete();
         trueIni.delete();
         testIni.delete();
