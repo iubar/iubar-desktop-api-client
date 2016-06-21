@@ -157,26 +157,28 @@ public class MasterClientTest {
 
     @Ignore("Ignoring test until the service is online")
     @Test
-    public void sendClientTestLocal() throws Exception {
+    public void sendTestLocal() throws Exception {
         MasterClient masterClient = new MasterClient("src/main/resources/config.ini");
         masterClient.send(client);
-        masterClient.send(titolare);
-        masterClient.send(datore);
-        masterClient.send(ccnl);
     }
 
     @Test
-    public void sendClientTest() throws Exception {
+    public void sendTest() throws Exception {
         MasterClient masterClient = new MasterClient(testIni.getAbsolutePath());
         try {
             masterClient.send(client);
             masterClient.send(titolare);
             masterClient.send(datore);
             masterClient.send(ccnl);
-            masterClient.send(null);
         } catch (ClientException e) {
             fail();
         }
+    }
+
+    @Test (expected = RuntimeException.class)
+    public void sendTestNull() throws Exception{
+        MasterClient masterClient = new MasterClient(testIni.getAbsolutePath());
+        masterClient.send(null);
     }
 
     @AfterClass

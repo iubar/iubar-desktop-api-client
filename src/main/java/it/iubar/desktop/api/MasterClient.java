@@ -18,6 +18,7 @@ import javax.ws.rs.core.MediaType;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.RuleBasedCollator;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Properties;
@@ -173,6 +174,11 @@ public class MasterClient {
 
     public <T> void send(T obj) throws ClientException {
 
+        if(obj == null){
+            LOGGER.log(Level.SEVERE, "Object to send cannot be nullable.");
+            throw new RuntimeException("Object to send cannot be nullable.");
+        }
+
         //Initialization jersey client
         Client client = Client.create();
         //set destination url
@@ -189,19 +195,29 @@ public class MasterClient {
                 url += INSERT_CCNL;
         }
 
-        webResource = client.resource(url);
+        webResource = client.resource(this.getUrl());
 
-        String toJson = null;
+        JSONObject jsonObject = null;
 
         try {
-            toJson = JSONPrinter.toJson(obj);
+            if(this.isAuth()){
+                jsonObject = new JSONObject();
+                jsonObject.put(USER_VALUE, this.getUser());
+                jsonObject.put("timestamp", getTimeStamp());
+                JSONObject tojson = new JSONObject(JSONPrinter.toJson(obj));
+                jsonObject.put("data", tojson);
+                jsonObject.put("signature", encryptedData(tojson.toString()));
+                System.out.println(jsonObject.toString());
+            }else{
+                jsonObject = new JSONObject(JSONPrinter.toJson(obj));
+            }
         } catch (JsonProcessingException e) {
             LOGGER.log(Level.SEVERE, "Jackson could not convert correctly", JsonProcessingException.class);
             throw new RuntimeException("Jackson ha problemi a convertire la classe.");
         }
 
         //execution query
-        ClientResponse response = webResource.accept("application/json").type(MediaType.APPLICATION_JSON_TYPE).header("X-Requested-With", "XMLHttpRequest").post(ClientResponse.class, toJson);
+        ClientResponse response = webResource.accept("application/json").type(MediaType.APPLICATION_JSON_TYPE).header("X-Requested-With", "XMLHttpRequest").post(ClientResponse.class, jsonObject.toString());
 
         JSONObject jsonResponse = new JSONObject(response.getEntity(String.class));
 
