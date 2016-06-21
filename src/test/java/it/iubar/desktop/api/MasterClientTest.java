@@ -23,7 +23,6 @@ public class MasterClientTest {
 
     static File falseIni;
     static File trueIni;
-    static File editedIni;
     static File testIni;
     static File brokenIni;
 
@@ -47,12 +46,6 @@ public class MasterClientTest {
         bwFalse.write("host = localhost\n" +
                 "is_auth = 0");
         bwFalse.close();
-
-        editedIni = File.createTempFile("editedIni", ".ini");
-        BufferedWriter bwEdited = new BufferedWriter(new FileWriter(editedIni));
-        bwEdited.write("host = localhost\n" +
-                ";is = true");
-        bwEdited.close();
 
         testIni = File.createTempFile("testIni", ".ini");
         BufferedWriter bwTest = new BufferedWriter(new FileWriter(testIni));
@@ -132,14 +125,6 @@ public class MasterClientTest {
         assertFalse((boolean) field.get(masterClient));
     }
 
-    @Test
-    public void masterClientEdit() throws Exception {
-        MasterClient masterClient = new MasterClient(editedIni.getAbsolutePath(), "is");
-        Field field = MasterClient.class.getDeclaredField("isAuth");
-        field.setAccessible(true);
-        assertFalse((boolean) field.get(masterClient));
-    }
-
     @Test (expected = RuntimeException.class)
     public void masterClientFail() throws Exception {
         MasterClient masterClient = new MasterClient(brokenIni.getAbsolutePath());
@@ -198,7 +183,6 @@ public class MasterClientTest {
     public static void delFiles(){
         falseIni.delete();
         trueIni.delete();
-        editedIni.delete();
         testIni.delete();
         brokenIni.delete();
     }
