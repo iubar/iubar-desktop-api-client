@@ -5,10 +5,14 @@
 ;uncomment to activate auth factor
 ;is_auth = true
 
-;all the values for target server
+[SERVER]
+;values used only if is_auth is true
+;user = test@test.com
+;api_key = password
+
 [SERVER]
 host = localhost
 ;uncomment if you want a different port
 ;port = 80
-;insert the root, the client will redirect you to the right route for each Class
+;insert the path, the client will redirect you to the right route for each Class
 ;path = /
