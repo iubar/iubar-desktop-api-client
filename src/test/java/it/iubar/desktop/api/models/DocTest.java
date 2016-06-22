@@ -7,6 +7,7 @@ import org.junit.Test;
 import static junit.framework.TestCase.assertEquals;
 
 public class DocTest {
+
     private static Doc doc;
 
     @BeforeClass

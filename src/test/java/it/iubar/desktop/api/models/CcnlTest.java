@@ -9,7 +9,7 @@ import static org.junit.Assert.assertEquals;
 
 public class CcnlTest {
 
-    static Ccnl ccnl;
+    private static Ccnl ccnl;
 
     @BeforeClass
     public static void before(){

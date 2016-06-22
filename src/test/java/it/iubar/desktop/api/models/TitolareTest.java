@@ -8,7 +8,7 @@ import static junit.framework.TestCase.assertEquals;
 
 public class TitolareTest {
 
-    static Titolare titolare;
+    private static Titolare titolare;
 
     @BeforeClass
     public static void before(){

@@ -8,7 +8,7 @@ import static org.junit.Assert.assertEquals;
 
 public class ClientTest {
 
-    static Client client;
+    private static Client client;
 
     @BeforeClass
     public static void before(){

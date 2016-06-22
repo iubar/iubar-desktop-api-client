@@ -7,7 +7,7 @@ import org.junit.Test;
 
 public class DatoreTest {
 
-    static Datore datore;
+    private static Datore datore;
 
     @BeforeClass
     public static void before(){
