@@ -182,39 +182,52 @@ public class MasterClient {
 
         cantBeNull(obj);
 
-        //Initialization jersey client
-        Client client = Client.create();
-        //set destination url
-        WebResource webResource;
+        String destUrl;
 
-        JSONObject jsonObject = new JSONObject();
+        if(!this.isUniqueUrl())
+            destUrl = masterRouter(obj);
+        else
+            destUrl = this.getUrl();
 
-        if (!this.isUniqueUrl())
-            webResource = client.resource(masterRouter(obj));
-        else {//TODO: remove hardcoded data
-            jsonObject.put("whatis", obj.getClass().getName());
-            webResource = client.resource(this.getUrl());
-        }
+        JSONObject dataToSend = new JSONObject();
 
         try {
-            if(this.isAuth()){ //TODO: remove hardcoded data
-                jsonObject.put(USER_VALUE, this.getUser());
-                jsonObject.put("timestamp", getTimeStamp());
-                JSONObject tojson = new JSONObject(JSONPrinter.toJson(obj));
-                jsonObject.put("data", tojson);
-                jsonObject.put("signature", encryptedData(tojson.toString()));
+            if(this.isAuth()){
+                dataToSend = genAuth(dataToSend, obj);
             }else{
-                jsonObject = new JSONObject(JSONPrinter.toJson(obj));
+                dataToSend = new JSONObject(JSONPrinter.toJson(obj));
             }
         } catch (JsonProcessingException e) {
             LOGGER.log(Level.SEVERE, "Jackson could not convert the object correctly.", JsonProcessingException.class);
             throw new RuntimeException("Jackson could not convert the object correctly.");
         }
 
-        //execution query
-        ClientResponse response = webResource.accept("application/json").type(MediaType.APPLICATION_JSON_TYPE).header("X-Requested-With", "XMLHttpRequest").post(ClientResponse.class, jsonObject.toString());
+        responseManager(post(destUrl, dataToSend));
+    }
 
-        responseManager(response);
+    private <T> JSONObject genAuth(JSONObject authData, T obj ) throws JsonProcessingException {
+        authData.put(USER_VALUE, this.getUser());
+        authData.put("timestamp", getTimeStamp());
+        JSONObject toJson = new JSONObject(obj);
+        authData.put("data", toJson);
+        authData.put("signature", encryptedData(toJson.toString()));
+        return authData;
+    }
+
+    private ClientResponse post(String url, JSONObject data){
+
+        Client client = Client.create();
+        WebResource webResource = client.resource(url);
+
+        return webResource.accept("application/json").type(MediaType.APPLICATION_JSON_TYPE).header("X-Requested-With", "XMLHttpRequest").post(ClientResponse.class, data.toString());
+    }
+
+    private ClientResponse get(String url){
+
+        Client client = Client.create();
+        WebResource webResource = client.resource(url);
+
+        return webResource.header("X-Requested-With", "XMLHttpRequest").accept("application/json").get(ClientResponse.class);
     }
 
     public ListMac checkMac(String macAddress){
