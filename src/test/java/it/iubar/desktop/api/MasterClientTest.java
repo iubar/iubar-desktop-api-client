@@ -180,6 +180,29 @@ public class MasterClientTest {
         }
     }
 
+    @Ignore("Ignoring test until the service is online")
+    @Test
+    public void checkMacTest() throws Exception {
+        MasterClient masterClient = new MasterClient("src/main/resources/config.ini");
+        ListMac listMac = masterClient.checkMac("1C-4B-D6-C8-8B-31");
+        assertEquals(true,listMac.isGreyList());
+        assertEquals(2,listMac.getCodeGreyList());
+        assertEquals("Non ha pagato", listMac.getDescGreyList());
+        assertEquals(false, listMac.isBlackList());
+        listMac = masterClient.checkMac("84-2B-2B-91-78-96");
+        assertEquals(false, listMac.isGreyList());
+        assertEquals(0, listMac.getCodeGreyList());
+        assertEquals("", listMac.getDescGreyList());
+        assertEquals(true, listMac.isBlackList());
+    }
+
+    @Ignore("Ignoring test until the service is online")
+    @Test (expected = RuntimeException.class)
+    public void checkWrongMac() throws Exception {
+        MasterClient masterClient = new MasterClient("src/main/resources/config.ini");
+        ListMac listMac = masterClient.checkMac("123456789");
+    }
+
     @Test (expected = RuntimeException.class)
     public void sendTestNull() throws Exception{
         MasterClient masterClient = new MasterClient(testIni.getAbsolutePath());
