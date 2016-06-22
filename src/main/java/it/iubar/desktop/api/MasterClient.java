@@ -111,7 +111,9 @@ public class MasterClient {
         InputStream inputStream = new FileInputStream(this.getConfigDir());
         properties.load(inputStream);
 
-        String user, apiKey, host;
+        String user;
+        String apiKey;
+        String host;
 
         String auth = properties.getProperty(IS_AUTH_VALUE, "false");
 
@@ -148,30 +150,28 @@ public class MasterClient {
         return s.equalsIgnoreCase("true");
     }
 
-    private String normalizePath(String s) {
-        if(!s.equalsIgnoreCase(""))
-            if(!s.substring(0,1).equalsIgnoreCase("/"))
-                s = "/" + s;
+    private String normalizePath(String path) {
+        if(!path.equalsIgnoreCase("") && !path.substring(0,1).equalsIgnoreCase("/"))
+            path = "/" + path;
 
-        return s;
+        return path;
     }
 
-    private String normalizeHost(String s){
-        if(s.contains("http://"))
-            s = s.replace("http://", "");
-        if(s.contains("https://"))
-            s = s.replace("https://", "");
-        if(s.contains(":"))
-            s = s.substring(0,s.indexOf(":"));
+    private String normalizeHost(String host){
+        if(host.contains("http://"))
+            host = host.replace("http://", "");
+        if(host.contains("https://"))
+            host = host.replace("https://", "");
+        if(host.contains(":"))
+            host = host.substring(0,host.indexOf(":"));
 
-        return s;
+        return host;
     }
 
-    private String normalizePort(String s){
-        if(!s.equalsIgnoreCase("80"))
-            if(s.contains(":"))
-                s = s.replace(":", "");
-        return s;
+    private String normalizePort(String port){
+        if(!port.equalsIgnoreCase("80") && (port.contains(":")))
+            port = port.replace(":", "");
+        return port;
     }
 
     public <T> void send(T obj) throws ClientException {
