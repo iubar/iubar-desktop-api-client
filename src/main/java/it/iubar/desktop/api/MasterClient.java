@@ -5,10 +5,7 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import it.iubar.desktop.api.exceptions.ClientException;
-import it.iubar.desktop.api.models.Ccnl;
-import it.iubar.desktop.api.models.Datore;
-import it.iubar.desktop.api.models.Doc;
-import it.iubar.desktop.api.models.Titolare;
+import it.iubar.desktop.api.models.*;
 import it.iubar.desktop.api.services.JSONPrinter;
 import org.apache.commons.codec.binary.Base64;
 import org.json.JSONException;
@@ -44,6 +41,7 @@ public class MasterClient {
     private final String INSERT_DATORE = "/datore";
     private final String INSERT_CCNL = "/ccnl";
     private final String INSERT_DOC = "/doc";
+    private final String INSERT_MAC = "/list/mac";
 
     private String user;
     private String apiKey;
@@ -213,6 +211,26 @@ public class MasterClient {
         responseManager(response);
     }
 
+    public ListMac checkMac(String macAddress){
+
+        cantBeNull(macAddress);
+
+        Client client = Client.create();
+
+        WebResource webResource = client.resource(this.getUrl() + INSERT_MAC + "/" + macAddress);
+
+        ClientResponse response = webResource.header("X-Requested-With", "XMLHttpRequest").accept("application/json").get(ClientResponse.class);
+
+        JSONObject jsonObject = responseManager(response);
+
+        if(jsonObject.getBoolean("black-list")){
+            return new ListMac(true);
+        }else{
+            JSONObject greyList = jsonObject.getJSONObject("grey-list");
+            return new ListMac(greyList.getInt("idreason"), greyList.getString("desc"));
+        }
+    }
+
     private String encryptedData(String data){
         String payload = this.getUrl() + this.getUser() + this.getTimeStamp() + this.getApiKey() + data;
         String algo = "HmacSHA256";
@@ -260,7 +278,7 @@ public class MasterClient {
         return urlToSend;
     }
 
-    private void responseManager(ClientResponse response){
+    private JSONObject responseManager(ClientResponse response){
 
         int status = response.getStatus();
 
@@ -271,6 +289,13 @@ public class MasterClient {
             } catch (JSONException e) {
                 LOGGER.log(Level.FINE, "Query ok, code: " + status);
             }
+            return answer;
+        } else if (status == 400){
+            LOGGER.log(Level.SEVERE, "Bad request, code: " + status);
+            throw new RuntimeException("Bad request, code: " + status);
+        } else if( status == 404){
+            LOGGER.log(Level.SEVERE, "Not found, code: " + status);
+            throw new RuntimeException("Not found, code: " + status);
         } else if (status == 500){
             LOGGER.log(Level.SEVERE, "Internal server error, code: " + status);
             throw new RuntimeException("Internal server error, code: " + status);
