@@ -7,9 +7,11 @@ import com.sun.jersey.api.client.WebResource;
 import it.iubar.desktop.api.exceptions.ClientException;
 import it.iubar.desktop.api.models.Ccnl;
 import it.iubar.desktop.api.models.Datore;
+import it.iubar.desktop.api.models.Doc;
 import it.iubar.desktop.api.models.Titolare;
 import it.iubar.desktop.api.services.JSONPrinter;
 import org.apache.commons.codec.binary.Base64;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import javax.crypto.Mac;
@@ -41,6 +43,7 @@ public class MasterClient {
     private final String INSERT_TITOLARE = "/titolare";
     private final String INSERT_DATORE = "/datore";
     private final String INSERT_CCNL = "/ccnl";
+    private final String INSERT_DOC = "/doc";
 
     private String user;
     private String apiKey;
@@ -173,59 +176,41 @@ public class MasterClient {
 
     public <T> void send(T obj) throws ClientException {
 
-        if(obj == null){
-            LOGGER.log(Level.SEVERE, "Object to send cannot be nullable.");
-            throw new RuntimeException("Object to send cannot be nullable.");
-        }
+        cantBeNull(obj);
 
         //Initialization jersey client
         Client client = Client.create();
         //set destination url
         WebResource webResource;
 
-        if (!this.isUniqueUrl()) {
-            if(obj instanceof it.iubar.desktop.api.models.Client)
-                url += INSERT_CLIENT;
-            else if (obj instanceof Datore)
-                url += INSERT_DATORE;
-            else if(obj instanceof Titolare)
-                url += INSERT_TITOLARE;
-            else if(obj instanceof Ccnl)
-                url += INSERT_CCNL;
+        JSONObject jsonObject = new JSONObject();
+
+        if (!this.isUniqueUrl())
+            webResource = client.resource(masterRouter(obj));
+        else {//TODO: remove hardcoded data
+            jsonObject.put("whatis", obj.getClass().getName());
+            webResource = client.resource(this.getUrl());
         }
 
-        webResource = client.resource(this.getUrl());
-
-        JSONObject jsonObject;
-
         try {
-            if(this.isAuth()){
-                jsonObject = new JSONObject();
+            if(this.isAuth()){ //TODO: remove hardcoded data
                 jsonObject.put(USER_VALUE, this.getUser());
                 jsonObject.put("timestamp", getTimeStamp());
                 JSONObject tojson = new JSONObject(JSONPrinter.toJson(obj));
                 jsonObject.put("data", tojson);
                 jsonObject.put("signature", encryptedData(tojson.toString()));
-                System.out.println(jsonObject.toString());
             }else{
                 jsonObject = new JSONObject(JSONPrinter.toJson(obj));
             }
         } catch (JsonProcessingException e) {
-            LOGGER.log(Level.SEVERE, "Jackson could not convert correctly", JsonProcessingException.class);
-            throw new RuntimeException("Jackson ha problemi a convertire la classe.");
+            LOGGER.log(Level.SEVERE, "Jackson could not convert the object correctly.", JsonProcessingException.class);
+            throw new RuntimeException("Jackson could not convert the object correctly.");
         }
 
         //execution query
         ClientResponse response = webResource.accept("application/json").type(MediaType.APPLICATION_JSON_TYPE).header("X-Requested-With", "XMLHttpRequest").post(ClientResponse.class, jsonObject.toString());
 
-        JSONObject jsonResponse = new JSONObject(response.getEntity(String.class));
-
-        //if code is not 200, throw exception
-        int stat = response.getStatus();
-        if (stat != 200) {
-            LOGGER.log(Level.SEVERE, "Error found in response: CODE " + stat);
-            throw new ClientException(response.getStatus(), jsonResponse.get("response").toString());
-        }
+        responseManager(response);
     }
 
     private String encryptedData(String data){
@@ -245,6 +230,55 @@ public class MasterClient {
 
     private String getTimeStamp(){
         return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX").format(new Date());
+    }
+
+    private <T> boolean isNull(T obj){
+        return obj == null;
+    }
+
+    private <T> void cantBeNull(T obj){
+        if(isNull(obj)){
+            LOGGER.log(Level.SEVERE, "Object to send cannot be nullable.");
+            throw new RuntimeException("Object to send cannot be nullable.");
+        }
+    }
+
+    private <T> String masterRouter(T obj){
+        String urlToSend = this.getUrl();
+
+        if(obj instanceof it.iubar.desktop.api.models.Client)
+            urlToSend += INSERT_CLIENT;
+        else if (obj instanceof Datore)
+            urlToSend += INSERT_DATORE;
+        else if(obj instanceof Titolare)
+            urlToSend += INSERT_TITOLARE;
+        else if(obj instanceof Ccnl)
+            urlToSend += INSERT_CCNL;
+        else if(obj instanceof Doc)
+            urlToSend += INSERT_DOC;
+
+        return urlToSend;
+    }
+
+    private void responseManager(ClientResponse response){
+
+        int status = response.getStatus();
+
+        if(status == 201 || status == 200){
+            JSONObject answer = new JSONObject(response.getEntity(String.class));
+            try {
+                LOGGER.log(Level.FINE, "Query ok, code: " + status + ", rows affected: " + answer.getString("response"));
+            } catch (JSONException e) {
+                LOGGER.log(Level.FINE, "Query ok, code: " + status);
+            }
+        } else if (status == 500){
+            LOGGER.log(Level.SEVERE, "Internal server error, code: " + status);
+            throw new RuntimeException("Internal server error, code: " + status);
+        } else {
+            LOGGER.log(Level.SEVERE, "Unknown error, code: " + status);
+            throw new RuntimeException("Unknown error, code: " + status);
+        }
+
     }
 
 }
