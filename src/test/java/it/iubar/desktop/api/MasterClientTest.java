@@ -1,10 +1,7 @@
 package it.iubar.desktop.api;
 
 import it.iubar.desktop.api.exceptions.ClientException;
-import it.iubar.desktop.api.models.Ccnl;
-import it.iubar.desktop.api.models.Client;
-import it.iubar.desktop.api.models.Datore;
-import it.iubar.desktop.api.models.Titolare;
+import it.iubar.desktop.api.models.*;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
@@ -30,6 +27,7 @@ public class MasterClientTest {
     private static Datore datore;
     private static Titolare titolare;
     private static Ccnl ccnl;
+    private static Doc doc;
 
     @BeforeClass
     public static void genFiles() throws IOException {
@@ -104,6 +102,8 @@ public class MasterClientTest {
         titolare.setChiave_pubblica("");
 
         ccnl = new Ccnl(123);
+
+        doc = new Doc(1, 12055, 2 , 2020);
     }
 
     @Test
@@ -174,6 +174,7 @@ public class MasterClientTest {
             masterClient.send(titolare);
             masterClient.send(datore);
             masterClient.send(ccnl);
+            masterClient.send(doc);
         } catch (ClientException e) {
             fail();
         }
