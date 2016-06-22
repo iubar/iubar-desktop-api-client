@@ -149,27 +149,33 @@ public class MasterClient {
     }
 
     private String normalizePath(String path) {
-        if(!path.equalsIgnoreCase("") && !path.substring(0,1).equalsIgnoreCase("/"))
-            path = "/" + path;
+        String finalPath = path;
 
-        return path;
+        if(!finalPath.equalsIgnoreCase("") && !finalPath.substring(0,1).equalsIgnoreCase("/"))
+            finalPath = "/" + finalPath;
+
+        return finalPath;
     }
 
     private String normalizeHost(String host){
-        if(host.contains("http://"))
-            host = host.replace("http://", "");
-        if(host.contains("https://"))
-            host = host.replace("https://", "");
-        if(host.contains(":"))
-            host = host.substring(0,host.indexOf(":"));
+        String finalHost = host;
 
-        return host;
+        if(finalHost.contains("http://"))
+            finalHost = finalHost.replace("http://", "");
+        if(finalHost.contains("https://"))
+            finalHost = finalHost.replace("https://", "");
+        if(finalHost.contains(":"))
+            finalHost = finalHost.substring(0,finalHost.indexOf(":"));
+
+        return finalHost;
     }
 
     private String normalizePort(String port){
-        if(!port.equalsIgnoreCase("80") && (port.contains(":")))
-            port = port.replace(":", "");
-        return port;
+        String finalPort = port;
+
+        if(!finalPort.equalsIgnoreCase("80") && (finalPort.contains(":")))
+            finalPort = finalPort.replace(":", "");
+        return finalPort;
     }
 
     public <T> void send(T obj) throws ClientException {
