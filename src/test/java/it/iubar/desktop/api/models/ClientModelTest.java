@@ -35,10 +35,6 @@ public class ClientModelTest {
         client.setDb_version("00.92"); 
         return client;
     }
-    @Test
-    public void testToJSon() throws Exception {
-//        String str = "{\"mac\":\"123325345234134\",\"idapp\":2323,\"version\":\"8697623\",\"platform\":\"\",\"os_name\":\"Windows Vista\",\"os_version\":\"6.3\",\"java_version\":\"\",\"titolari\":0,\"datori\":0,\"lavoratori\":0,\"ip_wan\":\"151.21.219.26\",\"ip_local\":\"192.168.32.2\",\"host_name\":\"TWO\",\"user_name\":\"TOMMASO\",\"server_ip\":\"127.0.0.1\",\"server_name\":\"localhost\",\"reg_key\":\"\",\"act_key\":\"\",\"db_date\":\"0000-00-00\",\"db_version\":\"00.92\",\"info_added\":\"2009-08-18 16:37:54\",\"info_updated\":\"2009-08-18 20:33:47\"}";
-//        assertEquals(str, JSONPrinter.toJson(client));
-    }
+ 
 
 }
