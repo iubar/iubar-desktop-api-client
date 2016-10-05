@@ -1,10 +1,17 @@
 package it.iubar.desktop.api.models;
 
-public class ListMac {
+import java.util.Date;
+
+public class ListMac implements IJsonModel {
 
     private boolean blackList;
     private int codeGreyList;
     private String descGreyList;
+    
+    private String actKey;
+    private String regKey;
+    private Date expire;
+    private Date issued;
 
     public ListMac(boolean blackList) {
         this.setBlackList(blackList);

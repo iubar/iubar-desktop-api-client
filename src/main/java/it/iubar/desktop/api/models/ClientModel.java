@@ -1,18 +1,18 @@
 package it.iubar.desktop.api.models;
 
-public class Client{
+import java.util.Date;
+
+public class ClientModel implements IJsonModel {
 
     private String mac;
     private int idapp;
     private String version;
-    private String platform;
     private String os_name;
     private String os_version;
     private String java_version;
     private int titolari;
     private int datori;
     private int lavoratori;
-    private String ip_wan;
     private String ip_local;
     private String host_name;
     private String user_name;
@@ -22,14 +22,10 @@ public class Client{
     private String act_key;
     private String db_date;
     private String db_version;
-    private String info_added;
-    private String info_updated;
 
-    public Client(String mac, int idapp, String version, String ip_wan){
+    public ClientModel(String mac, int idapp){
         this.setMac(mac);
         this.setIdapp(idapp);
-        this.setVersion(version);
-        this.setIp_wan(ip_wan);
     }
 
     public void setMac(String mac) {
@@ -44,9 +40,6 @@ public class Client{
         this.version = version;
     }
 
-    public void setPlatform(String platform) {
-        this.platform = platform;
-    }
 
     public void setOs_name(String os_name) {
         this.os_name = os_name;
@@ -70,10 +63,6 @@ public class Client{
 
     public void setLavoratori(int lavoratori) {
         this.lavoratori = lavoratori;
-    }
-
-    public void setIp_wan(String ip_wan) {
-        this.ip_wan = ip_wan;
     }
 
     public void setIp_local(String ip_local) {
@@ -112,14 +101,6 @@ public class Client{
         this.db_version = db_version;
     }
 
-    public void setInfo_added(String info_added) {
-        this.info_added = info_added;
-    }
-
-    public void setInfo_updated(String info_updated) {
-        this.info_updated = info_updated;
-    }
-
     public String getMac() {
         return mac;
     }
@@ -132,9 +113,6 @@ public class Client{
         return version;
     }
 
-    public String getPlatform() {
-        return platform;
-    }
 
     public String getOs_name() {
         return os_name;
@@ -158,10 +136,6 @@ public class Client{
 
     public int getLavoratori() {
         return lavoratori;
-    }
-
-    public String getIp_wan() {
-        return ip_wan;
     }
 
     public String getIp_local() {
@@ -200,12 +174,36 @@ public class Client{
         return db_version;
     }
 
-    public String getInfo_added() {
-        return info_added;
-    }
+	public static ClientModel fatory() {
+		ClientModel client = new ClientModel("123325345234134", 2323);
+		client.setVersion("8697623");
 
-    public String getInfo_updated() {
-        return info_updated;
-    }
+        client.setOs_name("Windows Vista");
+        client.setOs_version("6.3");
+        client.setJava_version("");
+        client.setTitolari(0);
+        client.setDatori(0);
+        client.setLavoratori(0);
+        client.setIp_local("192.168.32.2");
+        client.setHost_name("TWO");
+        client.setUser_name("TOMMASO");
+        client.setServer_ip("127.0.0.1");
+        client.setServer_name("localhost");
+        client.setReg_key("");
+        client.setAct_key("");
+        client.setDb_date("0000-00-00");
+        client.setDb_version("00.92");
+        return client;
+	}
+
+	public void setDb_date(Date date) {
+		setDb_date(toString(date));
+	}
+
+	private String toString(Date date) {
+		final java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String str = sdf.format(sdf);
+		return str;
+	}
 
 }

@@ -9,8 +9,6 @@
 ;values used only if is_auth is true
 ;user = test@test.com
 ;api_key = password
-
-[SERVER]
 host = localhost
 ;uncomment if you want a different port
 ;port = 80

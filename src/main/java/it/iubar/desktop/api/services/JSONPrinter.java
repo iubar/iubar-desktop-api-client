@@ -10,6 +10,9 @@ public class JSONPrinter {
         ObjectMapper mapper = new ObjectMapper();
         mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
         return mapper.writeValueAsString(obj);
+        
+        // String prettyStaff1 = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(staff1);
+        
     }
 
 }

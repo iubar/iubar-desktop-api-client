@@ -1,6 +1,6 @@
 package it.iubar.desktop.api.models;
 
-public class Titolare{
+public class TitolareModel implements IJsonModel {
     private int idtipo;
     private String cf;
     private String piva;
@@ -11,15 +11,11 @@ public class Titolare{
     private String tel;
     private int datori;
     private int lavoratori;
-    private int idcomune;
-    private int idprovincia;
-    private String info_added;
-    private String info_updated;
+    private String idcomune;
     private String chiave_pubblica;
 
-    public Titolare(int idcomune, int idprovincia) {
-        this.setIdcomune(idcomune);
-        this.setIdprovincia(idprovincia);
+    public TitolareModel() {
+
     }
 
     public int getIdtipo() {
@@ -102,36 +98,12 @@ public class Titolare{
         this.lavoratori = lavoratori;
     }
 
-    public int getIdcomune() {
+    public String getIdcomune() {
         return idcomune;
     }
 
-    public void setIdcomune(int idcomune) {
+    public void setIdcomune(String idcomune) {
         this.idcomune = idcomune;
-    }
-
-    public int getIdprovincia() {
-        return idprovincia;
-    }
-
-    public void setIdprovincia(int idprovincia) {
-        this.idprovincia = idprovincia;
-    }
-
-    public String getInfo_added() {
-        return info_added;
-    }
-
-    public void setInfo_added(String info_added) {
-        this.info_added = info_added;
-    }
-
-    public String getInfo_updated() {
-        return info_updated;
-    }
-
-    public void setInfo_updated(String info_updated) {
-        this.info_updated = info_updated;
     }
 
     public String getChiave_pubblica() {
@@ -141,5 +113,22 @@ public class Titolare{
     public void setChiave_pubblica(String chiave_pubblica) {
         this.chiave_pubblica = chiave_pubblica;
     }
+
+	public static TitolareModel factory() {
+        TitolareModel titolare = new TitolareModel();
+        titolare.setIdtipo(0);
+        titolare.setCf("123123123");
+        titolare.setPiva("qweasdzxc");
+        titolare.setDenom("Studio Eccol");
+        titolare.setCognome("Tommaso");
+        titolare.setIndirizzo("Via Sant'Antonio");
+        titolare.setIdcomune("10101");
+        titolare.setEmail("pippo@email.it");
+        titolare.setTel("4674567567");
+        titolare.setDatori(123);
+        titolare.setLavoratori(123);
+        titolare.setChiave_pubblica("");
+        return titolare;
+	}
 
 }

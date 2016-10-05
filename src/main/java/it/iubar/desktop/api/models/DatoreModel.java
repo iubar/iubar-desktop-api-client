@@ -1,19 +1,17 @@
 package it.iubar.desktop.api.models;
 
-public class Datore {
+public class DatoreModel implements IJsonModel {
     private String cf;
     private String piva;
     private String denom;
-    private String sub;
-    private String para;
+    private int sub;
+    private int para;
     private String email;
     private String tel;
-    private int idcomune;
-    private int idprovincia;
+    private String idcomune;
+ 
 
-    public Datore(int idcomune, int idprovincia) {
-        this.setIdcomune(idcomune);
-        this.setIdprovincia(idprovincia);
+    public DatoreModel( ) {
     }
 
     public String getCf() {
@@ -40,19 +38,19 @@ public class Datore {
         this.denom = denom;
     }
 
-    public String getSub() {
+    public int getSub() {
         return sub;
     }
 
-    public void setSub(String sub) {
+    public void setSub(int sub) {
         this.sub = sub;
     }
 
-    public String getPara() {
+    public int getPara() {
         return para;
     }
 
-    public void setPara(String para) {
+    public void setPara(int para) {
         this.para = para;
     }
 
@@ -72,20 +70,14 @@ public class Datore {
         this.tel = tel;
     }
 
-    public int getIdcomune() {
+    public String getIdcomune() {
         return idcomune;
     }
 
-    public void setIdcomune(int idcomune) {
+    public void setIdcomune(String idcomune) {
         this.idcomune = idcomune;
     }
 
-    public int getIdprovincia() {
-        return idprovincia;
-    }
 
-    public void setIdprovincia(int idprovincia) {
-        this.idprovincia = idprovincia;
-    }
 
 }
