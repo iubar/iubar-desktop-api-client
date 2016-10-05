@@ -51,7 +51,7 @@ public class MasterClient {
 	public final static String INSERT_DATORE = "datore";
 	public final static String INSERT_CONTRATTO = "contratto";
 	public final static String INSERT_DOCUMENTO = "documento-mese";
-	public final static String INSERT_TITOLARI = "titolare";
+	public final static String INSERT_TITOLARI = "titolari";
 	public final static String INSERT_DATORI = "datori";
 	public final static String INSERT_CONTRATTI = "contratti";
 	public final static String INSERT_DOCUMENTI = "documenti-mese";
@@ -254,16 +254,17 @@ public class MasterClient {
 	 * @see: http://docs.guzzlephp.org/en/5.3/clients.html
 	 */
 	private String resolveUrl(String restUrl) {
+		String baseUrl = this.getBaseUrl();
 		if(!restUrl.startsWith("http")){		
 			if(!isAbsoluteRoute(restUrl)){
-				String lastChar = this.getBaseUrl().substring(this.getBaseUrl().length() - 1);
+				String lastChar = baseUrl.substring(baseUrl.length() - 1);
 				if(lastChar.equals("/")){
-					restUrl = this.getBaseUrl() + restUrl;
+					restUrl = baseUrl + restUrl;
 				}else{
-					restUrl = getRootUrl(this.getBaseUrl()) + "/" + restUrl;
+					restUrl = getRootUrl(baseUrl) + "/" + restUrl;
 				}
 			}else{
-				restUrl = getRootUrl(this.getBaseUrl()) + restUrl;
+				restUrl = getRootUrl(baseUrl) + restUrl;
 			}
 		}else{
 			// la rotta è nel formato "http://..."
@@ -351,8 +352,11 @@ public class MasterClient {
 	}
 
 	private <T> String getRoute(T obj) {
-		String urlToSend = this.getBaseUrl() + "/";
-
+		String urlToSend = this.getBaseUrl();
+		String lastChar = urlToSend.substring(urlToSend.length() - 1);
+		if(!lastChar.equals("/")){			
+			urlToSend = urlToSend + "/";
+		}
 		if (obj instanceof it.iubar.desktop.api.models.ClientModel) {
 			urlToSend += INSERT_CLIENT;
 		} else if (obj instanceof DatoreModel) {
