@@ -11,11 +11,11 @@
     <name>Iubar Test Crm Client</name>
     <description>Send data to the Crm Api</description>
 
-	<parent>
-		<artifactId>iubar_pom</artifactId>
-		<groupId>it.iubar.pom</groupId>
-		<version>0.0.4</version>
-	</parent>
+<!-- 	<parent> -->
+<!-- 		<artifactId>iubar_pom</artifactId> -->
+<!-- 		<groupId>it.iubar.pom</groupId> -->
+<!-- 		<version>0.0.4</version> -->
+<!-- 	</parent> -->
 	
     <build>
     
