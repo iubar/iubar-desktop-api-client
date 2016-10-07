@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import it.iubar.desktop.api.exceptions.ClientException;
 import it.iubar.desktop.api.models.*;
 import it.iubar.desktop.api.services.JSONPrinter;
+ 
 
 import org.apache.commons.codec.binary.Base64;
 import org.json.JSONException;
@@ -42,21 +43,21 @@ public class MasterClient {
 
 	private final String IS_AUTH_VALUE = "is_auth";
 	private final String HOST_VALUE = "host";
-	private final String PATH_VALUE = "path";
 	private final String USER_VALUE = "user";
 	private final String API_KEY_VALUE = "api_key";
 
 	public final static String INSERT_CLIENT = "client";
-	public final static String INSERT_TITOLARE = "titolari";
-	public final static String INSERT_DATORE = "datore";
-	public final static String INSERT_CONTRATTO = "contratto";
-	public final static String INSERT_DOCUMENTO = "documento-mese";
+	public final static String INSERT_TITOLARE = "titolare";  			// non esiste
+	public final static String INSERT_DATORE = "datore"; 				// non esiste
+	public final static String INSERT_CONTRATTO = "contratto";  		// non esiste
+	public final static String INSERT_DOCUMENTO = "documento-mese";  	// non esiste
 	public final static String INSERT_TITOLARI = "titolari";
 	public final static String INSERT_DATORI = "datori";
 	public final static String INSERT_CONTRATTI = "contratti";
 	public final static String INSERT_DOCUMENTI = "documenti-mese";
-	public final static String INSERT_MAC = "list/mac";
-
+	public final static String INSERT_MAC = "list/mac";      
+       
+    
 	private String user;
 	private String apiKey;
 	private boolean isAuth;

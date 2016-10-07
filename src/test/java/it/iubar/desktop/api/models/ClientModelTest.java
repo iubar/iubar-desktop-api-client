@@ -1,5 +1,6 @@
 package it.iubar.desktop.api.models;
 
+import it.iubar.desktop.api.MasterClientTest;
 import it.iubar.desktop.api.services.JSONPrinter;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -8,15 +9,8 @@ import static org.junit.Assert.assertEquals;
 
 public class ClientModelTest {
 
-    private static ClientModel client;
-
-    @BeforeClass
-    public static void before(){
-    	client = ClientModelTest.factory();
-    }
-
-    private static ClientModel factory() {
-    	ClientModel client = new ClientModel("123325345234134", 2323);
+    public static ClientModel factory() {
+    	ClientModel client = new ClientModel("123325345234134", MasterClientTest.ID_APP_PAGHEOPEN);
 		client.setVersion("8697623");		
         client.setOs_name("Windows Vista");
         client.setOs_version("6.3");

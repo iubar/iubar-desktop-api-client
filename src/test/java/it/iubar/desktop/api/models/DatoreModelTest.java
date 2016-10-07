@@ -1,5 +1,6 @@
 package it.iubar.desktop.api.models;
 
+import it.iubar.desktop.api.MasterClientTest;
 import it.iubar.desktop.api.services.JSONPrinter;
 
 import org.junit.Assert;
@@ -12,11 +13,12 @@ public class DatoreModelTest {
 
     @BeforeClass
     public static void before(){
-        datore = DatoreModelTest.factory();
+    	DatoreModelTest.datore = DatoreModelTest.factory();
     }
 
 	public static DatoreModel factory() {
 		DatoreModel datore = new DatoreModel();
+		datore.setIdapp(MasterClientTest.ID_APP_PAGHEOPEN);
 		datore.setCf("AIHDUAWHDOU");
         datore.setIdcomune(null);
         datore.setPiva("obaojwdboawdb");

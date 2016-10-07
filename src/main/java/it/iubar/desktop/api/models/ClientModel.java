@@ -23,6 +23,10 @@ public class ClientModel implements IJsonModel {
     private String db_date;
     private String db_version;
 
+    public ClientModel(){
+        super(); 
+     }
+    
     public ClientModel(String mac, int idapp){
         this.setMac(mac);
         this.setIdapp(idapp);
@@ -102,99 +106,76 @@ public class ClientModel implements IJsonModel {
     }
 
     public String getMac() {
-        return mac;
+        return this.mac;
     }
 
     public int getIdapp() {
-        return idapp;
+        return this.idapp;
     }
 
     public String getVersion() {
-        return version;
+        return this.version;
     }
 
-
     public String getOs_name() {
-        return os_name;
+        return this.os_name;
     }
 
     public String getOs_version() {
-        return os_version;
+        return this.os_version;
     }
 
     public String getJava_version() {
-        return java_version;
+        return this.java_version;
     }
 
     public int getTitolari() {
-        return titolari;
+        return this.titolari;
     }
 
     public int getDatori() {
-        return datori;
+        return this.datori;
     }
 
     public int getLavoratori() {
-        return lavoratori;
+        return this.lavoratori;
     }
 
     public String getIp_local() {
-        return ip_local;
+        return this.ip_local;
     }
 
     public String getHost_name() {
-        return host_name;
+        return this.host_name;
     }
 
     public String getUser_name() {
-        return user_name;
+        return this.user_name;
     }
 
     public String getServer_ip() {
-        return server_ip;
+        return this.server_ip;
     }
 
     public String getServer_name() {
-        return server_name;
+        return this.server_name;
     }
 
     public String getReg_key() {
-        return reg_key;
+        return this.reg_key;
     }
 
     public String getAct_key() {
-        return act_key;
+        return this.act_key;
     }
 
     public String getDb_date() {
-        return db_date;
+        return this.db_date;
     }
 
     public String getDb_version() {
-        return db_version;
+        return this.db_version;
     }
-
-	public static ClientModel fatory() {
-		ClientModel client = new ClientModel("123325345234134", 2323);
-		client.setVersion("8697623");
-
-        client.setOs_name("Windows Vista");
-        client.setOs_version("6.3");
-        client.setJava_version("");
-        client.setTitolari(0);
-        client.setDatori(0);
-        client.setLavoratori(0);
-        client.setIp_local("192.168.32.2");
-        client.setHost_name("TWO");
-        client.setUser_name("TOMMASO");
-        client.setServer_ip("127.0.0.1");
-        client.setServer_name("localhost");
-        client.setReg_key("");
-        client.setAct_key("");
-        client.setDb_date("0000-00-00");
-        client.setDb_version("00.92");
-        return client;
-	}
 
 	public void setDb_date(Date date) {
 		setDb_date(toString(date));

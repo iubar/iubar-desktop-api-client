@@ -31,8 +31,10 @@ public class MasterClientTest {
     private static final String apiKey = "1234567890";
 
 	private static final String APP_FAMILY_PAGHE = "paghe";
+	public static final int ID_APP_PAGHEOPEN = 11;
 	private static final String ECHO_API = "http://www.iubar.it/extranet/api/echo";
 	private static final String ECHO_API_2 = "http://www.iubar.it/extranet/api/echo2";
+	
   
     private static ClientModel client;
     private static ModelsList<DatoreModel> datori;
@@ -41,25 +43,25 @@ public class MasterClientTest {
     private static ModelsList<DocModel> documenti;
 
     @BeforeClass
-    public static void genFiles() throws IOException {
+    public static void initData() throws IOException {
 
-        client = ClientModel.fatory();
+    	MasterClientTest.client = ClientModelTest.factory();
         
-        datori = new ModelsList<DatoreModel>(MAC_1, "datori");
+    	MasterClientTest.datori = new ModelsList<DatoreModel>(MAC_1, "datori");
         DatoreModel datore = DatoreModelTest.factory();
-        datori.add(datore);
+        MasterClientTest.datori.add(datore);
         
-        titolari= new ModelsList<TitolareModel>(MAC_1, "titolari");
-        TitolareModel titolare = TitolareModel.factory();
-        titolari.add(titolare);
+        MasterClientTest.titolari= new ModelsList<TitolareModel>(MAC_1, "titolari");
+        TitolareModel titolare = TitolareModelTest.factory();
+        MasterClientTest.titolari.add(titolare);
         
-        contratti = new ModelsList<CcnlModel>(MAC_1, "contratti");
+        MasterClientTest.contratti = new ModelsList<CcnlModel>(MAC_1, "contratti");
         CcnlModel ccnl = CcnlModelTest.factory();
-        contratti.add(ccnl);
+        MasterClientTest.contratti.add(ccnl);
         
-        documenti = new ModelsList<DocModel>(MAC_1, "doc");        
+        MasterClientTest.documenti = new ModelsList<DocModel>(MAC_1, "doc");        
         DocModel doc = DocModelTest.factory();
-        documenti.add(doc);
+        MasterClientTest.documenti.add(doc);
     }
 
     @Test
@@ -85,7 +87,7 @@ public class MasterClientTest {
 			// oppure
 			// masterClient.setBaseUrl("http://httpbin.org/post");
 			// oppure
-			String route = "http://104.155.64.146:81/crm/api/public/crm/v1/" + APP_FAMILY_PAGHE + "/";
+			String route = "http://104.155.64.146:81/crm/api/public/crm/v1/";
 			masterClient.setBaseUrl(route);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -109,7 +111,7 @@ public class MasterClientTest {
 		boolean b = false;
     	MasterClient masterClient = MasterClientTest.factory();
 		try {
-			JSONObject jsonObject = masterClient.responseManager(masterClient.get("blacklist/mac/" + mac));
+			JSONObject jsonObject = masterClient.responseManager(masterClient.get(APP_FAMILY_PAGHE + "/blacklist/mac/" + mac));
 			b = jsonObject.getBoolean("data");
 			if (b) {
 				System.out.println("The mac address is black-listed");
@@ -139,7 +141,7 @@ public class MasterClientTest {
     	int idreason = 0; // false
     	MasterClient masterClient = MasterClientTest.factory();
 		try{		
-	    	JSONObject jsonObject = masterClient.responseManager(masterClient.get("greylist/mac/" + mac));
+	    	JSONObject jsonObject = masterClient.responseManager(masterClient.get(APP_FAMILY_PAGHE + "/greylist/mac/" + mac));
 	    	Object obj = jsonObject.get("data");
 			if(obj instanceof JSONObject){
 				JSONObject jsonObject2 = jsonObject.getJSONObject("data");

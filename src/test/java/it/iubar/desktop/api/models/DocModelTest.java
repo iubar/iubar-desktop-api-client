@@ -1,10 +1,7 @@
 package it.iubar.desktop.api.models;
 
-import it.iubar.desktop.api.services.JSONPrinter;
 import org.junit.BeforeClass;
-import org.junit.Test;
 
-import static junit.framework.TestCase.assertEquals;
 
 public class DocModelTest {
 
@@ -12,7 +9,7 @@ public class DocModelTest {
 
     @BeforeClass
     public static void before(){
-        doc = DocModelTest.factory();
+    	DocModelTest.doc = DocModelTest.factory();
     }
 
 	public static DocModel factory() {

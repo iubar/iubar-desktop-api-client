@@ -1,7 +1,9 @@
 package it.iubar.desktop.api.models;
 
 public class TitolareModel implements IJsonModel {
-    private int idtipo;
+    
+	private int idapp = 0;
+	private int idtipo;
     private String cf;
     private String piva;
     private String denom;
@@ -15,7 +17,7 @@ public class TitolareModel implements IJsonModel {
     private String chiave_pubblica;
 
     public TitolareModel() {
-
+    	super();
     }
 
     public int getIdtipo() {
@@ -114,21 +116,12 @@ public class TitolareModel implements IJsonModel {
         this.chiave_pubblica = chiave_pubblica;
     }
 
-	public static TitolareModel factory() {
-        TitolareModel titolare = new TitolareModel();
-        titolare.setIdtipo(0);
-        titolare.setCf("123123123");
-        titolare.setPiva("qweasdzxc");
-        titolare.setDenom("Studio Eccol");
-        titolare.setCognome("Tommaso");
-        titolare.setIndirizzo("Via Sant'Antonio");
-        titolare.setIdcomune("10101");
-        titolare.setEmail("pippo@email.it");
-        titolare.setTel("4674567567");
-        titolare.setDatori(123);
-        titolare.setLavoratori(123);
-        titolare.setChiave_pubblica("");
-        return titolare;
-	}
-
+    public void setIdapp(int idapp) {
+        this.idapp = idapp;
+    }
+ 
+    public int getIdapp() {
+        return this.idapp;
+    }
+    
 }

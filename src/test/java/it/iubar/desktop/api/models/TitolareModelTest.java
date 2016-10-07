@@ -1,22 +1,14 @@
 package it.iubar.desktop.api.models;
 
-import it.iubar.desktop.api.services.JSONPrinter;
 import org.junit.BeforeClass;
-import org.junit.Test;
 
-import static junit.framework.TestCase.assertEquals;
+import it.iubar.desktop.api.MasterClientTest;
 
 public class TitolareModelTest {
 
-    private static TitolareModel titolare;
-
-    @BeforeClass
-    public static void before(){
-    	titolare = TitolareModelTest.factory();
-    }
-    
 	public static TitolareModel factory() {
 		TitolareModel titolare = new TitolareModel();
+		titolare.setIdapp(MasterClientTest.ID_APP_PAGHEOPEN);
         titolare.setIdtipo(0);
         titolare.setCf("123123123");
         titolare.setPiva("qweasdzxc");
@@ -30,6 +22,8 @@ public class TitolareModelTest {
         titolare.setChiave_pubblica("");
         return titolare;
 	}    
+	
+	
 
 //    @Test
 //    public void testToJSon() throws Exception{

@@ -1,6 +1,8 @@
 package it.iubar.desktop.api.models;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+
+import it.iubar.desktop.api.MasterClientTest;
 import it.iubar.desktop.api.services.JSONPrinter;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -13,12 +15,15 @@ public class CcnlModelTest {
 
     @BeforeClass
     public static void before(){
-        ccnl =  CcnlModelTest.factory();
+    	CcnlModelTest.ccnl =  CcnlModelTest.factory();
     }
     
 
 	public static CcnlModel factory() {
-		return new CcnlModel("123");
+		CcnlModel contratto = new CcnlModel();
+		contratto.setIdapp(MasterClientTest.ID_APP_PAGHEOPEN);
+		contratto.setIdccnl("123");
+		return contratto;
 	}    
 
 //    @Test

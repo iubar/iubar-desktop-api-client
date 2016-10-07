@@ -1,7 +1,9 @@
 package it.iubar.desktop.api.models;
 
 public class DatoreModel implements IJsonModel {
-    private String cf;
+    
+	private int idapp = 0;
+	private String cf;
     private String piva;
     private String denom;
     private int sub;
@@ -11,9 +13,18 @@ public class DatoreModel implements IJsonModel {
     private String idcomune;
  
 
-    public DatoreModel( ) {
+    public DatoreModel() {
+    	super();
     }
 
+    public void setIdapp(int idapp) {
+        this.idapp = idapp;
+    }
+    
+    public int getIdapp() {
+        return this.idapp;
+    }
+    
     public String getCf() {
         return cf;
     }
