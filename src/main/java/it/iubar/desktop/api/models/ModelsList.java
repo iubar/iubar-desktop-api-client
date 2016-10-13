@@ -21,6 +21,8 @@ public class ModelsList<T> {
 	String mac = null;
 	String jsonName = null;
 	List<T> list = new ArrayList<T>();
+
+	private int idapp;
 	
 	public Class getElemClass(){
 		T t = this.list.get(0);
@@ -31,8 +33,9 @@ public class ModelsList<T> {
 		return this.jsonName;
 	};
 	
-	public ModelsList(String mac, String jsonName) {
+	public ModelsList(String mac, int idapp, String jsonName) {
 		this.mac = mac;
+		this.idapp = idapp;
 		this.jsonName = jsonName;
 	}
  
@@ -68,6 +71,10 @@ public class ModelsList<T> {
 
 	public String getMac() {
 		return this.mac;
+	}
+
+	public Object getIdApp() {
+		return this.idapp;
 	}
 	
 }

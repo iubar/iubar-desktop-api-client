@@ -47,10 +47,6 @@ public class MasterClient {
 	private final String API_KEY_VALUE = "api_key";
 
 	public final static String INSERT_CLIENT = "client";
-	public final static String INSERT_TITOLARE = "titolare";  			// non esiste
-	public final static String INSERT_DATORE = "datore"; 				// non esiste
-	public final static String INSERT_CONTRATTO = "contratto";  		// non esiste
-	public final static String INSERT_DOCUMENTO = "documento-mese";  	// non esiste
 	public final static String INSERT_TITOLARI = "titolari";
 	public final static String INSERT_DATORI = "datori";
 	public final static String INSERT_CONTRATTI = "contratti";
@@ -175,6 +171,10 @@ public class MasterClient {
 	public <T> JSONObject send(String destUrl, ModelsList<T> docModellist) throws Exception {
 		JSONObject dataToSend = new JSONObject();
 		dataToSend.putOnce("mac", docModellist.getMac());
+		Object idApp = docModellist.getIdApp();
+		if(idApp!=null){
+			dataToSend.putOnce("idapp", idApp);
+		}
 		dataToSend.putOnce(docModellist.getJsonName(), docModellist.getJsonArray());
 		return send2(destUrl, dataToSend);
 	}
@@ -360,14 +360,6 @@ public class MasterClient {
 		}
 		if (obj instanceof it.iubar.desktop.api.models.ClientModel) {
 			urlToSend += INSERT_CLIENT;
-		} else if (obj instanceof DatoreModel) {
-			urlToSend += INSERT_DATORE;
-		} else if (obj instanceof TitolareModel) {
-			urlToSend += INSERT_TITOLARE;
-		} else if (obj instanceof CcnlModel) {
-			urlToSend += INSERT_CONTRATTO;
-		} else if (obj instanceof DocModel) {
-			urlToSend += INSERT_DOCUMENTO;
 		} else if (obj instanceof ModelsList) {
 			Class c = ((ModelsList) obj).getElemClass();
 			if (c.equals(DatoreModel.class)) {

@@ -8,7 +8,6 @@ public class TitolareModelTest {
 
 	public static TitolareModel factory() {
 		TitolareModel titolare = new TitolareModel();
-		titolare.setIdapp(MasterClientTest.ID_APP_PAGHEOPEN);
         titolare.setIdtipo(0);
         titolare.setCf("123123123");
         titolare.setPiva("qweasdzxc");

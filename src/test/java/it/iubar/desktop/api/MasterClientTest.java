@@ -44,22 +44,22 @@ public class MasterClientTest {
 
     @BeforeClass
     public static void initData() throws IOException {
-
+    	int idApp = MasterClientTest.ID_APP_PAGHEOPEN;
     	MasterClientTest.client = ClientModelTest.factory();
         
-    	MasterClientTest.datori = new ModelsList<DatoreModel>(MAC_1, "datori");
+    	MasterClientTest.datori = new ModelsList<DatoreModel>(MAC_1, idApp, "datori");
         DatoreModel datore = DatoreModelTest.factory();
         MasterClientTest.datori.add(datore);
         
-        MasterClientTest.titolari= new ModelsList<TitolareModel>(MAC_1, "titolari");
+        MasterClientTest.titolari= new ModelsList<TitolareModel>(MAC_1, idApp, "titolari");
         TitolareModel titolare = TitolareModelTest.factory();
         MasterClientTest.titolari.add(titolare);
         
-        MasterClientTest.contratti = new ModelsList<CcnlModel>(MAC_1, "contratti");
+        MasterClientTest.contratti = new ModelsList<CcnlModel>(MAC_1, idApp, "contratti");
         CcnlModel ccnl = CcnlModelTest.factory();
         MasterClientTest.contratti.add(ccnl);
         
-        MasterClientTest.documenti = new ModelsList<DocModel>(MAC_1, "doc");        
+        MasterClientTest.documenti = new ModelsList<DocModel>(MAC_1, 0, "doc");        
         DocModel doc = DocModelTest.factory();
         MasterClientTest.documenti.add(doc);
     }

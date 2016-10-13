@@ -21,7 +21,6 @@ public class CcnlModelTest {
 
 	public static CcnlModel factory() {
 		CcnlModel contratto = new CcnlModel();
-		contratto.setIdapp(MasterClientTest.ID_APP_PAGHEOPEN);
 		contratto.setIdccnl("123");
 		return contratto;
 	}    

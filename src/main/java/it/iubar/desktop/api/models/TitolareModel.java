@@ -2,7 +2,7 @@ package it.iubar.desktop.api.models;
 
 public class TitolareModel implements IJsonModel {
     
-	private int idapp = 0;
+//	private int idapp = 0;
 	private int idtipo;
     private String cf;
     private String piva;
@@ -116,12 +116,12 @@ public class TitolareModel implements IJsonModel {
         this.chiave_pubblica = chiave_pubblica;
     }
 
-    public void setIdapp(int idapp) {
-        this.idapp = idapp;
-    }
- 
-    public int getIdapp() {
-        return this.idapp;
-    }
+//    public void setIdapp(int idapp) {
+//        this.idapp = idapp;
+//    }
+// 
+//    public int getIdapp() {
+//        return this.idapp;
+//    }
     
 }
