@@ -1,4 +1,4 @@
 language: java
 sudo: false
-install:
+install: true
 script: mvn -f pom_travis.xml clean verify
