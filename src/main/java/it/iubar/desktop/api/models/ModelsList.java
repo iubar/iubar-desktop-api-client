@@ -43,6 +43,14 @@ public class ModelsList<T> {
 		this.list.add(model);
 	}
 
+	public int getSize(){
+		int n = 0;
+		if(this.list!=null){
+			n = this.list.size();
+		}
+		return n;
+	};
+	
 	public JSONArray getJsonArray() throws JSONException, JsonProcessingException {
 		JSONArray jsonArray = new JSONArray();
 		if(this.list!=null){

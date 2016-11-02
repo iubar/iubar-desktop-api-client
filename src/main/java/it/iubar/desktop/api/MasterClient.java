@@ -361,16 +361,21 @@ public class MasterClient {
 		if (obj instanceof it.iubar.desktop.api.models.ClientModel) {
 			urlToSend += INSERT_CLIENT;
 		} else if (obj instanceof ModelsList) {
-			Class c = ((ModelsList) obj).getElemClass();
-			if (c.equals(DatoreModel.class)) {
-				urlToSend += INSERT_DATORI;
-			} else if (c.equals(TitolareModel.class)) {
-				urlToSend += INSERT_TITOLARI;
-			} else if (c.equals(CcnlModel.class)) {
-				urlToSend += INSERT_CONTRATTI;
-			} else if (c.equals(DocModel.class)) {
-				urlToSend += INSERT_DOCUMENTI;
-			} else {
+			ModelsList ml = ((ModelsList) obj);
+			if(ml.getSize()>0){
+				Class c = ml.getElemClass();
+				if (c.equals(DatoreModel.class)) {
+					urlToSend += INSERT_DATORI;
+				} else if (c.equals(TitolareModel.class)) {
+					urlToSend += INSERT_TITOLARI;
+				} else if (c.equals(CcnlModel.class)) {
+					urlToSend += INSERT_CONTRATTI;
+				} else if (c.equals(DocModel.class)) {
+					urlToSend += INSERT_DOCUMENTI;
+				} else {
+					throw new RuntimeException("Situazione imprevista");
+				}
+			}else{
 				throw new RuntimeException("Situazione imprevista");
 			}
 		} else {
