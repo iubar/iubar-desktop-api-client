@@ -19,8 +19,8 @@ public class ClientModelTest {
         client.setDatori(0);
         client.setLavoratori(0);
         client.setIp_local("192.168.32.2");
-        client.setHost_name("TWO");
-        client.setUser_name("TOMMASO");
+        client.setHost_name("JUNIT");
+        client.setUser_name("JUNIT");
         client.setServer_ip("127.0.0.1");
         client.setServer_name("localhost");
         client.setReg_key("");
