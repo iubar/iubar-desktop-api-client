@@ -2,7 +2,7 @@ package it.iubar.desktop.api.models;
 
 import java.util.Date;
 
-public class ClientModel implements IJsonModel {
+public class ClientModel extends RootModel implements IJsonModel {
 
     private String mac;
     private int idapp;

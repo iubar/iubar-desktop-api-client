@@ -1,6 +1,6 @@
 package it.iubar.desktop.api.models;
 
-public class CcnlModel implements IJsonModel {
+public class CcnlModel extends RootModel implements IJsonModel {
     
 	private String idccnl;
 //	private int idapp = 0;

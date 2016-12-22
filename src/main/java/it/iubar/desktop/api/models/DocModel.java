@@ -1,7 +1,8 @@
 package it.iubar.desktop.api.models;
 
-public class DocModel implements IJsonModel, Cloneable {
-    private int iddoctype;
+public class DocModel extends RootModel implements IJsonModel, Cloneable {
+    
+	private int iddoctype;
     private String cf;
 	private int mese;
     private int anno;

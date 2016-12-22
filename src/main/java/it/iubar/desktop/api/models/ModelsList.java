@@ -1,7 +1,6 @@
 package it.iubar.desktop.api.models;
 
 import it.iubar.desktop.api.MasterClient;
-import it.iubar.desktop.api.services.JSONPrinter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +13,7 @@ import org.json.JSONObject;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-public class ModelsList<T> {
+public class ModelsList<T extends IJsonModel> {
 	
 	private final static Logger LOGGER = Logger.getLogger(ModelsList.class.getName());
 	
@@ -55,7 +54,8 @@ public class ModelsList<T> {
 		JSONArray jsonArray = new JSONArray();
 		if(this.list!=null){
 			for (T t : this.list) {
-				JSONObject jsonObj = new JSONObject(JSONPrinter.toJson(t));
+				String json = t.asJson();
+				JSONObject jsonObj = new JSONObject(json);
 				jsonArray.put(jsonObj);
 			}
 		}

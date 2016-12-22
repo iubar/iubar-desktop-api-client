@@ -1,6 +1,6 @@
 package it.iubar.desktop.api.models;
 
-public class TitolareModel implements IJsonModel {
+public class TitolareModel extends RootModel implements IJsonModel {
     
 //	private int idapp = 0;
 	private int idtipo;

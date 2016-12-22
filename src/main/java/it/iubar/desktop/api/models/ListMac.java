@@ -2,7 +2,7 @@ package it.iubar.desktop.api.models;
 
 import java.util.Date;
 
-public class ListMac implements IJsonModel {
+public class ListMac extends RootModel implements IJsonModel {
 
     private boolean blackList;
     private int codeGreyList;

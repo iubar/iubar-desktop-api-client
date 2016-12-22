@@ -4,8 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 
 import it.iubar.desktop.api.exceptions.ClientException;
 import it.iubar.desktop.api.models.*;
-import it.iubar.desktop.api.services.JSONPrinter;
- 
 
 import org.apache.commons.codec.binary.Base64;
 import org.json.JSONException;
@@ -18,6 +16,7 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 
 import java.io.BufferedReader;
@@ -86,7 +85,7 @@ public class MasterClient {
 		return user;
 	}
 
-	void setUser(String user) {
+	public void setUser(String user) {
 		this.user = user;
 	}
 
@@ -94,7 +93,7 @@ public class MasterClient {
 		return apiKey;
 	}
 
-	void setApiKey(String apiKey) {
+	public void setApiKey(String apiKey) {
 		this.apiKey = apiKey;
 	}
 
@@ -124,26 +123,21 @@ public class MasterClient {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-		String user = null;
-		String apiKey = null;
-		String host = null;
-
-		String auth = properties.getProperty(IS_AUTH_VALUE, "false");
+ 
+		String host = properties.getProperty(HOST_VALUE);
+		String auth = properties.getProperty(IS_AUTH_VALUE, "false");		
+		this.setAuth(fromStringToBool(auth));
+		this.setBaseUrl(host);
 		
-		if (fromStringToBool(auth)) {
-			apiKey = properties.getProperty(API_KEY_VALUE);
-			user = properties.getProperty(USER_VALUE);
+		if (isAuth()) {
+			String apiKey = properties.getProperty(API_KEY_VALUE);
+			String user = properties.getProperty(USER_VALUE);
 			this.setUser(user);
 			this.setApiKey(apiKey);
 		}
-		host = properties.getProperty(HOST_VALUE);
-
 		LOGGER.log(Level.FINE, "Config file parsed succesfully");
 
-		this.setAuth(fromStringToBool(auth));
 
-		this.setBaseUrl(host);
 	}
 
 	private boolean fromStringToBool(String s) {
@@ -160,15 +154,15 @@ public class MasterClient {
 		return finalPath;
 	}
  
-	public JSONObject send(IJsonModel obj) throws Exception {
+	public <T> JSONObject send(IJsonModel obj) throws Exception {
 		return send(getRoute(obj), obj);
 	}
 
-	public <T> JSONObject send(ModelsList<T> docModellist) throws Exception {
+	public <T> JSONObject send(ModelsList<? super T> docModellist) throws Exception {
 		return send(getRoute(docModellist), docModellist);
 	}
 
-	public <T> JSONObject send(String destUrl, ModelsList<T> docModellist) throws Exception {
+	private <T> JSONObject send(String destUrl, ModelsList<? super T> docModellist) throws Exception {
 		JSONObject dataToSend = new JSONObject();
 		dataToSend.putOnce("mac", docModellist.getMac());
 		Object idApp = docModellist.getIdApp();
@@ -176,33 +170,22 @@ public class MasterClient {
 			dataToSend.putOnce("idapp", idApp);
 		}
 		dataToSend.putOnce(docModellist.getJsonName(), docModellist.getJsonArray());
-		return send2(destUrl, dataToSend);
-	}
-
-	public JSONObject send(String destUrl, IJsonModel obj) throws Exception {
-		cantBeNull(obj);
-		JSONObject dataToSend = null;
-		try {
-			String json = JSONPrinter.toJson(obj);
-			dataToSend = new JSONObject(json);
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-			LOGGER.log(Level.SEVERE, "Jackson could not convert the object correctly.", JsonProcessingException.class);
-			throw new RuntimeException("Jackson could not convert the object correctly.");
-		}
-		return send2(destUrl, dataToSend);
-	}
-
-	private JSONObject send2(String destUrl, JSONObject dataToSend) throws Exception {
-		if (this.isAuth()) {
-			dataToSend = genAuth(destUrl, dataToSend);
-		}
 		Response response = post(destUrl, dataToSend);
 		JSONObject jsonObj = responseManager(response);
 		return jsonObj;
 	}
 
-	private JSONObject genAuth(String destUrl, JSONObject toJson) {
+	protected JSONObject send(String destUrl, IJsonModel obj) throws Exception {
+		cantBeNull(obj);
+		JSONObject dataToSend = null;
+		String json = obj.asJson();
+		dataToSend = new JSONObject(json);
+		Response response = post(destUrl, dataToSend);
+		JSONObject jsonObj = responseManager(response);
+		return jsonObj;
+	}
+
+	private JSONObject genAuth(String destUrl, JSONObject jsonObj) {
 		
 		String ts =  this.getTimeStamp();
 		String hash_argument = destUrl + this.getUser() + ts + this.getApiKey();		
@@ -214,7 +197,9 @@ public class MasterClient {
 		JSONObject authData = new JSONObject();
 		authData.put(USER_VALUE, this.getUser());
 		authData.put("ts", ts);
-		authData.put("data", toJson);
+		if(jsonObj!=null){
+			authData.put("data", jsonObj);
+		}
 		authData.put("hash", hash);
 		return authData;
 	}
@@ -232,8 +217,10 @@ public class MasterClient {
 	}
 
 	private Response post(String restUrl, JSONObject data) {
-		restUrl = resolveUrl(restUrl);
-		
+		resolveUrl(restUrl);
+		if (this.isAuth()) {
+			data = genAuth(restUrl, data);
+		}				
 		Client client = ClientBuilder.newClient();
 		WebTarget target = client.target(restUrl);
 		
@@ -298,13 +285,20 @@ public class MasterClient {
 
 	public Response get(String restUrl) {
 		restUrl = resolveUrl(restUrl);
-		Client client = ClientBuilder.newClient();
+		Client client = ClientBuilder.newClient();	
 		WebTarget target = client.target(restUrl);	
+		if (this.isAuth()) {
+			 JSONObject dataToSend = genAuth(restUrl, null);
+			 target = target.queryParam(USER_VALUE, dataToSend.get(USER_VALUE))
+					 .queryParam("ts", dataToSend.get("ts"))
+					 .queryParam("hash", dataToSend.get("hash"));
+		}		
+
 		Response response = target
 				.request(MediaType.APPLICATION_JSON)
 				.accept("application/json")
 				.header("X-Requested-With", "XMLHttpRequest")
-				.get();		
+				.get();				
 		return response;
 	}
 
@@ -385,7 +379,7 @@ public class MasterClient {
 		return urlToSend;
 	}
 
-	JSONObject responseManager(Response response) throws Exception {
+	public JSONObject responseManager(Response response) throws Exception {
 
 		int status = response.getStatus();
 		String output = response.readEntity(String.class);

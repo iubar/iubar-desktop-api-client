@@ -1,6 +1,6 @@
 package it.iubar.desktop.api.models;
 
-public class DatoreModel implements IJsonModel {
+public class DatoreModel extends RootModel implements IJsonModel {
     
 	private int idapp = 0;
 	private String cf;
@@ -12,7 +12,6 @@ public class DatoreModel implements IJsonModel {
     private String tel;
     private String idcomune;
  
-
     public DatoreModel() {
     	super();
     }
@@ -88,7 +87,5 @@ public class DatoreModel implements IJsonModel {
     public void setIdcomune(String idcomune) {
         this.idcomune = idcomune;
     }
-
-
 
 }
