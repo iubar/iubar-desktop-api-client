@@ -181,10 +181,4 @@ public class ClientModel extends RootModel implements IJsonModel {
 		setDb_date(toString(date));
 	}
 
-	private String toString(Date date) {
-		final java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		String str = sdf.format(sdf);
-		return str;
-	}
-
 }

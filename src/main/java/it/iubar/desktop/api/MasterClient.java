@@ -6,6 +6,7 @@ import it.iubar.desktop.api.exceptions.ClientException;
 import it.iubar.desktop.api.models.*;
 
 import org.apache.commons.codec.binary.Base64;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -53,10 +54,10 @@ public class MasterClient {
 	public final static String INSERT_MAC = "list/mac";      
        
     
-	private String user;
-	private String apiKey;
-	private boolean isAuth;
-	private String url;
+	private String user = null;
+	private String apiKey = null;
+	private boolean isAuth = false;
+	private String url = null;
 
 	public void loadConfigFromFile(String cfgFile) throws IOException {
 		File file = new File(cfgFile);
@@ -68,7 +69,7 @@ public class MasterClient {
 		super();
 	}
 	
-	public void loadConfig(){
+	public void loadConfigFromJar(){
 		// Soluzione 1		
 		ClassLoader classLoader = getClass().getClassLoader();
 	    File file = new File(classLoader.getResource("config.ini").getFile());  
@@ -185,8 +186,28 @@ public class MasterClient {
 		return jsonObj;
 	}
 
+	private JSONObject genAuth(String destUrl) {
+		JSONObject authData = genAuth2(destUrl);
+		return authData;
+	}
+	
 	private JSONObject genAuth(String destUrl, JSONObject jsonObj) {
-		
+		JSONObject authData = genAuth2(destUrl);
+		if(jsonObj!=null){
+			authData.put("data", jsonObj);
+		}
+		return authData;
+	}
+	
+	private JSONObject genAuth(String destUrl, JSONArray jsonArray) {
+		JSONObject authData = genAuth2(destUrl);
+		if(jsonArray!=null){
+			authData.put("data", jsonArray);
+		}
+		return authData;
+	}
+	
+	private JSONObject genAuth2(String destUrl) {
 		String ts =  this.getTimeStamp();
 		String hash_argument = destUrl + this.getUser() + ts + this.getApiKey();		
 		String secret = this.getApiKey();
@@ -197,9 +218,6 @@ public class MasterClient {
 		JSONObject authData = new JSONObject();
 		authData.put(USER_VALUE, this.getUser());
 		authData.put("ts", ts);
-		if(jsonObj!=null){
-			authData.put("data", jsonObj);
-		}
 		authData.put("hash", hash);
 		return authData;
 	}
@@ -216,17 +234,34 @@ public class MasterClient {
 		return encoded; 
 	}
 
-	private Response post(String restUrl, JSONObject data) {
-		resolveUrl(restUrl);
+	public Response post(String restUrl, final JSONArray data) {
+		restUrl = resolveUrl(restUrl);
+		if (this.isAuth()) {
+			JSONObject data2 = genAuth(restUrl, data);
+			Entity<String> d3 = Entity.json(data2.toString());
+			return post(restUrl, d3);
+		}else{			
+			Entity<String> d3 = Entity.json(data.toString());
+			return post(restUrl, d3);
+		}
+	}
+
+	public Response post(String restUrl, JSONObject data) {
+		restUrl = resolveUrl(restUrl);
 		if (this.isAuth()) {
 			data = genAuth(restUrl, data);
-		}				
-		Client client = ClientBuilder.newClient();
-		WebTarget target = client.target(restUrl);
-		
+		}		
 		Entity<String> d1 = Entity.text(data.toString());
 		Entity<String> d2 = Entity.entity(data.toString() , MediaType.APPLICATION_JSON);
 		Entity<String> d3 = Entity.json(data.toString()); // See: https://jersey.java.net/documentation/latest/client.html#d0e4692
+		return post(restUrl, d3);
+	}
+	
+	public Response post(String restUrl, Entity<String> d3) {
+		System.out.println("restUrl: " + restUrl);
+		// System.out.println("post: " + d3.toString());
+		Client client = ClientBuilder.newClient();
+		WebTarget target = client.target(restUrl);
 
 		Response response = target
 				.request(MediaType.APPLICATION_JSON)
@@ -235,6 +270,7 @@ public class MasterClient {
 				.post(d3);
 		return response;				
 	}
+ 
 
 	/*
 	 * Il seguente metodo implementa la logica di risoluzione delle rotte dettata dall'RFC3986,
@@ -285,10 +321,11 @@ public class MasterClient {
 
 	public Response get(String restUrl) {
 		restUrl = resolveUrl(restUrl);
+		System.out.println(restUrl);
 		Client client = ClientBuilder.newClient();	
 		WebTarget target = client.target(restUrl);	
 		if (this.isAuth()) {
-			 JSONObject dataToSend = genAuth(restUrl, null);
+			 JSONObject dataToSend = genAuth(restUrl);
 			 target = target.queryParam(USER_VALUE, dataToSend.get(USER_VALUE))
 					 .queryParam("ts", dataToSend.get("ts"))
 					 .queryParam("hash", dataToSend.get("hash"));
@@ -354,6 +391,8 @@ public class MasterClient {
 		}
 		if (obj instanceof it.iubar.desktop.api.models.ClientModel) {
 			urlToSend += INSERT_CLIENT;
+		}else if (obj instanceof it.iubar.desktop.api.models.DocModel) {
+				urlToSend += INSERT_DOCUMENTI;			
 		} else if (obj instanceof ModelsList) {
 			ModelsList ml = ((ModelsList) obj);
 			if(ml.getSize()>0){
@@ -379,6 +418,8 @@ public class MasterClient {
 		return urlToSend;
 	}
 
+	@Deprecated
+	// Spaghetti code
 	public JSONObject responseManager(Response response) throws Exception {
 
 		int status = response.getStatus();

@@ -1,15 +1,17 @@
 package it.iubar.desktop.api.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class DocModel extends RootModel implements IJsonModel, Cloneable {
     
-	private int iddoctype;
-    private String cf;
+	private DocType doctype;
+    private String cf; // Codice fiscale del Titolaredati
 	private int mese;
     private int anno;
-	private int qnt;
 
-    public DocModel(int iddoctype, String cf, int mese, int anno) {
-        this.setIddoctype(iddoctype);
+    public DocModel(DocType iddoctype, String cf, int mese, int anno) {
+    	this.setCf(cf);
+        this.setDoctype(iddoctype);
         this.setMese(mese);
         this.setAnno(anno);
     }
@@ -19,15 +21,24 @@ public class DocModel extends RootModel implements IJsonModel, Cloneable {
 	}
 
 	public int getIddoctype() {
+		int iddoctype= 0;
+		if(this.doctype!=null){
+			iddoctype = this.doctype.getId();
+		}
         return iddoctype;
     }
 
-    public void setIddoctype(int iddoctype) {
-        this.iddoctype = iddoctype;
+	@JsonIgnore
+	public DocType getDoctype() {
+        return this.doctype;
+    }
+
+    public void setDoctype(DocType doctype) {
+        this.doctype = doctype;
     }
 
     public String getCf() {
-		return cf;
+		return this.cf;
 	}
 
 	public void setCf(String cf) {
@@ -49,17 +60,6 @@ public class DocModel extends RootModel implements IJsonModel, Cloneable {
     public void setAnno(int anno) {
         this.anno = anno;
     }
-
-	public void setDocType(DocType docType) {
-		setIddoctype(docType.getId());		
-	}
-
-	public void setQnt(int qnt) {
-		this.qnt = qnt;
-	}
-	public int getQnt() {
-		return this.qnt;
-	}	
 	
 	 @Override
 	public DocModel clone() throws CloneNotSupportedException {

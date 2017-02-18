@@ -17,7 +17,6 @@ public class CcnlModelTest {
     	CcnlModelTest.ccnl =  CcnlModelTest.factory();
     }
     
-
 	public static CcnlModel factory() {
 		CcnlModel contratto = new CcnlModel();
 		contratto.setIdccnl("123");

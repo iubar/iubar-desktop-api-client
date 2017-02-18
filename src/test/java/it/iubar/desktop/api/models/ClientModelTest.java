@@ -9,7 +9,7 @@ import static org.junit.Assert.assertEquals;
 public class ClientModelTest {
 
     public static ClientModel factory() {
-    	ClientModel client = new ClientModel("123325345234134", MasterClientTest.ID_APP_PAGHEOPEN);
+    	ClientModel client = new ClientModel(MasterClientTest.MAC, MasterClientTest.ID_APP_PAGHEOPEN);
 		client.setVersion("8697623");		
         client.setOs_name("Windows Vista");
         client.setOs_version("6.3");

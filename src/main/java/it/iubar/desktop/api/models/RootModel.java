@@ -5,6 +5,17 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -26,12 +37,18 @@ import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
+
 public class RootModel {
     
 	private final static Logger LOGGER = Logger.getLogger(RootModel.class.getName());
+	private final static DateFormat FORMAT1 = new SimpleDateFormat("yyyy-MM-dd");
+	private final static DateFormat FORMAT2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	private final static DateFormat FORMAT3 = new SimpleDateFormat("yyyy-MM-dd HH:mm a z");
+ 
 	
 	public String asXml() throws JAXBException {
-		JAXBContext jContext = JAXBContext.newInstance(this.getClass());
+		Class c = this.getClass();
+		JAXBContext jContext = JAXBContext.newInstance(c);
 		java.io.StringWriter sw = new StringWriter();			
 		Marshaller marshaller = jContext.createMarshaller();
 		marshaller.setProperty(Marshaller.JAXB_ENCODING, "UTF-8");
@@ -76,7 +93,7 @@ public class RootModel {
     
 	public String asJson(){
 		String jsonString = null;
-		ObjectMapper mapper = new ObjectMapper();
+		ObjectMapper mapper = getMapper();
 		mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);		
 		try {
 			jsonString = mapper.writeValueAsString(this);
@@ -88,9 +105,23 @@ public class RootModel {
 		return jsonString;
 	}
 	
+	public static <T> String asJson(List<T> list){
+		String jsonString = null;
+		ObjectMapper mapper = getMapper();
+		mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);		
+		try {
+			jsonString = mapper.writeValueAsString(list);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, "Jackson could not convert the object correctly.", JsonProcessingException.class);
+			throw new RuntimeException("Jackson could not convert the object correctly.");	
+		}
+		return jsonString;
+	}	
+	
 	public String asPrettyJson(){
 		String jsonPrettyString = null;
-		ObjectMapper mapper = new ObjectMapper();
+		ObjectMapper mapper = getMapper();
 		try {
 			jsonPrettyString = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(this);
 		} catch (JsonProcessingException e) {
@@ -99,9 +130,9 @@ public class RootModel {
 		return jsonPrettyString;
 	}		
 	
-	public String asJsonFiltered(){
+	private String asJsonFiltered(){
 		String jsonPrettyString = null;
-		ObjectMapper mapper = new ObjectMapper();
+		ObjectMapper mapper = getMapper();
 		//By default all fields without explicit view definition are included, disable this
 		mapper.configure(MapperFeature.DEFAULT_VIEW_INCLUSION, false);	
 //	    mapper.configure(MapperFeature.AUTO_DETECT_FIELDS, false);
@@ -121,7 +152,7 @@ public class RootModel {
 	
 	public static <T> T fromJson(String json, Class<T> c) {
 		T t = null;
-		ObjectMapper mapper = new ObjectMapper();			
+		ObjectMapper mapper = getMapper();		
 		try {
 			t = mapper.readValue(json, c);
 		} catch (IOException e) {
@@ -130,6 +161,12 @@ public class RootModel {
 		return t;
 	}
 	
+	public static ObjectMapper getMapper() {
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.setDateFormat(FORMAT1);
+		return mapper;
+	}
+
 	public static StreamSource toStreamSource(String str){
 		StreamSource source = new StreamSource(new StringReader(str));
 		return source;
@@ -163,7 +200,56 @@ public class RootModel {
 		return source;
 	}
 
+	public static String toString(Date date) {
+		String formatted = null;
+		if(date!=null){				
+			formatted = FORMAT1.format(date);
+		}
+		return formatted; 
+	}	
 	
+	public static String toString(GregorianCalendar cal) {
+		if(cal!=null){				
+			return toString(cal.getTime());
+		}
+		return null;
+	}
 	
+	public static Date toDate(String str) {
+		Date d = null;
+		if(str!=null){					
+			try {
+				d = FORMAT1.parse(str);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		}
+		return d;
+	}
+
+	protected static Date toDate(GregorianCalendar cal) {
+		Date d = null;
+		if(cal!=null){
+			d = cal.getTime();
+		}
+		return d;
+	}
+	
+	protected static GregorianCalendar toCal(Date d) {
+		GregorianCalendar cal = new GregorianCalendar();
+		if(cal!=null){
+			cal.setTime(d);
+		}
+		return cal;
+	}	
+	
+	protected static String toString(BigDecimal bd){
+		String str = null;
+		if(bd!=null){
+			str = bd.toString();
+		}
+		return str;
+	}
+		
 	
 }

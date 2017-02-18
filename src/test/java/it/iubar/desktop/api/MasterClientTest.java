@@ -35,6 +35,7 @@ public class MasterClientTest {
 	private static final String ECHO_API = "http://www.iubar.it/extranet/api/echo";
 	private static final String ECHO_API_2 = "http://www.iubar.it/extranet/api/echo2";
 	private static final String ROUTE_BASE = "http://www.iubar.it/crm/api/public/crm/v1/";
+	public static final String MAC = "123325345234134";
 	
   
     private static ClientModel client;

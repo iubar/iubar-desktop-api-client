@@ -2,6 +2,8 @@ package it.iubar.desktop.api.models;
 
 import org.junit.BeforeClass;
 
+import it.iubar.desktop.api.MasterClientTest;
+
 
 public class DocModelTest {
 
@@ -13,13 +15,8 @@ public class DocModelTest {
     }
 
 	public static DocModel factory() {
-		DocModel docModel = new DocModel(1, "BRGNDRXXXXX", 7, 2016);
-		docModel.setQnt(200);
+		DocModel docModel = new DocModel(DocType.CEDOLINO, "BRGNDRXXXXX", 7, 2016);
 		return docModel;
 	}
-	
-//    @Test
-//    public void toJson() throws Exception{
-//        assertEquals("{\"iddoctype\":1,\"idtitolare\":17512,\"mese\":9,\"anno\":2012}", JSONPrinter.toJson(doc));
-//    }
+
 }
