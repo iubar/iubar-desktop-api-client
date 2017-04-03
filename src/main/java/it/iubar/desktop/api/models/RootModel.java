@@ -33,10 +33,14 @@ import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.AnnotationIntrospector;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-
+import com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector;
+import com.fasterxml.jackson.databind.type.TypeFactory;
+import com.fasterxml.jackson.module.jaxb.JaxbAnnotationIntrospector;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 public class RootModel {
     
@@ -164,6 +168,15 @@ public class RootModel {
 	public static ObjectMapper getMapper() {
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.setDateFormat(FORMAT1);
+		JaxbAnnotationIntrospector d;
+        // Add support for both Jaxb and Jackson annotations		
+		 AnnotationIntrospector aiJackson = new JacksonAnnotationIntrospector();
+		 AnnotationIntrospector aiJaxb = new JaxbAnnotationIntrospector(TypeFactory.defaultInstance());
+		 // first Jaxb, second Jackson annotations
+	     mapper.setAnnotationIntrospector(AnnotationIntrospector.pair(aiJaxb, aiJackson));
+
+		// Il seguente statement equivale all'annotazione (di classe) @JsonIgnoreProperties(ignoreUnknown = true)
+		// mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		return mapper;
 	}
 

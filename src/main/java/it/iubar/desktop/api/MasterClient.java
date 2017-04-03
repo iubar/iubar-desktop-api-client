@@ -37,9 +37,11 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class MasterClient {
+public class MasterClient extends MasterClient0 {
 
 	private final static Logger LOGGER = Logger.getLogger(MasterClient.class.getName());
+
+	public static final String ROUTE_BASE = "http://www.iubar.it/crm/api/crm/v1/";
 
 	private final String IS_AUTH_VALUE = "is_auth";
 	private final String HOST_VALUE = "host";
@@ -51,13 +53,7 @@ public class MasterClient {
 	public final static String INSERT_DATORI = "datori";
 	public final static String INSERT_CONTRATTI = "contratti";
 	public final static String INSERT_DOCUMENTI = "documenti-mese";
-	public final static String INSERT_MAC = "list/mac";      
-       
-    
-	private String user = null;
-	private String apiKey = null;
-	private boolean isAuth = false;
-	private String url = null;
+	public final static String INSERT_MAC = "list/mac";
 
 	public void loadConfigFromFile(String cfgFile) throws IOException {
 		File file = new File(cfgFile);
@@ -65,53 +61,22 @@ public class MasterClient {
 		this.setUpIni(is);
 	}
 
-	public MasterClient() throws IOException {
+	public MasterClient() {
 		super();
 	}
-	
-	public void loadConfigFromJar(){
-		// Soluzione 1		
+
+	public void loadConfigFromJar() {
+		// Soluzione 1
 		ClassLoader classLoader = getClass().getClassLoader();
-	    File file = new File(classLoader.getResource("config.ini").getFile());  
-	    // Soluzione 2	    
-	    //		NO: File file = new File("src/main/resources/config.ini");
-	    // Soluzione 3		
-		InputStream is = getClass().getResourceAsStream("/config.ini"); 
-		// eg: BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+		File file = new File(classLoader.getResource("config.ini").getFile());
+		// Soluzione 2
+		// NO: File file = new File("src/main/resources/config.ini");
+		// Soluzione 3
+		InputStream is = getClass().getResourceAsStream("/config.ini");
+		// eg: BufferedReader reader = new BufferedReader(new
+		// InputStreamReader(in));
 
-		this.setUpIni(is);		
-	}
-
-	private String getUser() {
-		return user;
-	}
-
-	public void setUser(String user) {
-		this.user = user;
-	}
-
-	private String getApiKey() {
-		return apiKey;
-	}
-
-	public void setApiKey(String apiKey) {
-		this.apiKey = apiKey;
-	}
-
-	private boolean isAuth() {
-		return isAuth;
-	}
-
-	public void setAuth(boolean auth) {
-		isAuth = auth;
-	}
-
-	public String getBaseUrl() {
-		return url;
-	}
-
-	public void setBaseUrl(String url) {
-		this.url = url;
+		this.setUpIni(is);
 	}
 
 	// Sets all the variables looking at the ".ini" file.
@@ -124,12 +89,12 @@ public class MasterClient {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
- 
+
 		String host = properties.getProperty(HOST_VALUE);
-		String auth = properties.getProperty(IS_AUTH_VALUE, "false");		
+		String auth = properties.getProperty(IS_AUTH_VALUE, "false");
 		this.setAuth(fromStringToBool(auth));
 		this.setBaseUrl(host);
-		
+
 		if (isAuth()) {
 			String apiKey = properties.getProperty(API_KEY_VALUE);
 			String user = properties.getProperty(USER_VALUE);
@@ -137,7 +102,6 @@ public class MasterClient {
 			this.setApiKey(apiKey);
 		}
 		LOGGER.log(Level.FINE, "Config file parsed succesfully");
-
 
 	}
 
@@ -147,14 +111,13 @@ public class MasterClient {
 
 	private String normalizePath(String path) {
 		String finalPath = path;
-		if (!finalPath.equalsIgnoreCase("")
-				&& !finalPath.substring(0, 1).equalsIgnoreCase("/")){
+		if (!finalPath.equalsIgnoreCase("") && !finalPath.substring(0, 1).equalsIgnoreCase("/")) {
 			finalPath = "/" + finalPath;
 		}
 
 		return finalPath;
 	}
- 
+
 	public <T> JSONObject send(IJsonModel obj) throws Exception {
 		return send(getRoute(obj), obj);
 	}
@@ -167,7 +130,7 @@ public class MasterClient {
 		JSONObject dataToSend = new JSONObject();
 		dataToSend.putOnce("mac", docModellist.getMac());
 		Object idApp = docModellist.getIdApp();
-		if(idApp!=null){
+		if (idApp != null) {
 			dataToSend.putOnce("idapp", idApp);
 		}
 		dataToSend.putOnce(docModellist.getJsonName(), docModellist.getJsonArray());
@@ -186,192 +149,6 @@ public class MasterClient {
 		return jsonObj;
 	}
 
-	private JSONObject genAuth(String destUrl) {
-		JSONObject authData = genAuth2(destUrl);
-		return authData;
-	}
-	
-	private JSONObject genAuth(String destUrl, JSONObject jsonObj) {
-		JSONObject authData = genAuth2(destUrl);
-		if(jsonObj!=null){
-			authData.put("data", jsonObj);
-		}
-		return authData;
-	}
-	
-	private JSONObject genAuth(String destUrl, JSONArray jsonArray) {
-		JSONObject authData = genAuth2(destUrl);
-		if(jsonArray!=null){
-			authData.put("data", jsonArray);
-		}
-		return authData;
-	}
-	
-	private JSONObject genAuth2(String destUrl) {
-		String ts =  this.getTimeStamp();
-		String hash_argument = destUrl + this.getUser() + ts + this.getApiKey();		
-		String secret = this.getApiKey();
-		String hash = encryptData(hash_argument, secret);
-		
-		String tsEncode = rawUrlEncode(ts);
-		
-		JSONObject authData = new JSONObject();
-		authData.put(USER_VALUE, this.getUser());
-		authData.put("ts", ts);
-		authData.put("hash", hash);
-		return authData;
-	}
-
-	/**
-	 * Il metodo implementa la funzione PHP rawurlencode()
-	 * @see: http://php.net/manual/en/function.rawurlencode.php
-	 * @param string
-	 * @return string
-	 */
-	private String rawUrlEncode(String string) {
-		String encoded = string.replaceAll("\\+", "%2B"); // analogo a rawurlencode di Php
-		encoded = encoded.replaceAll(":", "%3A"); // analogo a rawurlencode di Php
-		return encoded; 
-	}
-
-	public Response post(String restUrl, final JSONArray data) {
-		restUrl = resolveUrl(restUrl);
-		if (this.isAuth()) {
-			JSONObject data2 = genAuth(restUrl, data);
-			Entity<String> d3 = Entity.json(data2.toString());
-			return post(restUrl, d3);
-		}else{			
-			Entity<String> d3 = Entity.json(data.toString());
-			return post(restUrl, d3);
-		}
-	}
-
-	public Response post(String restUrl, JSONObject data) {
-		restUrl = resolveUrl(restUrl);
-		if (this.isAuth()) {
-			data = genAuth(restUrl, data);
-		}		
-		Entity<String> d1 = Entity.text(data.toString());
-		Entity<String> d2 = Entity.entity(data.toString() , MediaType.APPLICATION_JSON);
-		Entity<String> d3 = Entity.json(data.toString()); // See: https://jersey.java.net/documentation/latest/client.html#d0e4692
-		return post(restUrl, d3);
-	}
-	
-	public Response post(String restUrl, Entity<String> d3) {
-		System.out.println("restUrl: " + restUrl);
-		// System.out.println("post: " + d3.toString());
-		Client client = ClientBuilder.newClient();
-		WebTarget target = client.target(restUrl);
-
-		Response response = target
-				.request(MediaType.APPLICATION_JSON)
-				.accept("application/json")
-				.header("X-Requested-With", "XMLHttpRequest")
-				.post(d3);
-		return response;				
-	}
- 
-
-	/*
-	 * Il seguente metodo implementa la logica di risoluzione delle rotte dettata dall'RFC3986,
-	 * ovvero la stessa utilizzata da Guzzle e descritta nel manuale dello stesso progetto 
-	 * @see: http://docs.guzzlephp.org/en/5.3/clients.html
-	 */
-	private String resolveUrl(String restUrl) {
-		String baseUrl = this.getBaseUrl();
-		if(!restUrl.startsWith("http")){		
-			if(!isAbsoluteRoute(restUrl)){
-				String lastChar = baseUrl.substring(baseUrl.length() - 1);
-				if(lastChar.equals("/")){
-					restUrl = baseUrl + restUrl;
-				}else{
-					restUrl = getRootUrl(baseUrl) + "/" + restUrl;
-				}
-			}else{
-				restUrl = getRootUrl(baseUrl) + restUrl;
-			}
-		}else{
-			// la rotta è nel formato "http://..."
-		}
-		return restUrl;
-	}
-
-	private boolean isAbsoluteRoute(String restUrl) {
-		String s = restUrl.substring(0, 1);
-		if(s.equals("/")){
-			return true;
-		}
-		return false;
-	}
-
-	private String getRootUrl(String strUrl) {
-		URL url = null;
-		try {
-			url = new URL(strUrl);
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		String host = url.getHost();
-		String protocol = url.getProtocol();
-		int port = url.getPort();
-		String baseUrl = protocol + "://" + host + ":" + port;
-		return baseUrl;
-	}
-
-	public Response get(String restUrl) {
-		restUrl = resolveUrl(restUrl);
-		System.out.println(restUrl);
-		Client client = ClientBuilder.newClient();	
-		WebTarget target = client.target(restUrl);	
-		if (this.isAuth()) {
-			 JSONObject dataToSend = genAuth(restUrl);
-			 target = target.queryParam(USER_VALUE, dataToSend.get(USER_VALUE))
-					 .queryParam("ts", dataToSend.get("ts"))
-					 .queryParam("hash", dataToSend.get("hash"));
-		}		
-
-		Response response = target
-				.request(MediaType.APPLICATION_JSON)
-				.accept("application/json")
-				.header("X-Requested-With", "XMLHttpRequest")
-				.get();				
-		return response;
-	}
-
-	/**
-	 * 
-	 * Il metodo implementa il seguente codice PHP:
-	 * $hash = base64_encode(hash_hmac('sha256', 'Message', 'secret', true));
-	 * 
-	 * @param destUrl
-	 * @param data
-	 * @return
-	 */
-	public static String encryptData(String message, String secret) {
-		String hash_encoded = null;
-		final String algo = "HmacSHA256";
-		if(secret==null || secret.equals("")){
-			throw new RuntimeException("apikey is null or empty");
-		}
-		try {
-			Mac sha256_HMAC = Mac.getInstance(algo);
-			SecretKeySpec secret_key = new SecretKeySpec(secret.getBytes(), algo);
-			sha256_HMAC.init(secret_key);
-			byte[] hash = sha256_HMAC.doFinal(message.getBytes());
-			hash_encoded = Base64.encodeBase64String(hash);
-		} catch (Exception e) {
-			LOGGER.log(Level.SEVERE, "Unable to generate encypted data.");
-			throw new RuntimeException("Unable to generate encypted data.");
-		}
-		return hash_encoded;
-	}
-
-	private String getTimeStamp() {
-		String ts = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX").format(new Date()); // RFC_3339 format
-		return ts;
-	}
-
 	private <T> boolean isNull(T obj) {
 		return obj == null;
 	}
@@ -386,16 +163,16 @@ public class MasterClient {
 	private <T> String getRoute(T obj) {
 		String urlToSend = this.getBaseUrl();
 		String lastChar = urlToSend.substring(urlToSend.length() - 1);
-		if(!lastChar.equals("/")){			
+		if (!lastChar.equals("/")) {
 			urlToSend = urlToSend + "/";
 		}
 		if (obj instanceof it.iubar.desktop.api.models.ClientModel) {
 			urlToSend += INSERT_CLIENT;
-		}else if (obj instanceof it.iubar.desktop.api.models.DocModel) {
-				urlToSend += INSERT_DOCUMENTI;			
+		} else if (obj instanceof it.iubar.desktop.api.models.DocModel) {
+			urlToSend += INSERT_DOCUMENTI;
 		} else if (obj instanceof ModelsList) {
 			ModelsList ml = ((ModelsList) obj);
-			if(ml.getSize()>0){
+			if (ml.getSize() > 0) {
 				Class c = ml.getElemClass();
 				if (c.equals(DatoreModel.class)) {
 					urlToSend += INSERT_DATORI;
@@ -408,7 +185,7 @@ public class MasterClient {
 				} else {
 					throw new RuntimeException("Situazione imprevista");
 				}
-			}else{
+			} else {
 				throw new RuntimeException("Situazione imprevista");
 			}
 		} else {
@@ -425,20 +202,19 @@ public class MasterClient {
 		int status = response.getStatus();
 		String output = response.readEntity(String.class);
 		JSONObject answer = new JSONObject(output);
-				
-		System.out.println("Response status: " + response.getStatus());           
-        System.out.println("Response data: " + output);
-                    
+
+		System.out.println("Response status: " + response.getStatus());
+		System.out.println("Response data: " + output);
 
 		if (status == 201 || status == 200) {
-			
+
 			String resp = "";
-			if(answer.has("response")){
+			if (answer.has("response")) {
 				resp = answer.getString("response");
 			}
-			
+
 			try {
-				String msg =  "Query ok, code: " + status+ ", rows affected: " + resp;
+				String msg = "Query ok, code: " + status + ", rows affected: " + resp;
 				LOGGER.log(Level.FINE, msg);
 			} catch (JSONException e) {
 				e.printStackTrace();

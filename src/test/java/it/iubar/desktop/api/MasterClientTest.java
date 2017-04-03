@@ -34,7 +34,7 @@ public class MasterClientTest {
 	public static final int ID_APP_PAGHEOPEN = 11;
 	private static final String ECHO_API = "http://www.iubar.it/extranet/api/echo";
 	private static final String ECHO_API_2 = "http://www.iubar.it/extranet/api/echo2";
-	private static final String ROUTE_BASE = "http://www.iubar.it/crm/api/public/crm/v1/";
+
 	public static final String MAC = "123325345234134";
 	
   
@@ -83,16 +83,14 @@ public class MasterClientTest {
 
     private static MasterClient factory() {
     	MasterClient masterClient = null;
-		try {
+ 
 			masterClient = new MasterClient();
 			// masterClient.loadConfig();
 			// oppure
 			// masterClient.setBaseUrl("http://httpbin.org/post");
 			// oppure
-			masterClient.setBaseUrl(ROUTE_BASE);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+			masterClient.setBaseUrl(MasterClient.ROUTE_BASE);
+ 
     	return masterClient;
 	}
 
