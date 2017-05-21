@@ -13,8 +13,8 @@
 
 	<parent> 		
 		<groupId>it.iubar.pom</groupId>
-		<artifactId>iubar_pom</artifactId>		
-		<version>0.0.5</version>
+		<artifactId>iubar-pom</artifactId>		
+		<version>0.0.6</version>
  	</parent>
 	
     <build>
