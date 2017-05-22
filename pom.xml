@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>it.iubar.desktop.api</groupId>
-    <artifactId>iubar_desktop_api</artifactId>
+    <artifactId>iubar-desktop-api</artifactId>
     <version>1.0</version>
 
     <name>Iubar Test Crm Client</name>
