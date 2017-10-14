@@ -109,9 +109,16 @@ abstract public class MasterClient0 {
 		return hash_encoded;
 	}
 
+	/**
+	* RFC_3339 timestamp
+	* @see https://tools.ietf.org/html/rfc3339
+	* Coordinated Universal Time (UTC)
+   	* Because the daylight saving rules for local time zones are so convoluted and can change based on local law at 
+   	* unpredictable times, true interoperability is best achieved by using Coordinated Universal Time (UTC).
+	* This specification does not cater to local time zone rules.
+	*/
 	private String getTimeStamp() {
-		String ts = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX").format(new Date()); // RFC_3339
-																							// format
+		String ts = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX").format(new Date()); // RFC_3339 timestamp																							// format
 		return ts;
 	}
 
@@ -123,11 +130,8 @@ abstract public class MasterClient0 {
 	 * @return string
 	 */
 	private String rawUrlEncode(String string) {
-		String encoded = string.replaceAll("\\+", "%2B"); // analogo a
-															// rawurlencode di
-															// Php
-		encoded = encoded.replaceAll(":", "%3A"); // analogo a rawurlencode di
-													// Php
+		String encoded = string.replaceAll("\\+", "%2B"); // analogo a rawurlencode di Php
+		encoded = encoded.replaceAll(":", "%3A"); // analogo a rawurlencode di Php
 		return encoded;
 	}
 
@@ -150,8 +154,7 @@ abstract public class MasterClient0 {
 		}
 		Entity<String> d1 = Entity.text(data.toString());
 		Entity<String> d2 = Entity.entity(data.toString(), MediaType.APPLICATION_JSON);
-		Entity<String> d3 = Entity.json(data.toString()); // See:
-															// https://jersey.java.net/documentation/latest/client.html#d0e4692
+		Entity<String> d3 = Entity.json(data.toString()); // See: https://jersey.java.net/documentation/latest/client.html#d0e4692
 		return post(restUrl, d3);
 	}
 
