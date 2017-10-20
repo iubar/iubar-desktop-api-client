@@ -7,8 +7,8 @@
 	<artifactId>iubar-desktop-api</artifactId>
 	<version>1.0</version>
 
-	<name>Iubar Test Crm Client</name>
-	<description>Send data to the Crm Api</description>
+	<name>Iubar Desktop Api Client</name>
+	<description>Desktop Api Client classes</description>
 
 	<parent>
 		<groupId>it.iubar.pom</groupId>
