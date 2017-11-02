@@ -2,6 +2,8 @@ package it.iubar.desktop.api;
 
 
 
+
+
 public enum AppStatus {
 	SERIAL_NOT_VALIDATED("Codice seriale non valido"), 
 	SERIAL_VALIDATED("Codice seriale validato"),
