@@ -41,6 +41,7 @@ import com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.fasterxml.jackson.module.jaxb.JaxbAnnotationIntrospector;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 public class RootModel {
     
@@ -98,7 +99,8 @@ public class RootModel {
 	public String asJson(){
 		String jsonString = null;
 		ObjectMapper mapper = getMapper();
-		mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);		
+		mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
+		mapper.setSerializationInclusion(Include.NON_EMPTY);
 		try {
 			jsonString = mapper.writeValueAsString(this);
 		} catch (JsonProcessingException e) {
@@ -108,11 +110,15 @@ public class RootModel {
 		}
 		return jsonString;
 	}
-	
+
 	public static <T> String asJson(List<T> list){
+	
 		String jsonString = null;
 		ObjectMapper mapper = getMapper();
-		mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);		
+		mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
+		mapper.setSerializationInclusion(Include.NON_EMPTY); 	// equivale a @JsonSerialize(include = JsonSerialize.Inclusion.NON_EMPTY)
+		// mapper.setSerializationInclusion(Include.NON_NULL); 	// equivale a @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+		// If you need both non-null and non-empty, use @JsonSerialize(include = JsonSerialize.Inclusion.NON_DEFAULT) 
 		try {
 			jsonString = mapper.writeValueAsString(list);
 		} catch (JsonProcessingException e) {
