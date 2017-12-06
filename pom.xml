@@ -72,7 +72,7 @@
 		</dependency>
 		
 		<!-- https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api -->
-		<!--  required by Java >= 1.9  -->
+		<!--  required by Java >= 1.9   -->
 		<dependency>
 		    <groupId>javax.xml.bind</groupId>
 		    <artifactId>jaxb-api</artifactId>
