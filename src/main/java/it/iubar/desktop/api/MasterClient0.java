@@ -1,7 +1,9 @@
 package it.iubar.desktop.api;
 
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
@@ -129,9 +131,16 @@ abstract public class MasterClient0 {
 	 * @param string
 	 * @return string
 	 */
-	private String rawUrlEncode(String string) {
-		String encoded = string.replaceAll("\\+", "%2B"); // analogo a rawurlencode di Php
-		encoded = encoded.replaceAll(":", "%3A"); // analogo a rawurlencode di Php
+	protected String rawUrlEncode(String string) { // All non-ascii characters in URL has to be 'x-url-encoding' encoded.
+		//String encoded = string.replaceAll("\\+", "%2B"); // analogo a rawurlencode di Php
+		//encoded = encoded.replaceAll(":", "%3A"); // analogo a rawurlencode di Php
+		String encoded = null;
+		try {
+			encoded = URLEncoder.encode(string, "UTF-8"); // converts a String to the application/x-www-form-urlencoded MIME format.
+			encoded = encoded.replace("+", "%20"); // converts all space chars (the plus char in a mime encoded string) to "%20" like the rawurlencode() function in Php
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}			
 		return encoded;
 	}
 
@@ -222,14 +231,14 @@ abstract public class MasterClient0 {
 		restUrl = resolveUrl(restUrl);
 		System.out.println(restUrl);
 		Client client = ClientBuilder.newClient();
-		WebTarget target = client.target(restUrl);
+		WebTarget target = client.target(restUrl); // il metodo codifica il parametro (la stringa che rappresenta l'url) in modo analogo alla funzione PHP rawurlencode()
 		if (this.isAuth()) {
 			JSONObject dataToSend = genAuth(restUrl);
-			target = target.queryParam("user", dataToSend.get("user")).queryParam("ts", dataToSend.get("ts"))
-					.queryParam("hash", dataToSend.get("hash"));
+			String ts = String.valueOf(dataToSend.get("ts"));
+			String hash = String.valueOf(dataToSend.get("hash"));
+			target = target.queryParam("user", dataToSend.get("user")).queryParam("ts", dataToSend.get("ts")).queryParam("hash", dataToSend.get("hash"));
 		}
-		Response response = target.request(MediaType.APPLICATION_JSON).accept("application/json")
-				.header("X-Requested-With", "XMLHttpRequest").get();
+		Response response = target.request(MediaType.APPLICATION_JSON).accept("application/json").header("X-Requested-With", "XMLHttpRequest").get();
 		return response;
 	}
 
@@ -243,11 +252,12 @@ abstract public class MasterClient0 {
 		String hash_argument = destUrl + this.getUser() + ts + this.getApiKey();
 		String secret = this.getApiKey();
 		String hash = encryptData(hash_argument, secret);
-		String tsEncoded = rawUrlEncode(ts);
+		//String tsEncoded = rawUrlEncode(ts); // inutile perchè ci pensa la libreria client 
 		JSONObject authData = new JSONObject();
 		authData.put("user", this.getUser());
 		authData.put("ts", ts);
 		authData.put("hash", hash);
+
 		return authData;
 	}
 
