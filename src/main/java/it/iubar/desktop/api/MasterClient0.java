@@ -15,6 +15,7 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.Form;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -145,15 +146,15 @@ abstract public class MasterClient0 {
 	}
 
 	public Response post(String restUrl, final JSONArray data) {
+		Entity<String> d3 = null;
 		restUrl = resolveUrl(restUrl);
 		if (this.isAuth()) {
 			JSONObject data2 = genAuth(restUrl, data);
-			Entity<String> d3 = Entity.json(data2.toString());
-			return post(restUrl, d3);
+			d3 = Entity.json(data2.toString());
 		} else {
-			Entity<String> d3 = Entity.json(data.toString());
-			return post(restUrl, d3);
+			d3 = Entity.json(data.toString());			
 		}
+		return post(restUrl, d3);
 	}
 
 	public Response post(String restUrl, JSONObject data) {
@@ -163,16 +164,20 @@ abstract public class MasterClient0 {
 		}
 		Entity<String> d1 = Entity.text(data.toString());
 		Entity<String> d2 = Entity.entity(data.toString(), MediaType.APPLICATION_JSON);
-		Entity<String> d3 = Entity.json(data.toString()); // See: https://jersey.java.net/documentation/latest/client.html#d0e4692
+		Entity<String> d3 = Entity.json(data.toString()); // See: https://jersey.java.net/documentation/latest/client.html#d0e4692		
+// Se volessi utilizzare il post di tipo "application/x-www-form-urlencoded"	
+//		Form form = new Form();
+//	    form.param("user", "XXX");
+//	    Entity d4 = Entity.entity(form,MediaType.APPLICATION_FORM_URLENCODED);
+
 		return post(restUrl, d3);
 	}
 
 	public Response post(String restUrl, Entity<String> d3) {
-		System.out.println("restUrl: " + restUrl);
-		// System.out.println("post: " + d3.toString());
+		System.out.println("POST: " + restUrl);
 		Client client = ClientBuilder.newClient();
 		WebTarget target = client.target(restUrl);
-
+		// Accetto risposte di tipo Json
 		Response response = target.request(MediaType.APPLICATION_JSON).accept("application/json")
 				.header("X-Requested-With", "XMLHttpRequest").post(d3);
 		return response;
@@ -229,7 +234,7 @@ abstract public class MasterClient0 {
 
 	public Response get(String restUrl) {
 		restUrl = resolveUrl(restUrl);
-		System.out.println(restUrl);
+		System.out.println("GET:" + restUrl);
 		Client client = ClientBuilder.newClient();
 		WebTarget target = client.target(restUrl); // il metodo codifica il parametro (la stringa che rappresenta l'url) in modo analogo alla funzione PHP rawurlencode()
 		if (this.isAuth()) {
