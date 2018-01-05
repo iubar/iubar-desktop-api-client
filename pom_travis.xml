@@ -93,5 +93,13 @@
 			<version>1.10</version>
 		</dependency>
 
+<!-- https://mvnrepository.com/artifact/com.auth0/java-jwt -->
+<!-- https://github.com/auth0/java-jwt -->
+<dependency>
+    <groupId>com.auth0</groupId>
+    <artifactId>java-jwt</artifactId>
+    <version>3.3.0</version>
+</dependency>
+
 	</dependencies>
 </project>
