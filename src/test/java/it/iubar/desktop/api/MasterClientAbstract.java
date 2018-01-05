@@ -27,18 +27,17 @@ public abstract class MasterClientAbstract {
     private static final String MAC_2 = "0000099999";
     private static final String MAC_3 = "0000099999";
     
-    private static final String user = "daniele.montesi@iubar.it";
-    private static final String apiKey = "1234567890";
+	private static final String ECHO_API = "http://www.iubar.it/extranet/api/echo";
 
 	private static final String APP_FAMILY_PAGHE = "paghe";
 	public static final int ID_APP_PAGHEOPEN = 11;
-	private static final String ECHO_API = "http://www.iubar.it/extranet/api/echo";
-	private static final String ECHO_API_2 = "http://www.iubar.it/extranet/api/echo2";
+
+
 
 	public static final String MAC = "123325345234134";
 	
   
-    private static ClientModel client;
+	protected static ClientModel client;
     private static ModelsList<DatoreModel> datori;
     private static ModelsList<TitolareModel> titolari;
     private static ModelsList<CcnlModel> contratti;
@@ -68,7 +67,7 @@ public abstract class MasterClientAbstract {
 
     @Test
     public void sendTestOnEchoServer(){
-        MasterClient masterClient = clientFactory();
+        IHttpClient masterClient = clientFactory();
         try {
         	// Test on Echo server        
         	String url1 = ECHO_API;
@@ -81,7 +80,7 @@ public abstract class MasterClientAbstract {
     }
 
 
-    abstract protected MasterClient clientFactory();
+    abstract protected IHttpClient clientFactory();
     
     @Test
 	public void testMacBlacklist_1(){ 	
@@ -97,7 +96,7 @@ public abstract class MasterClientAbstract {
     
 	private boolean checkMacBlacklist(String mac){
 		boolean b = false;
-    	MasterClient masterClient = clientFactory();
+    	IHttpClient masterClient = clientFactory();
 		try {
 			JSONObject jsonObject = masterClient.responseManager(masterClient.get(APP_FAMILY_PAGHE + "/blacklist/mac/" + mac));
 			b = jsonObject.getBoolean("data");
@@ -127,7 +126,7 @@ public abstract class MasterClientAbstract {
     
     private int checkMacGreylist(String mac){ 	
     	int idreason = 0; // false
-    	MasterClient masterClient = clientFactory();
+    	IHttpClient masterClient = clientFactory();
 		try{		
 	    	JSONObject jsonObject = masterClient.responseManager(masterClient.get(APP_FAMILY_PAGHE + "/greylist/mac/" + mac));
 	    	Object obj = jsonObject.get("data");
@@ -153,26 +152,11 @@ public abstract class MasterClientAbstract {
 		return idreason;
 	}    
 	
-    @Test
-    public void sendTestOnEchoServer2(){
-        MasterClient masterClient = clientFactory();
-        try {       	
-        	// Test on Echo server        
-        	String url1 = ECHO_API_2;
-        	masterClient.setAuth(true);
-        	masterClient.setUser(user);			
-        	masterClient.setApiKey(apiKey);        	
-        	JSONObject jsonObj = masterClient.send(url1, MasterClientAbstract.client);  
-        	assertNotNull(jsonObj);
-        } catch (Exception e) {
-        	e.printStackTrace();
-        	fail();
-        }
-    }
+
 
     @Ignore("Ignoring test until the service is online")
     public void sendTest() {
-    	MasterClient masterClient = clientFactory();
+    	IHttpClient masterClient = clientFactory();
         try {
         	
         	// Test on Production 
@@ -201,7 +185,7 @@ public abstract class MasterClientAbstract {
 //    @Ignore("Ignoring test until the service is online")
 //    @Test
 //    public void checkMacTest() throws Exception {
-//        MasterClient masterClient = new MasterClient("src/main/resources/config.ini");
+//        IMasterClient masterClient = new MasterClient("src/main/resources/config.ini");
 //        ListMac listMac = masterClient.checkMac("1C-4B-D6-C8-8B-31");
 //        assertEquals(true,listMac.isGreyList());
 //        assertEquals(2,listMac.getCodeGreyList());

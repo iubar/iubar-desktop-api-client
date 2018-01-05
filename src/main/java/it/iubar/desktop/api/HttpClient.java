@@ -1,27 +1,51 @@
 package it.iubar.desktop.api;
 
-import it.iubar.desktop.api.models.*;
-
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import javax.ws.rs.core.Response;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class MasterClient extends MasterClient0 {
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.Form;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
-	private final static Logger LOGGER = Logger.getLogger(MasterClient.class.getName());
+import org.apache.commons.codec.binary.Base64;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-	public static final String ROUTE_BASE = "http://www.iubar.it/crm/api/crm/v1/";
+import it.iubar.desktop.api.models.CcnlModel;
+import it.iubar.desktop.api.models.DatoreModel;
+import it.iubar.desktop.api.models.DocModel;
+import it.iubar.desktop.api.models.IJsonModel;
+import it.iubar.desktop.api.models.ModelsList;
+import it.iubar.desktop.api.models.TitolareModel;
+
+abstract class HttpClient {
+
+	private final static Logger LOGGER = Logger.getLogger(HttpClient.class.getName());
+
+	private String user = null;
+	private String apiKey = null;
+	private boolean isAuth = false;
+	private String url = null;
+
 
 	private final String IS_AUTH_VALUE = "is_auth";
 	private final String HOST_VALUE = "host";
@@ -35,15 +59,14 @@ public class MasterClient extends MasterClient0 {
 	public final static String INSERT_DOCUMENTI = "documenti-mese";
 	public final static String INSERT_MAC = "list/mac";
 
+	abstract protected JSONObject genAuth2(String destUrl);
+	
 	public void loadConfigFromFile(String cfgFile) throws IOException {
 		File file = new File(cfgFile);
 		InputStream is = new FileInputStream(file);
 		this.setUpIni(is);
 	}
 
-	public MasterClient() {
-		super();
-	}
 
 	public void loadConfigFromJar() {
 		// Soluzione 1
@@ -98,6 +121,7 @@ public class MasterClient extends MasterClient0 {
 		return finalPath;
 	}
 
+ 
 	public <T> JSONObject send(IJsonModel obj) throws Exception {
 		return send(getRoute(obj), obj);
 	}
@@ -119,7 +143,7 @@ public class MasterClient extends MasterClient0 {
 		return jsonObj;
 	}
 
-	protected JSONObject send(String destUrl, IJsonModel obj) throws Exception {
+	public JSONObject send(String destUrl, IJsonModel obj) throws Exception {
 		cantBeNull(obj);
 		JSONObject dataToSend = null;
 		String json = obj.asJson();
@@ -182,8 +206,7 @@ public class MasterClient extends MasterClient0 {
 		int status = response.getStatus();
 		String output = response.readEntity(String.class);
 		JSONObject answer = new JSONObject(output);
-
-		System.out.println("Response status: " + response.getStatus());
+		System.out.println("Response status: " + status);
 		System.out.println("Response data: " + output);
 
 		if (status == 201 || status == 200) {
@@ -219,5 +242,176 @@ public class MasterClient extends MasterClient0 {
 		}
 		return answer;
 	}
+ 
+
+
+	public HttpClient() {
+		super();
+	}
+
+	protected String getUser() {
+		return user;
+	}
+
+	public void setUser(String user) {
+		this.user = user;
+	}
+
+	protected String getApiKey() {
+		return apiKey;
+	}
+
+	public void setApiKey(String apiKey) {
+		this.apiKey = apiKey;
+	}
+
+	protected boolean isAuth() {
+		return isAuth;
+	}
+
+	public void setAuth(boolean auth) {
+		isAuth = auth;
+	}
+
+	public String getBaseUrl() {
+		return url;
+	}
+
+	public void setBaseUrl(String url) {
+		this.url = url;
+	}
+
+	private JSONObject genAuth(String destUrl, JSONObject jsonObj) {
+		JSONObject authData = genAuth2(destUrl);
+		if (jsonObj != null) {
+			authData.put("data", jsonObj);
+		}
+		return authData;
+	}
+
+	private JSONObject genAuth(String destUrl, JSONArray jsonArray) {
+		JSONObject authData = genAuth2(destUrl);
+		if (jsonArray != null) {
+			authData.put("data", jsonArray);
+		}
+		return authData;
+	}
+
+ 
+
+	/**
+	 * Il metodo implementa la funzione PHP rawurlencode()
+	 * 
+	 * @see: http://php.net/manual/en/function.rawurlencode.php
+	 * @param string
+	 * @return string
+	 */
+	protected String rawUrlEncode(String string) { // All non-ascii characters in URL has to be 'x-url-encoding' encoded.
+		//String encoded = string.replaceAll("\\+", "%2B"); // analogo a rawurlencode di Php
+		//encoded = encoded.replaceAll(":", "%3A"); // analogo a rawurlencode di Php
+		String encoded = null;
+		try {
+			encoded = URLEncoder.encode(string, "UTF-8"); // converts a String to the application/x-www-form-urlencoded MIME format.
+			encoded = encoded.replace("+", "%20"); // converts all space chars (the plus char in a mime encoded string) to "%20" like the rawurlencode() function in Php
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}			
+		return encoded;
+	}
+
+	public Response post(String restUrl, final JSONArray data) {
+		Entity<String> d3 = null;
+		restUrl = resolveUrl(restUrl);
+		if (this.isAuth()) {
+			JSONObject data2 = genAuth(restUrl, data);
+			d3 = Entity.json(data2.toString());
+		} else {
+			d3 = Entity.json(data.toString());			
+		}
+		return post(restUrl, d3);
+	}
+
+	public Response post(String restUrl, JSONObject data) {
+		restUrl = resolveUrl(restUrl);
+		if (this.isAuth()) {
+			data = genAuth(restUrl, data);
+		}
+		Entity<String> d1 = Entity.text(data.toString());
+		Entity<String> d2 = Entity.entity(data.toString(), MediaType.APPLICATION_JSON);
+		Entity<String> d3 = Entity.json(data.toString()); // See: https://jersey.java.net/documentation/latest/client.html#d0e4692		
+// Se volessi utilizzare il post di tipo "application/x-www-form-urlencoded"	
+//		Form form = new Form();
+//	    form.param("user", "XXX");
+//	    Entity d4 = Entity.entity(form,MediaType.APPLICATION_FORM_URLENCODED);
+
+		return post(restUrl, d3);
+	}
+
+	public Response post(String restUrl, Entity<String> d3) {
+		System.out.println("POST: " + restUrl);
+		Client client = ClientBuilder.newClient();
+		WebTarget target = client.target(restUrl);
+		// Accetto risposte di tipo Json
+		Response response = target.request(MediaType.APPLICATION_JSON).accept("application/json")
+				.header("X-Requested-With", "XMLHttpRequest").post(d3);
+		return response;
+	}
+
+	/*
+	 * Il seguente metodo implementa la logica di risoluzione delle rotte
+	 * dettata dall'RFC3986, ovvero la stessa utilizzata da Guzzle e descritta
+	 * nel manuale dello stesso progetto
+	 * 
+	 * @see: http://docs.guzzlephp.org/en/5.3/clients.html
+	 */
+	protected String resolveUrl(String restUrl) {
+		String baseUrl = this.getBaseUrl();
+		if (!restUrl.startsWith("http")) {
+			if (!isAbsoluteRoute(restUrl)) {
+				String lastChar = baseUrl.substring(baseUrl.length() - 1);
+				if (lastChar.equals("/")) {
+					restUrl = baseUrl + restUrl;
+				} else {
+					restUrl = getRootUrl(baseUrl) + "/" + restUrl;
+				}
+			} else {
+				restUrl = getRootUrl(baseUrl) + restUrl;
+			}
+		} else {
+			// la rotta è nel formato "http://..."
+		}
+		return restUrl;
+	}
+
+	private boolean isAbsoluteRoute(String restUrl) {
+		String s = restUrl.substring(0, 1);
+		if (s.equals("/")) {
+			return true;
+		}
+		return false;
+	}
+
+	private String getRootUrl(String strUrl) {
+		URL url = null;
+		try {
+			url = new URL(strUrl);
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		String host = url.getHost();
+		String protocol = url.getProtocol();
+		int port = url.getPort();
+		String baseUrl = protocol + "://" + host + ":" + port;
+		return baseUrl;
+	}
+
+
+	protected JSONObject genAuth(String destUrl) {
+		JSONObject authData = genAuth2(destUrl);
+		return authData;
+	}
+
+
 
 }

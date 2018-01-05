@@ -101,6 +101,7 @@
 		
 		
 <!-- https://mvnrepository.com/artifact/com.auth0/java-jwt -->
+<!-- https://github.com/auth0/java-jwt -->
 <dependency>
     <groupId>com.auth0</groupId>
     <artifactId>java-jwt</artifactId>
@@ -108,14 +109,11 @@
 </dependency>
 
 <!-- https://mvnrepository.com/artifact/com.google.firebase/firebase-admin -->
-<dependency>
-    <groupId>com.google.firebase</groupId>
-    <artifactId>firebase-admin</artifactId>
-    <version>5.7.0</version>
-</dependency>
-
-
-
+<!-- <dependency> -->
+<!--     <groupId>com.google.firebase</groupId> -->
+<!--     <artifactId>firebase-admin</artifactId> -->
+<!--     <version>5.7.0</version> -->
+<!-- </dependency> -->
 		
 
 	</dependencies>

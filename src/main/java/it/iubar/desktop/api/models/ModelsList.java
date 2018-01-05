@@ -1,6 +1,6 @@
 package it.iubar.desktop.api.models;
 
-import it.iubar.desktop.api.MasterClient;
+import it.iubar.desktop.api.HmacClient;
 
 import java.util.ArrayList;
 import java.util.List;
