@@ -47,10 +47,10 @@ abstract class HttpClient {
 	private String url = null;
 
 
-	private final String IS_AUTH_VALUE = "is_auth";
-	private final String HOST_VALUE = "host";
-	private final String USER_VALUE = "user";
-	private final String API_KEY_VALUE = "api_key";
+//	private final String IS_AUTH_VALUE = "is_auth";
+//	private final String HOST_VALUE = "host";
+//	private final String USER_VALUE = "user";
+//	private final String API_KEY_VALUE = "api_key";
 
 	public final static String INSERT_CLIENT = "client";
 	public final static String INSERT_TITOLARI = "titolari";
@@ -61,52 +61,52 @@ abstract class HttpClient {
 
 	abstract protected JSONObject genAuth2(String destUrl);
 	
-	public void loadConfigFromFile(String cfgFile) throws IOException {
-		File file = new File(cfgFile);
-		InputStream is = new FileInputStream(file);
-		this.setUpIni(is);
-	}
+//	public void loadConfigFromFile(String cfgFile) throws IOException {
+//		File file = new File(cfgFile);
+//		InputStream is = new FileInputStream(file);
+//		this.setUpIni(is);
+//	}
 
 
-	public void loadConfigFromJar() {
-		// Soluzione 1
-		ClassLoader classLoader = getClass().getClassLoader();
-		File file = new File(classLoader.getResource("config.ini").getFile());
-		// Soluzione 2
-		// NO: File file = new File("src/main/resources/config.ini");
-		// Soluzione 3
-		InputStream is = getClass().getResourceAsStream("/config.ini");
-		// eg: BufferedReader reader = new BufferedReader(new
-		// InputStreamReader(in));
-
-		this.setUpIni(is);
-	}
+//	public void loadConfigFromJar() {
+//		// Soluzione 1
+//		ClassLoader classLoader = getClass().getClassLoader();
+//		File file = new File(classLoader.getResource("config.ini").getFile());
+//		// Soluzione 2
+//		// NO: File file = new File("src/main/resources/config.ini");
+//		// Soluzione 3
+//		InputStream is = getClass().getResourceAsStream("/config.ini");
+//		// eg: BufferedReader reader = new BufferedReader(new
+//		// InputStreamReader(in));
+//
+//		this.setUpIni(is);
+//	}
 
 	// Sets all the variables looking at the ".ini" file.
-	private void setUpIni(InputStream inputStream) {
-		Properties properties = new Properties();
-		try {
-			properties.load(inputStream);
-		} catch (FileNotFoundException e1) {
-			e1.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		String host = properties.getProperty(HOST_VALUE);
-		String auth = properties.getProperty(IS_AUTH_VALUE, "false");
-		this.setAuth(fromStringToBool(auth));
-		this.setBaseUrl(host);
-
-		if (isAuth()) {
-			String apiKey = properties.getProperty(API_KEY_VALUE);
-			String user = properties.getProperty(USER_VALUE);
-			this.setUser(user);
-			this.setApiKey(apiKey);
-		}
-		LOGGER.log(Level.FINE, "Config file parsed succesfully");
-
-	}
+//	private void setUpIni(InputStream inputStream) {
+//		Properties properties = new Properties();
+//		try {
+//			properties.load(inputStream);
+//		} catch (FileNotFoundException e1) {
+//			e1.printStackTrace();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//
+//		String host = properties.getProperty(HOST_VALUE);
+//		String auth = properties.getProperty(IS_AUTH_VALUE, "false");
+//		this.setAuth(fromStringToBool(auth));
+//		this.setBaseUrl(host);
+//
+//		if (isAuth()) {
+//			String apiKey = properties.getProperty(API_KEY_VALUE);
+//			String user = properties.getProperty(USER_VALUE);
+//			this.setUser(user);
+//			this.setApiKey(apiKey);
+//		}
+//		LOGGER.log(Level.FINE, "Config file parsed succesfully");
+//
+//	}
 
 	private boolean fromStringToBool(String s) {
 		return s.equalsIgnoreCase("true");
