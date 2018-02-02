@@ -9,8 +9,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+ 
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -324,7 +323,8 @@ abstract class HttpClient {
 		restUrl = resolveUrl(restUrl);
 		if (this.isAuth()) {
 			JSONObject data2 = genAuth(restUrl, data);
-			d3 = Entity.json(data2.toString());
+			String str = data2.toString();
+			d3 = Entity.json(str);
 		} else {
 			d3 = Entity.json(data.toString());			
 		}

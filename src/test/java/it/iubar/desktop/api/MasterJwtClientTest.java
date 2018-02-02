@@ -28,42 +28,11 @@ public class MasterJwtClientTest extends MasterClientAbstract {
     
 	protected static final String ROUTE_1 = "http://www.iubar.it/extranet/api/jwt/token"; // POST
 	protected static final String ECHO_API_3 = "http://www.iubar.it/extranet/api/jwt/data"; // ANY
-	
-	private static String user = null;
-    private static String apiKey = null;
+ 
     
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {
-    	String jwtUser = System.getenv("JWT_USER");
-    	String jwtApiKey = System.getenv("JWT_APIKEY");
-    	if(jwtUser!=null && jwtUser.length()>0) {
-    		MasterJwtClientTest.user = jwtUser;
-    		MasterJwtClientTest.apiKey = jwtApiKey;
-    	}else {
-    		String config = "/config.properties";    		
-    		Properties prop = new Properties();
-    		InputStream is = null;
-    		try {
-    			is = MasterJwtClientTest.class.getResourceAsStream(config);
-    			prop.load(is);
-    			MasterJwtClientTest.user = prop.getProperty("JWT_USER");
-    			MasterJwtClientTest.apiKey = prop.getProperty("JWT_APIKEY");
-
-    		} catch (IOException ex) {
-    			ex.printStackTrace();
-    		} finally {
-    			if (is != null) {
-    				try {
-    					is.close();
-    				} catch (IOException e) {
-    					e.printStackTrace();
-    				}
-    			}
-    		}
-    		
-    		
-
-    	}
+    	MasterClientAbstract.loadConfig();
     }
     
     @Test
@@ -73,8 +42,8 @@ public class MasterJwtClientTest extends MasterClientAbstract {
         	// Test on Echo server        
         	String url1 = ECHO_API_3;
         	masterClient.setAuth(true);
-        	masterClient.setUser(user);			
-        	masterClient.setApiKey(apiKey);         	
+        	masterClient.setUser(MasterClientAbstract.user);			
+        	masterClient.setApiKey(MasterClientAbstract.apiKey);         	
         	JSONObject jsonObj = masterClient.send(url1, MasterClientAbstract.client);
 
         	assertNotNull(jsonObj);
@@ -89,8 +58,8 @@ public class MasterJwtClientTest extends MasterClientAbstract {
     	String url1 = ECHO_API_3 + "?msg=HelloWorld";  	
     	JwtClient masterClient = (JwtClient) clientFactory();
     	masterClient.setAuth(true);
-    	masterClient.setUser(user);			
-    	masterClient.setApiKey(apiKey);
+    	masterClient.setUser(MasterClientAbstract.user);			
+    	masterClient.setApiKey(MasterClientAbstract.apiKey);
    	    
     	// Test on Echo server        
     	masterClient.setAuth(true);

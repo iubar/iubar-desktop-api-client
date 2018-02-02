@@ -14,8 +14,10 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.Properties;
 
 import javax.ws.rs.core.Response;
 
@@ -31,18 +33,47 @@ public abstract class MasterClientAbstract {
 
 	private static final String APP_FAMILY_PAGHE = "paghe";
 	public static final int ID_APP_PAGHEOPEN = 11;
-
-
+	public static String user = null;
+	public static String apiKey = null;
 
 	public static final String MAC = "123325345234134";
-	
-  
+	  
 	protected static ClientModel client;
     private static ModelsList<DatoreModel> datori;
     private static ModelsList<TitolareModel> titolari;
     private static ModelsList<CcnlModel> contratti;
     private static ModelsList<DocModel> documenti;
 
+    public static void loadConfig() throws Exception {
+    	String jwtUser = System.getenv("JWT_USER");
+    	String jwtApiKey = System.getenv("JWT_APIKEY");
+    	if(jwtUser!=null && jwtUser.length()>0) {
+    		MasterClientAbstract.user = jwtUser;
+    		MasterClientAbstract.apiKey = jwtApiKey;
+    	}else {
+    		String config = "/secret.properties";    		
+    		Properties prop = new Properties();
+    		InputStream is = null;
+    		try {
+    			is = MasterJwtClientTest.class.getResourceAsStream(config);
+    			prop.load(is);
+    			MasterClientAbstract.user = prop.getProperty("JWT_USER");
+    			MasterClientAbstract.apiKey = prop.getProperty("JWT_APIKEY");
+
+    		} catch (IOException ex) {
+    			ex.printStackTrace();
+    		} finally {
+    			if (is != null) {
+    				try {
+    					is.close();
+    				} catch (IOException e) {
+    					e.printStackTrace();
+    				}
+    			}
+    		}
+    	}
+    }
+    
     @BeforeClass
     public static void initData() throws IOException {
     	int idApp = MasterClientAbstract.ID_APP_PAGHEOPEN;
