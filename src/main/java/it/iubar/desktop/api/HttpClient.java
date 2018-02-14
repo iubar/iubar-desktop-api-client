@@ -257,7 +257,7 @@ abstract class HttpClient {
 	}
 
 	protected String getApiKey() {
-		return apiKey;
+		return this.apiKey;
 	}
 
 	public void setApiKey(String apiKey) {
@@ -265,15 +265,15 @@ abstract class HttpClient {
 	}
 
 	protected boolean isAuth() {
-		return isAuth;
+		return this.isAuth;
 	}
 
 	public void setAuth(boolean auth) {
-		isAuth = auth;
+		this.isAuth = auth;
 	}
 
 	public String getBaseUrl() {
-		return url;
+		return this.url;
 	}
 
 	public void setBaseUrl(String url) {
