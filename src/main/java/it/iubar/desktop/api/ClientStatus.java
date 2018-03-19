@@ -25,6 +25,9 @@ public class ClientStatus {
 		String s1 = ClientStatus.app_status.toString();
 		String s2 = ClientStatus.app_status2.toString();
 		String status = s1 + " / " + s2;
+		if(ClientStatus.app_status == AppStatus.UNKNWON) {
+			status = "<sconosciuto>";
+		}
 		return status;
 	}
 	
