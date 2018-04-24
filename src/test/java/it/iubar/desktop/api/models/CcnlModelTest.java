@@ -29,4 +29,5 @@ public class CcnlModelTest {
 //        assertEquals(str, JSONPrinter.toJson(ccnl));
 //    }
 
+
 }

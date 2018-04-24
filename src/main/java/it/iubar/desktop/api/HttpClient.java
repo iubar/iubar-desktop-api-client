@@ -25,6 +25,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.apache.commons.codec.binary.Base64;
+import org.glassfish.jersey.client.ClientConfig;
+import org.glassfish.jersey.client.ClientProperties;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,7 +38,7 @@ import it.iubar.desktop.api.models.IJsonModel;
 import it.iubar.desktop.api.models.ModelsList;
 import it.iubar.desktop.api.models.TitolareModel;
 
-abstract class HttpClient {
+public abstract class HttpClient {
 
 	private final static Logger LOGGER = Logger.getLogger(HttpClient.class.getName());
 
@@ -59,6 +61,7 @@ abstract class HttpClient {
 	public final static String INSERT_MAC = "list/mac";
 
 	abstract protected JSONObject genAuth2(String destUrl);
+	abstract public Response get(String restUrl);
 	
 //	public void loadConfigFromFile(String cfgFile) throws IOException {
 //		File file = new File(cfgFile);
@@ -201,10 +204,11 @@ abstract class HttpClient {
 	@Deprecated
 	// Spaghetti code
 	public JSONObject responseManager(Response response) throws Exception {
-
+		JSONObject answer = null;
+ if(response!=null) {
 		int status = response.getStatus();
 		String output = response.readEntity(String.class);
-		JSONObject answer = new JSONObject(output);
+		answer = new JSONObject(output);
 		System.out.println("Response status: " + status);
 		System.out.println("Response data: " + output);
 
@@ -239,6 +243,11 @@ abstract class HttpClient {
 			LOGGER.log(Level.SEVERE, msg);
 			throw new Exception(msg);
 		}
+ }else {
+		String msg = "Response is null";;
+		LOGGER.log(Level.SEVERE, msg);
+		throw new Exception(msg);
+ }
 		return answer;
 	}
  
@@ -257,7 +266,7 @@ abstract class HttpClient {
 	}
 
 	protected String getApiKey() {
-		return apiKey;
+		return this.apiKey;
 	}
 
 	public void setApiKey(String apiKey) {
@@ -265,15 +274,15 @@ abstract class HttpClient {
 	}
 
 	protected boolean isAuth() {
-		return isAuth;
+		return this.isAuth;
 	}
 
 	public void setAuth(boolean auth) {
-		isAuth = auth;
+		this.isAuth = auth;
 	}
 
 	public String getBaseUrl() {
-		return url;
+		return this.url;
 	}
 
 	public void setBaseUrl(String url) {
@@ -349,12 +358,19 @@ abstract class HttpClient {
 
 	public Response post(String restUrl, Entity<String> d3) {
 		System.out.println("POST: " + restUrl);
-		Client client = ClientBuilder.newClient();
+		Client client = HttpClient.newClient();
 		WebTarget target = client.target(restUrl);
 		// Accetto risposte di tipo Json
-		Response response = target.request(MediaType.APPLICATION_JSON).accept("application/json")
-				.header("X-Requested-With", "XMLHttpRequest").post(d3);
+		Response response = target.request(MediaType.APPLICATION_JSON).accept("application/json").header("X-Requested-With", "XMLHttpRequest").post(d3);	
 		return response;
+	}
+
+	public static Client newClient() {
+		ClientConfig configuration = new ClientConfig();
+		configuration.property(ClientProperties.CONNECT_TIMEOUT, 1500);
+		configuration.property(ClientProperties.READ_TIMEOUT, 3000);
+		Client client = ClientBuilder.newClient(configuration);
+		return client;
 	}
 
 	/*
@@ -396,7 +412,6 @@ abstract class HttpClient {
 		try {
 			url = new URL(strUrl);
 		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		String host = url.getHost();

@@ -80,11 +80,11 @@ public class HmacClient extends HttpClient implements IHttpClient {
 		return ts;
 	}
 	
-
+	@Override
 	public Response get(String restUrl) {
 		restUrl = resolveUrl(restUrl);
 		System.out.println("GET:" + restUrl);
-		Client client = ClientBuilder.newClient();
+		Client client = HttpClient.newClient();
 		WebTarget target = client.target(restUrl); // il metodo codifica il parametro (la stringa che rappresenta l'url) in modo analogo alla funzione PHP rawurlencode()
 		if (this.isAuth()) {
 			JSONObject dataToSend = genAuth(restUrl);
