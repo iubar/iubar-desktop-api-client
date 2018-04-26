@@ -1,22 +1,12 @@
 pipeline {
     agent {    
     	docker {    		
-    		image 'iubar/iubar-maven-alpine'
+    		image 'iubar-maven-alpine'
     		label 'docker'
-    		args '-v $HOME/.m2:/root/.m2'
+    		args '-e MAVEN_CONFIG=/home/jenkins/.m2 -v $HOME/.m2:/home/jenkins/.m2:rw,z'
     	} 
     }
     stages {
-        stage ('Initialize') {
-            steps {
-            	echo 'Initializing...'
-            	// Since you're SSH'ing into the server instead of using an actual interactive shell, the $USER variable is (and several other environment variables are) never set.
-                echo 'USER = $(whoami)'
-				sh 'printenv'
-				echo 'Hello, Maven'
-                sh 'mvn --version'
-            }
-        }
         stage ('Build') {
             steps {
             	echo 'Building...'
@@ -26,7 +16,7 @@ pipeline {
 		stage('Test') {
             steps {
             	echo 'Testing...'
-                sh 'mvn -B test'
+                sh 'mvn -B test -Djava.io.tmpdir=${WORKSPACE}@tmp'
             }
             post {
                 always {
@@ -39,5 +29,18 @@ pipeline {
                 sh 'sonar-scanner'
             }
         }
-    }      
+    }
+	post {
+        changed {
+        	echo "CURRENT STATUS: ${currentBuild.currentResult}"
+            sh "curl -i -X GET ${env.TELEGRAM_URL}\\&text=JENKINS:%20Status%20of%20${JOB_NAME}%20is%20changed%20to%20${currentBuild.currentResult}"
+        }
+		cleanup {
+			deleteDir()
+			dir("${env.WORKSPACE}@tmp") {
+				echo 'Cleaning ${env.WORKSPACE}@tmp'
+			  deleteDir()
+			}
+        }
+    }    
 }
