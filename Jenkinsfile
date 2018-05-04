@@ -33,7 +33,7 @@ pipeline {
 	post {
         changed {
         	echo "CURRENT STATUS: ${currentBuild.currentResult}"
-            sh "curl -G -v \"https://api.telegram.org/bot447819318:AAHHaIsNBxD1GhHeag4xRIXh6rCp9EV5S_c/sendMessage?chat_id=-1001181492268&parse_mode=HTML\" --data \"text=<b>JENKINS</b>%0A<i>${JOB_NAME}</i>%0AStatus%20is%20changed%20to%20${currentBuild.currentResult}\""
+            sh "curl -H 'JENKINS: Pipeline Hook Iubar' -i -X GET -G ${env.IUBAR_WEBHOOK_URL} -d status=${currentBuild.currentResult} -d project_name=${JOB_NAME}"
         }
 		cleanup {
 			deleteDir()
