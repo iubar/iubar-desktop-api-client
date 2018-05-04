@@ -1,6 +1,7 @@
+// iubar-auto-update
 pipeline {
     agent {    
-    	docker {    		
+    	docker {   	
     		image 'iubar-maven-alpine'
     		label 'docker'
     		args '-e MAVEN_CONFIG=/home/jenkins/.m2 -v $HOME/.m2:/home/jenkins/.m2:rw,z'
@@ -16,14 +17,20 @@ pipeline {
 		stage('Test') {
             steps {
             	echo 'Testing...'
-                sh 'mvn -B test -Djava.io.tmpdir=${WORKSPACE}@tmp'
+                sh 'mvn -B -Djava.io.tmpdir=${WORKSPACE}@tmp -Djava.awt.headless=true test'
             }
             post {
                 always {
                     junit 'target/surefire-reports/*.xml' // show junit log in Jenkins 
                 }
             }
-        }                      
+        }
+		stage ('Deploy') {
+            steps {
+            	echo 'Deploying...'
+                sh 'mvn -B -DskipTests=true jar:jar deploy:deploy'
+            }
+        }
         stage('Analyze') {
             steps {
                 sh 'sonar-scanner'
@@ -33,13 +40,13 @@ pipeline {
 	post {
         changed {
         	echo "CURRENT STATUS: ${currentBuild.currentResult}"
-            sh "curl -G -v \"https://api.telegram.org/bot447819318:AAHHaIsNBxD1GhHeag4xRIXh6rCp9EV5S_c/sendMessage?chat_id=-1001181492268&parse_mode=HTML\" --data \"text=<b>JENKINS</b>%0A<i>${JOB_NAME}</i>%0AStatus%20is%20changed%20to%20${currentBuild.currentResult}\""
+            sh "curl -H 'JENKINS: Pipeline Hook Iubar' -i -X GET -G ${env.IUBAR_WEBHOOK_URL} -d status=${currentBuild.currentResult} -d project_name=${JOB_NAME}"
         }
 		cleanup {
-			deleteDir()
-			dir("${env.WORKSPACE}@tmp") {
-				echo 'Cleaning ${env.WORKSPACE}@tmp'
-			  deleteDir()
+			cleanWs()
+			echo 'Cleaning ${env.WORKSPACE}@tmp'
+			dir("${env.WORKSPACE}@tmp") {				
+				deleteDir()
 			}
         }
     }    
