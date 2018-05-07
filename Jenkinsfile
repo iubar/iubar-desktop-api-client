@@ -44,7 +44,6 @@ pipeline {
         }
 		cleanup {
 			cleanWs()
-			echo 'Cleaning ${env.WORKSPACE}@tmp'
 			dir("${env.WORKSPACE}@tmp") {				
 				deleteDir()
 			}
