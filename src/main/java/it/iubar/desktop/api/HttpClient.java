@@ -140,6 +140,7 @@ public abstract class HttpClient {
 			dataToSend.putOnce("idapp", idApp);
 		}
 		dataToSend.putOnce(docModellist.getJsonName(), docModellist.getJsonArray());
+		LOGGER.log(Level.INFO, dataToSend.toString());
 		Response response = post(destUrl, dataToSend);
 		JSONObject jsonObj = responseManager(response);
 		return jsonObj;
@@ -150,6 +151,7 @@ public abstract class HttpClient {
 		JSONObject dataToSend = null;
 		String json = obj.asJson();
 		dataToSend = new JSONObject(json);
+		LOGGER.log(Level.INFO, dataToSend.toString());
 		Response response = post(destUrl, dataToSend);
 		JSONObject jsonObj = responseManager(response);
 		return jsonObj;

@@ -15,7 +15,7 @@ public class DocModelTest {
     }
 
 	public static DocModel factory() {
-		DocModel docModel = new DocModel(DocType.CEDOLINO, "BRGNDRXXXXX", 7, 2016);
+		DocModel docModel = new DocModel(DocType.CEDOLINO, 7, ClientModelTest.CF, 2016);
 		return docModel;
 	}
 

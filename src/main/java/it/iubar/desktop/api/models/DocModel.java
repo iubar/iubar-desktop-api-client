@@ -5,13 +5,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class DocModel extends RootModel implements IJsonModel, Cloneable {
     
 	private DocType doctype;
-    private String cf; // Codice fiscale del Titolaredati
+	public String cf;
 	private int mese;
     private int anno;
-
-    public DocModel(DocType iddoctype, String cf, int mese, int anno) {
-    	this.setCf(cf);
+    
+    public DocModel(DocType iddoctype, int mese, String cf, int anno) {
         this.setDoctype(iddoctype);
+        this.setCf(cf);
         this.setMese(mese);
         this.setAnno(anno);
     }
@@ -40,10 +40,10 @@ public class DocModel extends RootModel implements IJsonModel, Cloneable {
     public String getCf() {
 		return this.cf;
 	}
-
-	public void setCf(String cf) {
-		this.cf = cf;
-	}
+    public void setCf(String cf)
+    {
+    	this.cf = cf;
+    }
 
     public int getMese() {
         return mese;

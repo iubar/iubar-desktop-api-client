@@ -18,12 +18,12 @@ public class DatoreModelTest {
 	public static DatoreModel factory() {
 		DatoreModel datore = new DatoreModel();
 		datore.setIdapp(MasterClientTest.ID_APP_PAGHEOPEN);
-		datore.setCf("AIHDUAWHDOU");
         datore.setIdcomune(null);
         datore.setPiva("obaojwdboawdb");
         datore.setDenom("AWDBAWJDBJLA");
         datore.setSub(3);
         datore.setPara(7);
+        datore.setCf(ClientModelTest.CF);
         datore.setEmail("awdnaowdj@gmail.com");
         datore.setTel("0129300823");
         return datore;

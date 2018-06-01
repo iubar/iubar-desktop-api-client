@@ -3,7 +3,7 @@ package it.iubar.desktop.api.models;
 public class DatoreModel extends RootModel implements IJsonModel {
     
 	private int idapp = 0;
-	private String cf;
+
     private String piva;
     private String denom;
     private int sub;
@@ -11,6 +11,8 @@ public class DatoreModel extends RootModel implements IJsonModel {
     private String email;
     private String tel;
     private String idcomune;
+
+	private String cf;
  
     public DatoreModel() {
     	super();
@@ -25,18 +27,23 @@ public class DatoreModel extends RootModel implements IJsonModel {
     }
     
     public String getCf() {
-        return cf;
+        return this.cf;
     }
-
-    public void setCf(String cf) {
-        this.cf = cf;
+    public void setCf(String cf)
+    {
+    	this.cf = cf;
     }
+    
 
     public String getPiva() {
-        return piva;
+        return this.piva;
     }
 
     public void setPiva(String piva) {
+    	if(piva !=null && piva.equals(""))
+    	{
+    		throw new IllegalArgumentException();
+    	}
         this.piva = piva;
     }
 
@@ -45,6 +52,10 @@ public class DatoreModel extends RootModel implements IJsonModel {
     }
 
     public void setDenom(String denom) {
+    	if(denom !=null && denom.equals(""))
+    	{
+    		throw new IllegalArgumentException();
+    	}
         this.denom = denom;
     }
 
@@ -69,6 +80,10 @@ public class DatoreModel extends RootModel implements IJsonModel {
     }
 
     public void setEmail(String email) {
+    	if(email !=null && email.equals(""))
+    	{
+    		throw new IllegalArgumentException();
+    	}
         this.email = email;
     }
 
@@ -77,6 +92,10 @@ public class DatoreModel extends RootModel implements IJsonModel {
     }
 
     public void setTel(String tel) {
+    	if(tel !=null && tel.equals(""))
+    	{
+    		throw new IllegalArgumentException();
+    	}
         this.tel = tel;
     }
 
@@ -85,6 +104,10 @@ public class DatoreModel extends RootModel implements IJsonModel {
     }
 
     public void setIdcomune(String idcomune) {
+    	if(idcomune !=null && idcomune.equals(""))
+    	{
+    		throw new IllegalArgumentException();
+    	}
         this.idcomune = idcomune;
     }
 

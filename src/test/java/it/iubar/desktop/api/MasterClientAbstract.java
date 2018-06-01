@@ -33,16 +33,17 @@ public abstract class MasterClientAbstract {
 
 	private static final String APP_FAMILY_PAGHE = "paghe";
 	public static final int ID_APP_PAGHEOPEN = 11;
+	public static final int ID_FAMILY_PAGHE = 1;
 	public static String user = null;
 	public static String apiKey = null;
 
-	public static final String MAC = "123325345234134";
+
 	  
-	protected static ClientModel client;
-    private static ModelsList<DatoreModel> datori;
-    private static ModelsList<TitolareModel> titolari;
-    private static ModelsList<CcnlModel> contratti;
-    private static ModelsList<DocModel> documenti;
+	protected static ClientModel client = null;
+    private static ModelsList<DatoreModel> datori = null;
+    private static ModelsList<TitolareModel> titolari = null;
+    private static ModelsList<CcnlModel> contratti = null;
+    private static ModelsList<DocModel> documenti = null;
 
     public static void loadConfig() throws Exception {
     	String jwtUser = System.getenv("JWT_USER");
@@ -96,34 +97,10 @@ public abstract class MasterClientAbstract {
         MasterClientAbstract.documenti.add(doc);
     }
 
-    @Test
-    public void sendTestOnEchoServer(){
-        IHttpClient masterClient = clientFactory();
-        try {
-        	// Test on Echo server        
-        	String url1 = ECHO_API;
-        	JSONObject jsonObj = masterClient.send(url1, MasterClientAbstract.client);
-        	assertNotNull(jsonObj);
-        } catch (Exception e) {
-        	e.printStackTrace();
-        	fail();
-        }
-    }
-
 
     abstract protected IHttpClient clientFactory();
     
-    @Test
-	public void testMacBlacklist_1(){ 	
-    	boolean b = checkMacBlacklist(MAC_1);
-    	assertFalse(b);
-    }
-    
-    @Test
-	public void testMacBlacklist_2(){ 	
-    	boolean b = checkMacBlacklist(MAC_2);
-    	assertFalse(b);
-    }
+
     
 	private boolean checkMacBlacklist(String mac){
 		boolean b = false;
@@ -143,18 +120,7 @@ public abstract class MasterClientAbstract {
 		return b;
 	}
     
-    @Test
-	public void testMacGreylist_1(){ 	
-    	int idreason = checkMacGreylist(MAC_1);
-    	assertEquals(0, idreason);
-    }
-    
-    @Test
-	public void testMacGreylist_2(){ 	
-    	int idreason = checkMacGreylist(MAC_2);
-    	assertEquals(0, idreason);
-    }
-    
+   
     private int checkMacGreylist(String mac){ 	
     	int idreason = 0; // false
     	IHttpClient masterClient = clientFactory();
@@ -229,6 +195,45 @@ public abstract class MasterClientAbstract {
 //        assertEquals(true, listMac.isBlackList());
 //    }
 
+    @Test
+   	public void testMacGreylist_1(){ 	
+       	int idreason = checkMacGreylist(MAC_1);
+       	assertEquals(0, idreason);
+       }
+       
+       @Test
+   	public void testMacGreylist_2(){ 	
+       	int idreason = checkMacGreylist(MAC_2);
+       	assertEquals(0, idreason);
+       }
+       
+
+       @Test
+       public void sendTestOnEchoServer(){
+           IHttpClient masterClient = clientFactory();
+           try {
+           	// Test on Echo server        
+           	String url1 = ECHO_API;
+           	JSONObject jsonObj = masterClient.send(url1, MasterClientAbstract.client);
+           	assertNotNull(jsonObj);
+           } catch (Exception e) {
+           	e.printStackTrace();
+           	fail();
+           }
+       }
+       @Test
+   	public void testMacBlacklist_1(){ 	
+       	boolean b = checkMacBlacklist(MAC_1);
+       	assertFalse(b);
+       }
+       
+       @Test
+   	public void testMacBlacklist_2(){ 	
+       	boolean b = checkMacBlacklist(MAC_2);
+       	assertFalse(b);
+       }    
+       
+       
  
     @AfterClass
     public static void delFiles(){

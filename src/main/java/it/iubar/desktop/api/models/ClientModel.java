@@ -22,6 +22,7 @@ public class ClientModel extends RootModel implements IJsonModel {
     private String act_key;
     private String db_date;
     private String db_version;
+    private String cf;
 
     public ClientModel(){
         super(); 
@@ -98,6 +99,7 @@ public class ClientModel extends RootModel implements IJsonModel {
     }
 
     public void setDb_date(String db_date) {
+    	// FIXME: controllare il formato di db_date
         this.db_date = db_date;
     }
 
@@ -179,6 +181,14 @@ public class ClientModel extends RootModel implements IJsonModel {
 
 	public void setDb_date(Date date) {
 		setDb_date(toString(date));
+	}
+
+	public String getCf() {
+		return cf;
+	}
+
+	public void setCf(String cf) {
+		this.cf = cf;
 	}
 
 }

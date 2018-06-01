@@ -8,13 +8,17 @@ import static org.junit.Assert.assertEquals;
 
 public class ClientModelTest {
 
+	public static final String MAC = "123325345234134";
+	public static final String CF = "123123123";
+	
     public static ClientModel factory() {
-    	ClientModel client = new ClientModel(MasterClientTest.MAC, MasterClientTest.ID_APP_PAGHEOPEN);
+    	ClientModel client = new ClientModel(ClientModelTest.MAC, MasterClientTest.ID_APP_PAGHEOPEN);
 		client.setVersion("8697623");		
         client.setOs_name("Windows Vista");
         client.setOs_version("6.3");
         client.setJava_version("");
         client.setTitolari(0);
+        client.setCf(ClientModelTest.CF);
         client.setDatori(0);
         client.setLavoratori(0);
         client.setIp_local("192.168.32.2");
@@ -24,7 +28,7 @@ public class ClientModelTest {
         client.setServer_name("localhost");
         client.setReg_key("");
         client.setAct_key("");
-        client.setDb_date("0000-00-00");
+        client.setDb_date("24/05/2018");
         client.setDb_version("00.92"); 
         return client;
     }
