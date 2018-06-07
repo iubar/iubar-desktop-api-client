@@ -2,7 +2,6 @@ package it.iubar.desktop.api;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -13,16 +12,13 @@ import java.util.logging.Logger;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
-import javax.ws.rs.core.Response.StatusType;
 import javax.ws.rs.core.UriBuilder;
 
 import org.glassfish.jersey.client.ClientConfig;
-import org.glassfish.jersey.client.ClientResponse;
 import org.json.JSONObject;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -35,7 +31,6 @@ import it.iubar.desktop.api.models.DatoreModel;
 import it.iubar.desktop.api.models.DatoreModelTest;
 import it.iubar.desktop.api.models.DocModel;
 import it.iubar.desktop.api.models.DocModelTest;
-import it.iubar.desktop.api.models.DocType;
 import it.iubar.desktop.api.models.ModelsList;
 import it.iubar.desktop.api.models.TitolareModel;
 import it.iubar.desktop.api.models.TitolareModelTest;
@@ -138,7 +133,7 @@ public class MasterClientTest2 {
 	}
 	
 	@Test
-	public void sendIncrementDocumento()
+	public void receiveIncrementDocumento()
 	{
 		
 		ClientConfig config = new ClientConfig();
@@ -166,7 +161,7 @@ public class MasterClientTest2 {
 	}
 
 	@Test
-	public void sendRegisterClientFail() {
+	public void receiveRegisterClientFail() {
 		ClientConfig config = new ClientConfig();
 		Client client = ClientBuilder.newClient(config);
 		URI baseUri = UriBuilder.fromUri("http://iubar.it/crm/api/crm/v1").build();
@@ -241,7 +236,7 @@ public class MasterClientTest2 {
 	
 
 	@Test
-	public void sendAggiornamentiMese()
+	public void receiveAggiornamentiMese()
 	{
 		ClientConfig config = new ClientConfig();
 		Client client = ClientBuilder.newClient(config);
@@ -251,7 +246,7 @@ public class MasterClientTest2 {
 		LOGGER.info("Testing path \"" + baseUri.toString() + "/" + path + "\" ...");
 		Response response = target.path(path)
 				.request().accept(MediaType.APPLICATION_JSON)
-				.header("PRIVATE-TOKEN", null).get(Response.class);
+				.get(Response.class);
 		
 		int statusCode = response.getStatus();
 		
@@ -265,7 +260,7 @@ public class MasterClientTest2 {
 	}
 	
 	@Test
-	public void sendAnalisi()
+	public void receiveAnalisi()
 	{
 		ClientConfig config = new ClientConfig();
 		Client client = ClientBuilder.newClient(config);
@@ -276,7 +271,7 @@ public class MasterClientTest2 {
 		
 		Response response = target.path(path)
 				.request().accept(MediaType.APPLICATION_JSON)
-				.header("PRIVATE-TOKEN", null).get(Response.class);
+				.get(Response.class);
 		
 		int statusCode = response.getStatus();
 		
@@ -291,7 +286,7 @@ public class MasterClientTest2 {
 	}
 
 	@Test
-	public void sendBlacklist()
+	public void receiveBlacklist()
 	{
 		ClientConfig config = new ClientConfig();
 		Client client = ClientBuilder.newClient(config);
@@ -302,7 +297,7 @@ public class MasterClientTest2 {
 		
 		Response response = target.path(path)
 				.request().accept(MediaType.APPLICATION_JSON)
-				.header("PRIVATE-TOKEN", null).get(Response.class);
+				.get(Response.class);
 		
 		int statusCode = response.getStatus();
 		String json = response.readEntity(String.class);
@@ -319,7 +314,7 @@ public class MasterClientTest2 {
 	}
 
 	@Test
-	public void sendCedolino()
+	public void receiveCedolino()
 	{
 		ClientConfig config = new ClientConfig();
 		Client client = ClientBuilder.newClient(config);
@@ -330,7 +325,7 @@ public class MasterClientTest2 {
 		
 		Response response = target.path(path)
 				.request().accept(MediaType.APPLICATION_JSON)
-				.header("PRIVATE-TOKEN", null).get(Response.class);
+				.get(Response.class);
 		
 		int statusCode = response.getStatus();
 		String json = response.readEntity(String.class);
@@ -344,7 +339,7 @@ public class MasterClientTest2 {
 	}
 		
 	@Test 
-	public void sendCountDocumentiMese()
+	public void receiveCountDocumentiMese()
 	{
 		ClientConfig config = new ClientConfig();
 		Client client = ClientBuilder.newClient(config);
@@ -355,7 +350,7 @@ public class MasterClientTest2 {
 		
 		Response response = target.path(path)
 				.request().accept(MediaType.APPLICATION_JSON)
-				.header("PRIVATE-TOKEN", null).get(Response.class);
+				.get(Response.class);
 		
 		int statusCode = response.getStatus();
 		String json = response.readEntity(String.class);
@@ -369,7 +364,7 @@ public class MasterClientTest2 {
 	}
 	
 	@Test 
-	public void sendDocumenti()
+	public void receiveDocumenti()
 	{
 		ClientConfig config = new ClientConfig();
 		Client client = ClientBuilder.newClient(config);
@@ -394,7 +389,7 @@ public class MasterClientTest2 {
 	}
 
 	@Test
-	public void sendElencoProvincie()
+	public void receiveElencoProvincie()
 	{
 		ClientConfig config = new ClientConfig();
 		Client client = ClientBuilder.newClient(config);
@@ -405,7 +400,7 @@ public class MasterClientTest2 {
 		
 		Response response = target.path(path)
 				.request().accept(MediaType.APPLICATION_JSON)
-				.header("PRIVATE-TOKEN", null).get(Response.class);
+				.get(Response.class);
 		
 		int statusCode = response.getStatus();
 		String json = response.readEntity(String.class);
@@ -419,7 +414,7 @@ public class MasterClientTest2 {
 	}
 
 	@Test
-	public void sendGreylist()
+	public void receiveGreylist()
 	{
 		ClientConfig config = new ClientConfig();
 		Client client = ClientBuilder.newClient(config);
@@ -429,7 +424,7 @@ public class MasterClientTest2 {
 		LOGGER.info("Testing path \"" + baseUri.toString() + "/" + path + "\" ...");
 		Response response = target.path(path)
 				.request().accept(MediaType.APPLICATION_JSON)
-				.header("PRIVATE-TOKEN", null).get(Response.class);
+				.get(Response.class);
 		
 		int statusCode = response.getStatus();
 		String json = response.readEntity(String.class);
@@ -444,7 +439,7 @@ public class MasterClientTest2 {
 	
 
 	@Test
-	public void sendInfoMac()
+	public void receiveInfoMac()
 	{
 		ClientConfig config = new ClientConfig();
 		Client client = ClientBuilder.newClient(config);
@@ -455,7 +450,7 @@ public class MasterClientTest2 {
 
 		Response response = target.path(path)
 				.request().accept(MediaType.APPLICATION_JSON)
-				.header("PRIVATE-TOKEN", null).get(Response.class);
+				.get(Response.class);
 		
 		int statusCode = response.getStatus();
 		String json = response.readEntity(String.class);
@@ -469,7 +464,7 @@ public class MasterClientTest2 {
 	}
 
 	@Test
-	public void sendInfoTitolare()
+	public void receiveInfoTitolare()
 	{
 		ClientConfig config = new ClientConfig();
 		Client client = ClientBuilder.newClient(config);
@@ -494,7 +489,7 @@ public class MasterClientTest2 {
 	}
 	
 	@Test
-	public void sendInstallazioniMese()
+	public void receiveInstallazioniMese()
 	{
 		ClientConfig config = new ClientConfig();
 		Client client = ClientBuilder.newClient(config);
@@ -505,7 +500,7 @@ public class MasterClientTest2 {
 		
 		Response response = target.path(path)
 				.request().accept(MediaType.APPLICATION_JSON)
-				.header("PRIVATE-TOKEN", null).get(Response.class);
+				.get(Response.class);
 		
 		int statusCode = response.getStatus();
 		String json = response.readEntity(String.class);
@@ -519,7 +514,7 @@ public class MasterClientTest2 {
 	}
 
 	@Test
-	public void sendInstallazioni()
+	public void receiveInstallazioni()
 	{
 		ClientConfig config = new ClientConfig();
 		Client client = ClientBuilder.newClient(config);
@@ -530,7 +525,7 @@ public class MasterClientTest2 {
 		
 		Response response = target.path(path)
 				.request().accept(MediaType.APPLICATION_JSON)
-				.header("PRIVATE-TOKEN", null).get(Response.class);
+				.get(Response.class);
 		
 		int statusCode = response.getStatus();
 		String json = response.readEntity(String.class);
@@ -544,7 +539,7 @@ public class MasterClientTest2 {
 	}
 	
 	@Test
-	public void sendNow()
+	public void receiveNow()
 	{
 		ClientConfig config = new ClientConfig();
 		Client client = ClientBuilder.newClient(config);
@@ -555,7 +550,7 @@ public class MasterClientTest2 {
 		
 		Response response = target.path(path)
 				.request().accept(MediaType.APPLICATION_JSON)
-				.header("PRIVATE-TOKEN", null).get(Response.class);
+				.get(Response.class);
 		
 		int statusCode = response.getStatus();
 		String json = response.readEntity(String.class);
@@ -570,7 +565,7 @@ public class MasterClientTest2 {
 	
 	
 	@Test
-	public void sendPreventivi()
+	public void receivePreventivi()
 	{
 		ClientConfig config = new ClientConfig();
 		Client client = ClientBuilder.newClient(config);
@@ -581,7 +576,7 @@ public class MasterClientTest2 {
 		
 		Response response = target.path(path)
 				.request().accept(MediaType.APPLICATION_JSON)
-				.header("PRIVATE-TOKEN", null).get(Response.class);
+				.get(Response.class);
 		
 		int statusCode = response.getStatus();
 		String json = response.readEntity(String.class);
@@ -595,7 +590,7 @@ public class MasterClientTest2 {
 	}
 	
 	@Test
-	public void sendStatisticheGenerali()
+	public void receiveStatisticheGenerali()
 	{
 		ClientConfig config = new ClientConfig();
 		Client client = ClientBuilder.newClient(config);
@@ -606,7 +601,7 @@ public class MasterClientTest2 {
 		
 		Response response = target.path(path)
 				.request().accept(MediaType.APPLICATION_JSON)
-				.header("PRIVATE-TOKEN", null).get(Response.class);
+				.get(Response.class);
 		
 		int statusCode = response.getStatus();
 		String json = response.readEntity(String.class);
@@ -620,7 +615,7 @@ public class MasterClientTest2 {
 	}
 	
 	@Test
-	public void sendTopUsers()
+	public void receiveTopUsers()
 	{
 		ClientConfig config = new ClientConfig();
 		Client client = ClientBuilder.newClient(config);
@@ -631,7 +626,7 @@ public class MasterClientTest2 {
 		
 		Response response = target.path(path)
 				.request().accept(MediaType.APPLICATION_JSON)
-				.header("PRIVATE-TOKEN", null).get(Response.class);
+				.get(Response.class);
 		
 		int statusCode = response.getStatus();
 		String json = response.readEntity(String.class);
@@ -644,7 +639,7 @@ public class MasterClientTest2 {
 		assertEquals(Status.OK.getStatusCode(), jsonObject.getInt("code"));
 	}
 	@Test
-	public void sendUltimiUtenti()
+	public void receiveUltimiUtenti()
 	{
 		ClientConfig config = new ClientConfig();
 		Client client = ClientBuilder.newClient(config);
@@ -655,7 +650,7 @@ public class MasterClientTest2 {
 		
 		Response response = target.path(path)
 				.request().accept(MediaType.APPLICATION_JSON)
-				.header("PRIVATE-TOKEN", null).get(Response.class);
+				.get(Response.class);
 		
 		int statusCode = response.getStatus();
 		String json = response.readEntity(String.class);
