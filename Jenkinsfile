@@ -28,7 +28,8 @@ pipeline {
 		stage ('Deploy') {
             steps {
             	echo 'Deploying...'
-                sh 'mvn -X -B -DskipTests=true --settings /home/jenkins/.m2/settings.xml jar:jar deploy:deploy'
+		sh 'cat /home/jenkins/.m2/settings.xml'
+                sh 'mvn -X -B -DskipTests=true --global-settings /home/jenkins/.m2/settings.xml --settings /home/jenkins/.m2/settings.xml jar:jar deploy:deploy'
             }
         }
         stage('Analyze') {
