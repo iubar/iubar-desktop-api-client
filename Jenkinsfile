@@ -28,7 +28,7 @@ pipeline {
 		stage ('Deploy') {
             steps {
             	echo 'Deploying...'
-                sh 'mvn -B -DskipTests=true jar:jar deploy:deploy'
+                sh 'mvn -X -B -DskipTests=true jar:jar deploy:deploy'
             }
         }
         stage('Analyze') {
