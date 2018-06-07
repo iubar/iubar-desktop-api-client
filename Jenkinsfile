@@ -4,7 +4,7 @@ pipeline {
     	docker {   	
     		image 'iubar-maven-ubuntu'
     		label 'docker'
-    		args '-e MAVEN_CONFIG=/home/jenkins/.m2 -v $HOME/.m2:/home/jenkins/.m2:rw,z'
+    		args '-e MAVEN_CONFIG=/home/jenkins/.m2 -v /home/jenkins/.m2:/home/jenkins/.m2:rw,z'
     	} 
     }
     stages {
