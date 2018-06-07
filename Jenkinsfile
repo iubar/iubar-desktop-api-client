@@ -2,7 +2,7 @@
 pipeline {
     agent {    
     	docker {   	
-    		image 'iubar-maven-ubuntu'
+    		image 'iubar-maven-alpine'
     		label 'docker'
     		args '-e MAVEN_CONFIG=/home/jenkins/.m2 -v /home/jenkins/.m2:/home/jenkins/.m2:rw,z'
     	} 
