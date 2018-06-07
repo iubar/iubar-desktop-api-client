@@ -11,7 +11,7 @@ pipeline {
         stage ('Build') {
             steps {
             	echo 'Building...'
-                sh 'mvn -B -DskipTests=true clean package'
+                sh 'mvn -B -DskipTests=true clean package' https://i.stack.imgur.com/wqati.png
             }
         }
 		stage('Test') {
@@ -29,6 +29,9 @@ pipeline {
             steps {
             	echo 'Deploying...'
 		sh 'cat /home/jenkins/.m2/settings.xml'
+		sh 'mvn --version'
+		sh 'mvn help:effective-settings'
+		echo '...Deploying...' // @see https://i.stack.imgur.com/wqati.png
                 // sh 'mvn -X -B -DskipTests=true --global-settings /home/jenkins/.m2/settings.xml --settings /home/jenkins/.m2/settings.xml jar:jar deploy:deploy'
     	        sh 'mvn -X -B -DskipTests=true deploy'
             }
@@ -52,3 +55,11 @@ pipeline {
         }
     }    
 }
+
+
+// 1) If you want to skip tests you can add the following to the command line.
+// mvn -DskipTests build
+// 2) compiles the tests, but skips running them
+// mvn -Dmaven.test.skip=true build
+// 3) skips compiling the tests and does not run them
+// mvn clean install
