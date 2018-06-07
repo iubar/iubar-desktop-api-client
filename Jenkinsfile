@@ -11,7 +11,7 @@ pipeline {
         stage ('Build') {
             steps {
             	echo 'Building...'
-                sh 'mvn -B -DskipTests=true clean package' https://i.stack.imgur.com/wqati.png
+                sh 'mvn -B -DskipTests=true clean package'
             }
         }
 		stage('Test') {
