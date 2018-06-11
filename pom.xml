@@ -8,13 +8,13 @@
 
 	<name>Iubar Desktop Api Client</name>
 	<description>Desktop Api Client classes</description>
-
+<!--
  	<parent>
  		<groupId>it.iubar.pom</groupId>
  		<artifactId>iubar-pom</artifactId>
  		<version>0.0.6</version>
  	</parent>
-
+-->
 	<build>
 
 
