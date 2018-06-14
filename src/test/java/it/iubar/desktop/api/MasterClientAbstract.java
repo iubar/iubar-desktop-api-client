@@ -5,10 +5,10 @@ import it.iubar.desktop.api.exceptions.ClientException;
 import it.iubar.desktop.api.models.*;
 
 import org.json.JSONObject;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -75,7 +75,7 @@ public abstract class MasterClientAbstract {
     	}
     }
     
-    @BeforeClass
+    @BeforeAll
     public static void initData() throws IOException {
     	int idApp = MasterClientAbstract.ID_APP_PAGHEOPEN;
     	MasterClientAbstract.client = ClientModelTest.factory();
@@ -151,7 +151,7 @@ public abstract class MasterClientAbstract {
 	
 
 
-    @Ignore("Ignoring test until the service is online")
+    @Disabled("Ignoring test until the service is online")
     public void sendTest() {
     	IHttpClient masterClient = clientFactory();
         try {
@@ -235,7 +235,7 @@ public abstract class MasterClientAbstract {
        
        
  
-    @AfterClass
+    @AfterAll
     public static void delFiles(){
    
     }

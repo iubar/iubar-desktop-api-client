@@ -1,6 +1,6 @@
 package it.iubar.desktop.api.models;
 
-import org.junit.BeforeClass;
+import org.junit.jupiter.api.BeforeAll;
 
 import it.iubar.desktop.api.MasterClientTest;
 

@@ -1,10 +1,12 @@
 package it.iubar.desktop.api;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import java.net.URI;
 import java.util.logging.Logger;
@@ -20,8 +22,6 @@ import javax.ws.rs.core.UriBuilder;
 
 import org.glassfish.jersey.client.ClientConfig;
 import org.json.JSONObject;
-import org.junit.BeforeClass;
-import org.junit.Test;
 
 import it.iubar.desktop.api.models.CcnlModel;
 import it.iubar.desktop.api.models.CcnlModelTest;
@@ -39,7 +39,7 @@ public class MasterClientTest2 {
 
 	private static final Logger LOGGER = Logger.getLogger(MasterClientTest2.class.getName());
 	
-	@BeforeClass
+	@BeforeAll
 	public static void setUpBeforeClass() throws Exception {
 		MasterClientAbstract.loadConfig();
 	}

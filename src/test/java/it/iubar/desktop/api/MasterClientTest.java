@@ -5,10 +5,10 @@ import it.iubar.desktop.api.exceptions.ClientException;
 import it.iubar.desktop.api.models.*;
 
 import org.json.JSONObject;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -26,7 +26,7 @@ public class MasterClientTest extends MasterClientAbstract {
 
 	protected static final String ECHO_API_2 = "http://www.iubar.it/extranet/api/echo2";
 
-    @BeforeClass
+    @BeforeAll
     public static void setUpBeforeClass() throws Exception {
     	MasterClientAbstract.loadConfig();
     }

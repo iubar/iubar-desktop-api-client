@@ -5,10 +5,10 @@ import it.iubar.desktop.api.exceptions.ClientException;
 import it.iubar.desktop.api.models.*;
 
 import org.json.JSONObject;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -30,7 +30,7 @@ public class MasterJwtClientTest extends MasterClientAbstract {
 	protected static final String ECHO_API_3 = "http://www.iubar.it/extranet/api/jwt/data"; // ANY
  
     
-    @BeforeClass
+    @BeforeAll
     public static void setUpBeforeClass() throws Exception {
     	MasterClientAbstract.loadConfig();
     }
@@ -88,7 +88,7 @@ public class MasterJwtClientTest extends MasterClientAbstract {
     	return masterClient;
 	}
  
-    @AfterClass
+    @AfterAll
     public static void delFiles(){
    
     }

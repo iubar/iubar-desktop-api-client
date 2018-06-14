@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-    <groupId>it.iubar.desktop.api</groupId>
-    <artifactId>iubar-desktop-api</artifactId>
-    <version>1.0</version>
+	<groupId>it.iubar.desktop.api</groupId>
+	<artifactId>iubar-desktop-api</artifactId>
+	<version>1.0</version>
 
-    <name>Iubar Test Crm Client</name>
-    <description>Send data to the Crm Api</description>
+	<name>Iubar Test Crm Client</name>
+	<description>Send data to the Crm Api</description>
 
-<!-- 	<parent> -->
-<!-- 		<artifactId>iubar_pom</artifactId> -->
-<!-- 		<groupId>it.iubar.pom</groupId> -->
-<!-- 		<version>0.0.4</version> -->
-<!-- 	</parent> -->
-	
-    <build>
-    
-<resources>
+	<!-- <parent> -->
+	<!-- <artifactId>iubar_pom</artifactId> -->
+	<!-- <groupId>it.iubar.pom</groupId> -->
+	<!-- <version>0.0.4</version> -->
+	<!-- </parent> -->
+
+	<build>
+
+		<resources>
 			<!-- regular resource processsing for everything except config.ini.example -->
 			<resource>
 				<directory>src/main/resources</directory>
@@ -49,22 +49,39 @@
 					<target>1.7</target>
 				</configuration>
 			</plugin>
-			
+
 			<plugin>
-		        <groupId>org.apache.maven.plugins</groupId>
-		        <artifactId>maven-surefire-plugin</artifactId>
-		        <version>2.21.0</version>
-		        <configuration>
-		          <includes>
-		         	<include>MasterClientTest.java</include>
-		            <include>MasterClientTest2.java</include>
-		            <include>MasterJwtClientTest.java</include>            
-		          </includes>
-		          <excludes>
-		            <exclude>MasterClientAbstract.java</exclude>
-		          </excludes>          
-		        </configuration>
-      		</plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.21.0</version>
+				<configuration>
+					<includes>
+						<include>MasterClientTest.java</include>
+						<include>MasterClientTest2.java</include>
+						<include>MasterJwtClientTest.java</include>
+					</includes>
+					<excludes>
+						<exclude>MasterClientAbstract.java</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.19.1</version>
+				<dependencies>
+					<dependency>
+						<groupId>org.junit.platform</groupId>
+						<artifactId>junit-platform-surefire-provider</artifactId>
+						<version>1.1.0</version>
+					</dependency>
+					<dependency>
+						<groupId>org.junit.jupiter</groupId>
+						<artifactId>junit-jupiter-engine</artifactId>
+						<version>5.2.0</version>
+					</dependency>
+				</dependencies>
+			</plugin>
 		</plugins>
 	</build>
 
@@ -91,9 +108,21 @@
 			<version>2.9.2</version>
 		</dependency>
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.12</version>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
+			<version>5.2.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
+			<version>5.2.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
+			<version>5.2.0</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -109,13 +138,13 @@
 			<version>1.10</version>
 		</dependency>
 
-<!-- https://mvnrepository.com/artifact/com.auth0/java-jwt -->
-<!-- https://github.com/auth0/java-jwt -->
-<dependency>
-    <groupId>com.auth0</groupId>
-    <artifactId>java-jwt</artifactId>
-    <version>3.3.0</version>
-</dependency>
+		<!-- https://mvnrepository.com/artifact/com.auth0/java-jwt -->
+		<!-- https://github.com/auth0/java-jwt -->
+		<dependency>
+			<groupId>com.auth0</groupId>
+			<artifactId>java-jwt</artifactId>
+			<version>3.3.0</version>
+		</dependency>
 
 	</dependencies>
 </project>

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>it.iubar.desktop.api</groupId>
@@ -9,11 +11,11 @@
 	<name>Iubar Desktop Api Client</name>
 	<description>Desktop Api Client classes</description>
 
- 	<parent>
- 		<groupId>it.iubar.pom</groupId>
- 		<artifactId>iubar-pom</artifactId>
- 		<version>0.0.6</version>
- 	</parent>
+	<parent>
+		<groupId>it.iubar.pom</groupId>
+		<artifactId>iubar-pom</artifactId>
+		<version>0.0.6</version>
+	</parent>
 
 	<build>
 
@@ -44,24 +46,39 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<!-- inherits config from parent: can override if required -->
 			</plugin>
-			
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <version>2.21.0</version>
-        <configuration>
-          <includes>
-         	<include>MasterClientTest.java</include>
-            <include>MasterClientTest2.java</include>
-            <include>MasterJwtClientTest.java</include>            
-          </includes>
-          <excludes>
-            <exclude>MasterClientAbstract.java</exclude>
-          </excludes>          
-        </configuration>
-      </plugin>
-      
-      			
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.21.0</version>
+				<configuration>
+					<includes>
+						<include>MasterClientTest.java</include>
+						<include>MasterClientTest2.java</include>
+						<include>MasterJwtClientTest.java</include>
+					</includes>
+					<excludes>
+						<exclude>MasterClientAbstract.java</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.19.1</version>
+				<dependencies>
+					<dependency>
+						<groupId>org.junit.platform</groupId>
+						<artifactId>junit-platform-surefire-provider</artifactId>
+						<version>1.1.0</version>
+					</dependency>
+					<dependency>
+						<groupId>org.junit.jupiter</groupId>
+						<artifactId>junit-jupiter-engine</artifactId>
+						<version>5.2.0</version>
+					</dependency>
+				</dependencies>
+			</plugin>
 		</plugins>
 	</build>
 
@@ -101,9 +118,21 @@
 		</dependency>
 
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.12</version>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
+			<version>5.2.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
+			<version>5.2.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
+			<version>5.2.0</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -138,9 +167,9 @@
 
 	</dependencies>
 	<scm>
-  		<tag>${project.version}</tag>
-		<connection>scm:git:git://github.com/iubar/${project.artifactId}-client.git</connection> 
-		<developerConnection>scm:git:git://github.com/iubar/${project.artifactId}-client.git</developerConnection> 
+		<tag>${project.version}</tag>
+		<connection>scm:git:git://github.com/iubar/${project.artifactId}-client.git</connection>
+		<developerConnection>scm:git:git://github.com/iubar/${project.artifactId}-client.git</developerConnection>
 		<url>https://github.com/iubar/${project.artifactId}-client</url>
 	</scm>
 </project>

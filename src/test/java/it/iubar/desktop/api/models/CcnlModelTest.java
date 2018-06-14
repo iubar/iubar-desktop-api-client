@@ -3,8 +3,8 @@ package it.iubar.desktop.api.models;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import it.iubar.desktop.api.MasterClientTest;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.Assert.assertEquals;
 
@@ -12,7 +12,7 @@ public class CcnlModelTest {
 
     private static CcnlModel ccnl;
 
-    @BeforeClass
+    @BeforeAll
     public static void before(){
     	CcnlModelTest.ccnl =  CcnlModelTest.factory();
     }

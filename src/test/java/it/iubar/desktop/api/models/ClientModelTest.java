@@ -1,10 +1,6 @@
 package it.iubar.desktop.api.models;
 
 import it.iubar.desktop.api.MasterClientTest;
-import org.junit.BeforeClass;
-import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
 
 public class ClientModelTest {
 

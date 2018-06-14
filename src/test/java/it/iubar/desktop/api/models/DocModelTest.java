@@ -1,6 +1,6 @@
 package it.iubar.desktop.api.models;
 
-import org.junit.BeforeClass;
+import org.junit.jupiter.api.BeforeAll;
 
 import it.iubar.desktop.api.MasterClientTest;
 
@@ -9,7 +9,7 @@ public class DocModelTest {
 
     private static DocModel doc;
 
-    @BeforeClass
+    @BeforeAll
     public static void before(){
     	DocModelTest.doc = DocModelTest.factory();
     }

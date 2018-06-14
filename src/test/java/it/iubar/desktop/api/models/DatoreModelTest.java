@@ -2,15 +2,14 @@ package it.iubar.desktop.api.models;
 
 import it.iubar.desktop.api.MasterClientTest;
 
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+
+import org.junit.jupiter.api.BeforeAll;
 
 public class DatoreModelTest {
 
     private static DatoreModel datore;
 
-    @BeforeClass
+    @BeforeAll
     public static void before(){
     	DatoreModelTest.datore = DatoreModelTest.factory();
     }
