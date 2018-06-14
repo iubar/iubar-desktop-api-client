@@ -1,8 +1,6 @@
 package it.iubar.desktop.api.models;
 
 import it.iubar.desktop.api.MasterClientTest;
-
-
 import org.junit.jupiter.api.BeforeAll;
 
 public class DatoreModelTest {

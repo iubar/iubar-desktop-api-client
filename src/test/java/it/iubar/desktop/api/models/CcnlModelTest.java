@@ -6,8 +6,6 @@ import it.iubar.desktop.api.MasterClientTest;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
-
 public class CcnlModelTest {
 
     private static CcnlModel ccnl;
