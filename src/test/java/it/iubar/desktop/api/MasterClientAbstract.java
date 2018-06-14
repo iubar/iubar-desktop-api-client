@@ -9,6 +9,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -21,7 +22,6 @@ import java.util.Properties;
 
 import javax.ws.rs.core.Response;
 
-import static org.junit.Assert.*;
 
 public abstract class MasterClientAbstract {
 
