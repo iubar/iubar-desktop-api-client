@@ -81,7 +81,7 @@ public class MasterClientTest2 {
 		HttpMethods.modlesSend(datori);
 	}
 
-	@Test
+	//@Test
 	public void sendDoc() {
 			DocModel doc = DocModelTest.factory();
 

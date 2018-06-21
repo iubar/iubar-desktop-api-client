@@ -48,7 +48,12 @@ public class HttpMethods {
 
 		JSONObject jsonObjModel = null;
 		try {
-			jsonObjModel = masterClient.send(url, model);
+			if(url != null)
+			{
+				jsonObjModel = masterClient.send(url, model);
+			}
+			else
+				jsonObjModel = masterClient.send(model);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
