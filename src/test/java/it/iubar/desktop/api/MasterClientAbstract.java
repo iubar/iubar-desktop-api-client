@@ -1,26 +1,33 @@
 package it.iubar.desktop.api;
 
  
-import it.iubar.desktop.api.exceptions.ClientException;
-import it.iubar.desktop.api.models.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 
 import org.json.JSONObject;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.util.Properties;
-
-import javax.ws.rs.core.Response;
+import it.iubar.desktop.api.models.CcnlModel;
+import it.iubar.desktop.api.models.CcnlModelTest;
+import it.iubar.desktop.api.models.ClientModel;
+import it.iubar.desktop.api.models.ClientModelTest;
+import it.iubar.desktop.api.models.DatoreModel;
+import it.iubar.desktop.api.models.DatoreModelTest;
+import it.iubar.desktop.api.models.DocModel;
+import it.iubar.desktop.api.models.DocModelTest;
+import it.iubar.desktop.api.models.ModelsList;
+import it.iubar.desktop.api.models.TitolareModel;
+import it.iubar.desktop.api.models.TitolareModelTest;
 
 
 public abstract class MasterClientAbstract {

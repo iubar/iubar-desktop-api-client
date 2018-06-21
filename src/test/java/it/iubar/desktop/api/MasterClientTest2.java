@@ -18,7 +18,6 @@ import it.iubar.desktop.api.models.TitolareModel;
 import it.iubar.desktop.api.models.TitolareModelTest;
 
 public class MasterClientTest2 {
-
 	@BeforeAll
 	public static void setUpBeforeClass() throws Exception {
 		MasterClientAbstract.loadConfig();

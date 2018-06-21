@@ -1,10 +1,6 @@
 package it.iubar.desktop.api.models;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-
-import it.iubar.desktop.api.MasterClientTest;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
 
 public class CcnlModelTest {
 
