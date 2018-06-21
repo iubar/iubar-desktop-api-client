@@ -1,7 +1,6 @@
 package it.iubar.desktop.api;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -38,7 +37,7 @@ import it.iubar.desktop.api.models.TitolareModelTest;
 public class MasterClientTest2 {
 
 	private static final Logger LOGGER = Logger.getLogger(MasterClientTest2.class.getName());
-	
+
 	@BeforeAll
 	public static void setUpBeforeClass() throws Exception {
 		MasterClientAbstract.loadConfig();
@@ -51,181 +50,86 @@ public class MasterClientTest2 {
 		masterClient.setBaseUrl(RestApiConsts.CRM_BASE_ROUTE);
 		return masterClient;
 	}
-	
-	
 
 	@Test
 	public void sendClient() {
-		HmacClient masterClient = (HmacClient) clientFactory();
-		try {
-			String url1 = "http://iubar.it/crm/api/crm/v1/client";
-			masterClient.setAuth(false);
-			ClientModel client = ClientModelTest.factory();
-			JSONObject jsonObjClient = masterClient.send(url1, client);
-			boolean data = jsonObjClient.getBoolean("data");
-			
-			assertNotNull(jsonObjClient);
-			assertTrue(data);			
-		} catch (Exception e) {
-			e.printStackTrace();
-			fail();
-		}
+
+		String url = "http://iubar.it/crm/api/crm/v1/client";
+		ClientModel client = ClientModelTest.factory();
+
+		HttpMethods.modelSend(url, client);
 	}
 
 	@Test
 	public void sendContatto() {
-		HmacClient masterClient = (HmacClient) clientFactory();
-		try {
-			masterClient.setAuth(false);
-			CcnlModel contratto = CcnlModelTest.factory();
-			ModelsList<CcnlModel> contratti = new ModelsList<CcnlModel>(ClientModelTest.MAC,
-					MasterClientAbstract.ID_APP_PAGHEOPEN, "contratti");
-			contratti.add(contratto);
-			JSONObject jsonObjContratti = masterClient.send(contratti);
-			boolean data = jsonObjContratti.getBoolean("data");
-			
-			assertNotNull(jsonObjContratti);
-			assertTrue(data);
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-			fail();
-		}
-	}
 
+		CcnlModel contratto = CcnlModelTest.factory();
+		ModelsList<CcnlModel> contratti = new ModelsList<CcnlModel>(ClientModelTest.MAC,
+				MasterClientAbstract.ID_APP_PAGHEOPEN, "contratti");
+		contratti.add(contratto);
+
+		HttpMethods.modlesSend(contratti);
+	}
 
 	@Test
 	public void sendDatore() {
-		HmacClient masterClient = (HmacClient) clientFactory();
-		try {
-			masterClient.setAuth(false);
-			DatoreModel datore = DatoreModelTest.factory();
-			ModelsList<DatoreModel> datori = new ModelsList<DatoreModel>(ClientModelTest.MAC,
-					MasterClientAbstract.ID_APP_PAGHEOPEN, "datori");
-			datori.add(datore);
-			JSONObject jsonObjdatori = masterClient.send(datori);
-			boolean data = jsonObjdatori.getBoolean("data");
-			
-			assertNotNull(jsonObjdatori);
-			assertTrue(data);
-		} catch (Exception e) {
-			e.printStackTrace();
-			fail();
-		}
+		DatoreModel datore = DatoreModelTest.factory();
+		ModelsList<DatoreModel> datori = new ModelsList<DatoreModel>(ClientModelTest.MAC,
+				MasterClientAbstract.ID_APP_PAGHEOPEN, "datori");
+		datori.add(datore);
+		
+		HttpMethods.modlesSend(datori);
 	}
 
 	@Test
 	public void sendDoc() {
-		HmacClient masterClient = (HmacClient) clientFactory();
-		try {
-			masterClient.setAuth(false);
 			DocModel doc = DocModelTest.factory();
 
-			JSONObject jsonObjDocs = masterClient.send(doc);
-			boolean data = jsonObjDocs.getBoolean("data");
-			assertNotNull(jsonObjDocs);
-			assertTrue(data);
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-			fail();
-		}
-	}
-	
-	@Test
-	public void receiveIncrementDocumento()
-	{
-		
-		ClientConfig config = new ClientConfig();
-		Client client = ClientBuilder.newClient(config);
-		URI baseUri = UriBuilder.fromUri("http://iubar.it/crm/api/crm/v1").build();
-		WebTarget target = client.target(baseUri);
-		String input = "{" + "\"iddoctype\": \"1\", " + "\"qnt\": \"0\""+ "}";
-		String path = "increment-documento";
-		LOGGER.info("Testing path \"" + baseUri.toString() + "/" + path + "\" ...");
-		Response response = target.path(path)
-				.request().accept(MediaType.APPLICATION_JSON)
-				.post(Entity.json(input));				
-		int statusCode = response.getStatus();
-		String json = response.readEntity(String.class);
-		JSONObject jsonObject = new JSONObject(json);		
-		LOGGER.info("...request: " + input + " | response: " + jsonObject.toString()+"\n");
-				
-		String message = jsonObject.getString("response");
-		boolean data = jsonObject.getBoolean("data");				
-		assertNotNull(message);
-		assertEquals(Status.OK.getStatusCode(), statusCode);
-		assertTrue(data);
-		assertEquals(Status.OK.getStatusCode(), jsonObject.getInt("code"));
-		
+			HttpMethods.modelSend(null, doc);			
 	}
 
 	@Test
-	public void receiveRegisterClientFail() {
-		ClientConfig config = new ClientConfig();
-		Client client = ClientBuilder.newClient(config);
-		URI baseUri = UriBuilder.fromUri("http://iubar.it/crm/api/crm/v1").build();
-		WebTarget target = client.target(baseUri);
+	public void sendIncrementDocumento() {
+		String input = "{" + "\"iddoctype\": \"1\", " + "\"qnt\": \"0\"" + "}";
+		String path = "increment-documento";
+
+		HttpMethods.send(input, path, true);
+	}
+
+	@Test
+	public void sendRegisterClientFail() {
+
 		String input = "{" + "\"mac\": \"B8-CA-3A-96-BD-03\", " + "\"cf\": \"DMNLSN95P14D969J\", "
 				+ "\"nome\": \"ALESSANDRO\", " + "\"cognome\": \"DAMONTE\"" + "}";
 		String path = "register-client/" + Integer.toString(MasterClientAbstract.ID_FAMILY_PAGHE);
-		LOGGER.info("Testing path \"" + baseUri.toString() + "/" + path + "\" ...");
-		Response response = target.path(path)
-				.request().accept(MediaType.APPLICATION_JSON)
-				.post(Entity.json(input));
-		int statusCode = response.getStatus();
-		String json = response.readEntity(String.class);
-		JSONObject jsonObject = new JSONObject(json);
-		LOGGER.info("...request: " + input + " | response: " + jsonObject.toString()+"\n");
-		
-		String message = jsonObject.getString("response");
 
-		assertNotNull(message);
-		assertEquals(statusCode, Status.BAD_REQUEST.getStatusCode());
-		assertEquals(Status.BAD_REQUEST.getStatusCode(), jsonObject.getInt("code"));
+		HttpMethods.send(input, path, false);
 	}
 
 	@Test
 	public void sendRegisterClient() {
-		ClientConfig config = new ClientConfig();
-		Client client = ClientBuilder.newClient(config);
-		URI baseUri = UriBuilder.fromUri("http://iubar.it/crm/api/crm/v1").build();
-		WebTarget target = client.target(baseUri);
 		String input = "{" + "\"mac\": \"" + ClientModelTest.MAC + "\", " + "\"cf\": \"" + ClientModelTest.CF + "\", "
 				+ "\"nome\": \"ALESSANDRO\", " + "\"cognome\": \"DAMONTE\"" + "}";
-		String path = "register-client/"+Integer.toString(MasterClientAbstract.ID_FAMILY_PAGHE);
-		LOGGER.info("Testing path \"" + baseUri.toString() + "/" + path + "\" ...");
-		
-		Response response = target.path(path)
-				.request().accept(MediaType.APPLICATION_JSON)
-				.post(Entity.json(input));
-		int statusCode = response.getStatus();
-		String json = response.readEntity(String.class);
-		JSONObject jsonObject = new JSONObject(json);
-		LOGGER.info("...request: " + input + " | response: " + jsonObject.toString() +"\n");
-		
-		String message = jsonObject.getString("response");
-		boolean data = jsonObject.getBoolean("data");
-		
-		assertNotNull(message);
-		assertEquals(Status.OK.getStatusCode(), statusCode);
-		assertTrue(data);
-		assertEquals(Status.OK.getStatusCode(), jsonObject.getInt("code"));
+		String path = "register-client/" + Integer.toString(MasterClientAbstract.ID_FAMILY_PAGHE);
+
+		HttpMethods.send(input, path, true);
+
 	}
+
 	@Test
 	public void sendTitolare() {
 		HmacClient masterClient = (HmacClient) clientFactory();
 		try {
 			masterClient.setAuth(false);
 			TitolareModel titolare = TitolareModelTest.factory();
-			
+
 			ModelsList<TitolareModel> titolari = new ModelsList<TitolareModel>(ClientModelTest.MAC,
 					MasterClientAbstract.ID_APP_PAGHEOPEN, "titolari");
 			titolari.add(titolare);
-			
+
 			JSONObject jsonObjTitolari = masterClient.send(titolari);
 			boolean data = jsonObjTitolari.getBoolean("data");
-			
+
 			assertNotNull(jsonObjTitolari);
 			assertTrue(data);
 		} catch (Exception e) {
@@ -233,435 +137,128 @@ public class MasterClientTest2 {
 			fail();
 		}
 	}
-	
 
 	@Test
-	public void receiveAggiornamentiMese()
-	{
-		ClientConfig config = new ClientConfig();
-		Client client = ClientBuilder.newClient(config);
-		URI baseUri = UriBuilder.fromUri("http://iubar.it/crm/api/crm/v1").build();
-		WebTarget target = client.target(baseUri);
-		String path =Integer.toString(MasterClientAbstract.ID_FAMILY_PAGHE)+ "/stats/updated/"+"2017-01-01/"+"2017-05-26";
-		LOGGER.info("Testing path \"" + baseUri.toString() + "/" + path + "\" ...");
-		Response response = target.path(path)
-				.request().accept(MediaType.APPLICATION_JSON)
-				.get(Response.class);
-		
-		int statusCode = response.getStatus();
-		
-		String json = response.readEntity(String.class);
-		JSONObject jsonObject = new JSONObject(json);
-		LOGGER.info("...response: " + jsonObject.toString()+"\n");
-		String message = jsonObject.getString("response");
-		assertNotNull(message);
-		assertEquals(Status.OK.getStatusCode(), statusCode);
-		assertEquals(Status.OK.getStatusCode(), jsonObject.getInt("code"));
-	}
-	
-	@Test
-	public void receiveAnalisi()
-	{
-		ClientConfig config = new ClientConfig();
-		Client client = ClientBuilder.newClient(config);
-		URI baseUri = UriBuilder.fromUri("http://iubar.it/crm/api/crm/v1").build();
-		WebTarget target = client.target(baseUri);
-		String path =Integer.toString(MasterClientAbstract.ID_FAMILY_PAGHE)+ "/analytics";
-		LOGGER.info("Testing path \"" + baseUri.toString() + "/" + path + "\" ...");
-		
-		Response response = target.path(path)
-				.request().accept(MediaType.APPLICATION_JSON)
-				.get(Response.class);
-		
-		int statusCode = response.getStatus();
-		
-		String json = response.readEntity(String.class);
-		JSONObject jsonObject = new JSONObject(json);
-		LOGGER.info("...response: " + jsonObject.toString()+"\n");
-		String message = jsonObject.getString("response");
-		
-		assertNotNull(message);
-		assertEquals(Status.OK.getStatusCode(), statusCode);
-		assertEquals(Status.OK.getStatusCode(), jsonObject.getInt("code"));		
+	public void receiveAggiornamentiMese() {
+		String path = Integer.toString(MasterClientAbstract.ID_FAMILY_PAGHE) + "/stats/updated/" + "2017-01-01/"
+				+ "2017-05-26";
+
+		HttpMethods.receive(path);
 	}
 
 	@Test
-	public void receiveBlacklist()
-	{
-		ClientConfig config = new ClientConfig();
-		Client client = ClientBuilder.newClient(config);
-		URI baseUri = UriBuilder.fromUri("http://iubar.it/crm/api/crm/v1").build();
-		WebTarget target = client.target(baseUri);
-		String path =Integer.toString(MasterClientAbstract.ID_FAMILY_PAGHE)+ "/blacklist/" + "mac/" + ClientModelTest.MAC;
-		LOGGER.info("Testing path \"" + baseUri.toString() + "/" + path + "\" ...");
-		
-		Response response = target.path(path)
-				.request().accept(MediaType.APPLICATION_JSON)
-				.get(Response.class);
-		
-		int statusCode = response.getStatus();
-		String json = response.readEntity(String.class);
-		JSONObject jsonObject = new JSONObject(json);
-		LOGGER.info("...response: " + jsonObject.toString()+"\n");
-		String message = jsonObject.getString("response");
-		
-		boolean data = jsonObject.getBoolean("data");
-		
-		assertNotNull(message);
-		assertEquals(Status.OK.getStatusCode(), statusCode);
-		assertFalse(data);
-		assertEquals(Status.OK.getStatusCode(), jsonObject.getInt("code"));		
+	public void receiveAnalisi() {
+		String path = Integer.toString(MasterClientAbstract.ID_FAMILY_PAGHE) + "/analytics";
+
+		HttpMethods.receive(path);
 	}
 
 	@Test
-	public void receiveCedolino()
-	{
-		ClientConfig config = new ClientConfig();
-		Client client = ClientBuilder.newClient(config);
-		URI baseUri = UriBuilder.fromUri("http://iubar.it/crm/api/crm/v1").build();
-		WebTarget target = client.target(baseUri);
-		String path ="stats/cedolini/" + "2016-05-06/"+"2017-05-06" ;
-		LOGGER.info("Testing path \"" + baseUri.toString() + "/" + path + "\" ...");
-		
-		Response response = target.path(path)
-				.request().accept(MediaType.APPLICATION_JSON)
-				.get(Response.class);
-		
-		int statusCode = response.getStatus();
-		String json = response.readEntity(String.class);
-		JSONObject jsonObject = new JSONObject(json);
-		LOGGER.info("...response: " + jsonObject.toString()+"\n");
-		String message = jsonObject.getString("response");
-		
-		assertNotNull(message);
-		assertEquals(Status.OK.getStatusCode(), statusCode);
-		assertEquals(Status.OK.getStatusCode(), jsonObject.getInt("code"));	
-	}
-		
-	@Test 
-	public void receiveCountDocumentiMese()
-	{
-		ClientConfig config = new ClientConfig();
-		Client client = ClientBuilder.newClient(config);
-		URI baseUri = UriBuilder.fromUri("http://iubar.it/crm/api/crm/v1").build();
-		WebTarget target = client.target(baseUri);
-		String path ="count-documenti/" +"1/"+ "2017-08-19/"+"2017-09-19" ;
-		LOGGER.info("Testing path \"" + baseUri.toString() + "/" + path + "\" ...");
-		
-		Response response = target.path(path)
-				.request().accept(MediaType.APPLICATION_JSON)
-				.get(Response.class);
-		
-		int statusCode = response.getStatus();
-		String json = response.readEntity(String.class);
-		JSONObject jsonObject = new JSONObject(json);
-		LOGGER.info("...response: " + jsonObject.toString()+"\n");
-		String message = jsonObject.getString("response");
-		
-		assertNotNull(message);
-		assertEquals(Status.OK.getStatusCode(), statusCode);
-		assertEquals(Status.OK.getStatusCode(), jsonObject.getInt("code"));	
-	}
-	
-	@Test 
-	public void receiveDocumenti()
-	{
-		ClientConfig config = new ClientConfig();
-		Client client = ClientBuilder.newClient(config);
-		URI baseUri = UriBuilder.fromUri("http://iubar.it/crm/api/crm/v1").build();
-		WebTarget target = client.target(baseUri);
-		String path = "stats/doc/" + "2016-05-06/"+"2017-05-06" ;
-		LOGGER.info("Testing path \"" + baseUri.toString() + "/" + path + "\" ...");
-		
-		Response response = target.path(path)
-				.request().accept(MediaType.APPLICATION_JSON)
-				.get(Response.class);
-		
-		int statusCode = response.getStatus();
-		String json = response.readEntity(String.class);
-		JSONObject jsonObject = new JSONObject(json);
-		LOGGER.info("...response: " + jsonObject.toString()+"\n");
-		String message = jsonObject.getString("response");
-		
-		assertNotNull(message);
-		assertEquals(Status.OK.getStatusCode(), statusCode);
-		assertEquals(Status.OK.getStatusCode(), jsonObject.getInt("code"));	
+	public void receiveBlacklist() {
+		String path = Integer.toString(MasterClientAbstract.ID_FAMILY_PAGHE) + "/blacklist/" + "mac/"
+				+ ClientModelTest.MAC;
+
+		HttpMethods.receive(path);
+		HttpMethods.isDataFalse();
 	}
 
 	@Test
-	public void receiveElencoProvincie()
-	{
-		ClientConfig config = new ClientConfig();
-		Client client = ClientBuilder.newClient(config);
-		URI baseUri = UriBuilder.fromUri("http://iubar.it/crm/api/crm/v1").build();
-		WebTarget target = client.target(baseUri);
-		String path = "provincia/all" ;
-		LOGGER.info("Testing path \"" + baseUri.toString() + "/" + path + "\" ...");
-		
-		Response response = target.path(path)
-				.request().accept(MediaType.APPLICATION_JSON)
-				.get(Response.class);
-		
-		int statusCode = response.getStatus();
-		String json = response.readEntity(String.class);
-		JSONObject jsonObject = new JSONObject(json);
-		LOGGER.info("...response: " + jsonObject.toString()+"\n");
-		String message = jsonObject.getString("response");
-		
-		assertNotNull(message);
-		assertEquals(Status.OK.getStatusCode(), statusCode);
-		assertEquals(Status.OK.getStatusCode(), jsonObject.getInt("code"));	
+	public void receiveCedolino() {
+		String path = "stats/cedolini/" + "2016-05-06/" + "2017-05-06";
+
+		HttpMethods.receive(path);
 	}
 
 	@Test
-	public void receiveGreylist()
-	{
-		ClientConfig config = new ClientConfig();
-		Client client = ClientBuilder.newClient(config);
-		URI baseUri = UriBuilder.fromUri("http://iubar.it/crm/api/crm/v1").build();
-		WebTarget target = client.target(baseUri);
-		String path = Integer.toString(MasterClientAbstract.ID_FAMILY_PAGHE) + "/greylist/" + "mac/" + ClientModelTest.MAC;
-		LOGGER.info("Testing path \"" + baseUri.toString() + "/" + path + "\" ...");
-		Response response = target.path(path)
-				.request().accept(MediaType.APPLICATION_JSON)
-				.get(Response.class);
-		
-		int statusCode = response.getStatus();
-		String json = response.readEntity(String.class);
-		JSONObject jsonObject = new JSONObject(json);
-		LOGGER.info("...response: " + jsonObject.toString()+"\n");
-		String message = jsonObject.getString("response");
+	public void receiveCountDocumentiMese() {
+		String path = "count-documenti/" + "1/" + "2017-08-19/" + "2017-09-19";
 
-		assertNotNull(message);
-		assertEquals(Status.OK.getStatusCode(), statusCode);
-		assertEquals(Status.OK.getStatusCode(), jsonObject.getInt("code"));			
+		HttpMethods.receive(path);
 	}
-	
 
 	@Test
-	public void receiveInfoMac()
-	{
-		ClientConfig config = new ClientConfig();
-		Client client = ClientBuilder.newClient(config);
-		URI baseUri = UriBuilder.fromUri("http://iubar.it/crm/api/crm/v1").build();
-		WebTarget target = client.target(baseUri);
+	public void receiveDocumenti() {
+		String path = "stats/doc/" + "2016-05-06/" + "2017-05-06";
+
+		HttpMethods.receive(path);
+	}
+
+	@Test
+	public void receiveElencoProvincie() {
+		String path = "provincia/all";
+
+		HttpMethods.receive(path);
+	}
+
+	@Test
+	public void receiveGreylist() {
+		String path = Integer.toString(MasterClientAbstract.ID_FAMILY_PAGHE) + "/greylist/" + "mac/"
+				+ ClientModelTest.MAC;
+
+		HttpMethods.receive(path);
+	}
+
+	@Test
+	public void receiveInfoMac() {
 		String path = "info/" + ClientModelTest.MAC;
-		LOGGER.info("Testing path \"" + baseUri.toString() + "/" + path + "\" ...");
 
-		Response response = target.path(path)
-				.request().accept(MediaType.APPLICATION_JSON)
-				.get(Response.class);
-		
-		int statusCode = response.getStatus();
-		String json = response.readEntity(String.class);
-		JSONObject jsonObject = new JSONObject(json);
-		LOGGER.info("...response: " + jsonObject.toString()+"\n");
-		String message = jsonObject.getString("response");
-
-		assertNotNull(message);
-		assertEquals(Status.OK.getStatusCode(), statusCode);
-		assertEquals(Status.OK.getStatusCode(), jsonObject.getInt("code"));	
+		HttpMethods.receive(path);
 	}
 
 	@Test
-	public void receiveInfoTitolare()
-	{
-		ClientConfig config = new ClientConfig();
-		Client client = ClientBuilder.newClient(config);
-		URI baseUri = UriBuilder.fromUri("http://iubar.it/crm/api/crm/v1").build();
-		WebTarget target = client.target(baseUri);
+	public void receiveInfoTitolare() {
 		String path = "info/" + "cognome/" + "prova";
-		LOGGER.info("Testing path \"" + baseUri.toString() + "/" + path + "\" ...");
-		
-		Response response = target.path(path)
-				.request().accept(MediaType.APPLICATION_JSON)
-				.header("PRIVATE-TOKEN", null).get(Response.class);
-		
-		int statusCode = response.getStatus();
-		String json = response.readEntity(String.class);
-		JSONObject jsonObject = new JSONObject(json);
-		LOGGER.info("...response: " + jsonObject.toString()+"\n");
-		String message = jsonObject.getString("response");
 
-		assertNotNull(message);
-		assertEquals(Status.OK.getStatusCode(), statusCode);
-		assertEquals(Status.OK.getStatusCode(), jsonObject.getInt("code"));	
-	}
-	
-	@Test
-	public void receiveInstallazioniMese()
-	{
-		ClientConfig config = new ClientConfig();
-		Client client = ClientBuilder.newClient(config);
-		URI baseUri = UriBuilder.fromUri("http://iubar.it/crm/api/crm/v1").build();
-		WebTarget target = client.target(baseUri);
-		String path = Integer.toString(MasterClientAbstract.ID_FAMILY_PAGHE) + "/stats/installed/" + "2017-01-01/" + "2017-05-26";
-		LOGGER.info("Testing path \"" + baseUri.toString() + "/" + path + "\" ...");
-		
-		Response response = target.path(path)
-				.request().accept(MediaType.APPLICATION_JSON)
-				.get(Response.class);
-		
-		int statusCode = response.getStatus();
-		String json = response.readEntity(String.class);
-		JSONObject jsonObject = new JSONObject(json);
-		LOGGER.info("...response: " + jsonObject.toString()+"\n");
-		String message = jsonObject.getString("response");
-
-		assertNotNull(message);
-		assertEquals(Status.OK.getStatusCode(), statusCode);
-		assertEquals(Status.OK.getStatusCode(), jsonObject.getInt("code"));	
+		HttpMethods.receive(path);
 	}
 
 	@Test
-	public void receiveInstallazioni()
-	{
-		ClientConfig config = new ClientConfig();
-		Client client = ClientBuilder.newClient(config);
-		URI baseUri = UriBuilder.fromUri("http://iubar.it/crm/api/crm/v1").build();
-		WebTarget target = client.target(baseUri);
+	public void receiveInstallazioniMese() {
+		String path = Integer.toString(MasterClientAbstract.ID_FAMILY_PAGHE) + "/stats/installed/" + "2017-01-01/"
+				+ "2017-05-26";
+
+		HttpMethods.receive(path);
+	}
+
+	@Test
+	public void receiveInstallazioni() {
 		String path = Integer.toString(MasterClientAbstract.ID_FAMILY_PAGHE) + "/stats/installed";
-		LOGGER.info("Testing path \"" + baseUri.toString() + "/" + path + "\" ...");
-		
-		Response response = target.path(path)
-				.request().accept(MediaType.APPLICATION_JSON)
-				.get(Response.class);
-		
-		int statusCode = response.getStatus();
-		String json = response.readEntity(String.class);
-		JSONObject jsonObject = new JSONObject(json);
-		LOGGER.info("...response: " + jsonObject.toString()+"\n");
-		String message = jsonObject.getString("response");
 
-		assertNotNull(message);
-		assertEquals(Status.OK.getStatusCode(), statusCode);
-		assertEquals(Status.OK.getStatusCode(), jsonObject.getInt("code"));
+		HttpMethods.receive(path);
 	}
-	
-	@Test
-	public void receiveNow()
-	{
-		ClientConfig config = new ClientConfig();
-		Client client = ClientBuilder.newClient(config);
-		URI baseUri = UriBuilder.fromUri("http://iubar.it/crm/api/crm/v1").build();
-		WebTarget target = client.target(baseUri);
-		String path = "now/" + "europe/" + "rome" ;
-		LOGGER.info("Testing path \"" + baseUri.toString() + "/" + path + "\" ...");
-		
-		Response response = target.path(path)
-				.request().accept(MediaType.APPLICATION_JSON)
-				.get(Response.class);
-		
-		int statusCode = response.getStatus();
-		String json = response.readEntity(String.class);
-		JSONObject jsonObject = new JSONObject(json);
-		LOGGER.info("...response: " + jsonObject.toString()+"\n");
-		String message = jsonObject.getString("response");
 
-		assertNotNull(message);
-		assertEquals(Status.OK.getStatusCode(), statusCode);
-		assertEquals(Status.OK.getStatusCode(), jsonObject.getInt("code"));
-	}
-	
-	
 	@Test
-	public void receivePreventivi()
-	{
-		ClientConfig config = new ClientConfig();
-		Client client = ClientBuilder.newClient(config);
-		URI baseUri = UriBuilder.fromUri("http://iubar.it/crm/api/crm/v1").build();
-		WebTarget target = client.target(baseUri);
-		String path = "stats/preventivi/" + "2016-05-06/" + "2017-05-06" ;
-		LOGGER.info("Testing path \"" + baseUri.toString() + "/" + path + "\" ...");
-		
-		Response response = target.path(path)
-				.request().accept(MediaType.APPLICATION_JSON)
-				.get(Response.class);
-		
-		int statusCode = response.getStatus();
-		String json = response.readEntity(String.class);
-		JSONObject jsonObject = new JSONObject(json);
-		LOGGER.info("...response: " + jsonObject.toString()+"\n");
-		String message = jsonObject.getString("response");
+	public void receiveNow() {
+		String path = "now/" + "europe/" + "rome";
 
-		assertNotNull(message);
-		assertEquals(Status.OK.getStatusCode(), statusCode);
-		assertEquals(Status.OK.getStatusCode(), jsonObject.getInt("code"));
+		HttpMethods.receive(path);
 	}
-	
-	@Test
-	public void receiveStatisticheGenerali()
-	{
-		ClientConfig config = new ClientConfig();
-		Client client = ClientBuilder.newClient(config);
-		URI baseUri = UriBuilder.fromUri("http://iubar.it/crm/api/crm/v1").build();
-		WebTarget target = client.target(baseUri);
-		String path = Integer.toString(MasterClientAbstract.ID_FAMILY_PAGHE) +"/stats/" + "2016-05-06/" + "2017-05-06";
-		LOGGER.info("Testing path \"" + baseUri.toString() + "/" + path + "\" ...");
-		
-		Response response = target.path(path)
-				.request().accept(MediaType.APPLICATION_JSON)
-				.get(Response.class);
-		
-		int statusCode = response.getStatus();
-		String json = response.readEntity(String.class);
-		JSONObject jsonObject = new JSONObject(json);
-		LOGGER.info("...response: " + jsonObject.toString()+"\n");
-		String message = jsonObject.getString("response");
 
-		assertNotNull(message);
-		assertEquals(Status.OK.getStatusCode(), statusCode);
-		assertEquals(Status.OK.getStatusCode(), jsonObject.getInt("code"));
-	}
-	
 	@Test
-	public void receiveTopUsers()
-	{
-		ClientConfig config = new ClientConfig();
-		Client client = ClientBuilder.newClient(config);
-		URI baseUri = UriBuilder.fromUri("http://iubar.it/crm/api/crm/v1").build();
-		WebTarget target = client.target(baseUri);
+	public void receivePreventivi() {
+		String path = "stats/preventivi/" + "2016-05-06/" + "2017-05-06";
+
+		HttpMethods.receive(path);
+	}
+
+	@Test
+	public void receiveStatisticheGenerali() {
+		String path = Integer.toString(MasterClientAbstract.ID_FAMILY_PAGHE) + "/stats/" + "2016-05-06/" + "2017-05-06";
+
+		HttpMethods.receive(path);
+	}
+
+	@Test
+	public void receiveTopUsers() {
 		String path = "top-users/limit/" + "10";
-		LOGGER.info("Testing path \"" + baseUri.toString() + "/" + path + "\" ...");
-		
-		Response response = target.path(path)
-				.request().accept(MediaType.APPLICATION_JSON)
-				.get(Response.class);
-		
-		int statusCode = response.getStatus();
-		String json = response.readEntity(String.class);
-		JSONObject jsonObject = new JSONObject(json);
-		LOGGER.info("...response: " + jsonObject.toString()+"\n");
-		String message = jsonObject.getString("response");
 
-		assertNotNull(message);
-		assertEquals(Status.OK.getStatusCode(), statusCode);
-		assertEquals(Status.OK.getStatusCode(), jsonObject.getInt("code"));
+		HttpMethods.receive(path);
 	}
+
 	@Test
-	public void receiveUltimiUtenti()
-	{
-		ClientConfig config = new ClientConfig();
-		Client client = ClientBuilder.newClient(config);
-		URI baseUri = UriBuilder.fromUri("http://iubar.it/crm/api/crm/v1").build();
-		WebTarget target = client.target(baseUri);
+	public void receiveUltimiUtenti() {
 		String path = "last-users/limit/" + "10";
-		LOGGER.info("Testing path \"" + baseUri.toString() + "/" + path + "\" ...");
-		
-		Response response = target.path(path)
-				.request().accept(MediaType.APPLICATION_JSON)
-				.get(Response.class);
-		
-		int statusCode = response.getStatus();
-		String json = response.readEntity(String.class);
-		JSONObject jsonObject = new JSONObject(json);
-		LOGGER.info("...response: " + jsonObject.toString()+"\n");
-		String message = jsonObject.getString("response");
 
-		assertNotNull(message);
-		assertEquals(Status.OK.getStatusCode(), statusCode);
-		assertEquals(Status.OK.getStatusCode(), jsonObject.getInt("code"));
+		HttpMethods.receive(path);
 	}
-
-	
 }
