@@ -1,12 +1,7 @@
 package it.iubar.desktop.api;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
-import java.util.logging.Logger;
-
-import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -23,6 +18,7 @@ import it.iubar.desktop.api.models.TitolareModel;
 import it.iubar.desktop.api.models.TitolareModelTest;
 
 public class MasterClientTest2 {
+
 	@BeforeAll
 	public static void setUpBeforeClass() throws Exception {
 		MasterClientAbstract.loadConfig();
@@ -42,7 +38,11 @@ public class MasterClientTest2 {
 		String url = "http://iubar.it/crm/api/crm/v1/client";
 		ClientModel client = ClientModelTest.factory();
 
-		HttpMethods.modelSend(url, client);
+		try {
+			HttpMethods.modelSend(url, client);
+		} catch (Exception e) {
+			fail();
+		}
 	}
 
 	@Test
@@ -53,7 +53,11 @@ public class MasterClientTest2 {
 				MasterClientAbstract.ID_APP_PAGHEOPEN, "contratti");
 		contratti.add(contratto);
 
-		HttpMethods.modlesSend(contratti);
+		try {
+			HttpMethods.modlesSend(contratti);
+		} catch (Exception e) {
+			fail();
+		}
 	}
 
 	@Test
@@ -62,15 +66,23 @@ public class MasterClientTest2 {
 		ModelsList<DatoreModel> datori = new ModelsList<DatoreModel>(ClientModelTest.MAC,
 				MasterClientAbstract.ID_APP_PAGHEOPEN, "datori");
 		datori.add(datore);
-		
-		HttpMethods.modlesSend(datori);
+
+		try {
+			HttpMethods.modlesSend(datori);
+		} catch (Exception e) {
+			fail();
+		}
 	}
 
-	//@Test
+	@Test
 	public void sendDoc() {
-			DocModel doc = DocModelTest.factory();
+		DocModel doc = DocModelTest.factory();
 
-			HttpMethods.modelSend(null, doc);			
+		try {
+			HttpMethods.modelSend(null, doc);
+		} catch (Exception e) {
+			fail();
+		}
 	}
 
 	@Test
@@ -78,7 +90,11 @@ public class MasterClientTest2 {
 		String input = "{" + "\"iddoctype\": \"1\", " + "\"qnt\": \"0\"" + "}";
 		String path = "increment-documento";
 
-		HttpMethods.send(input, path, true);
+		try {
+			HttpMethods.send(input, path, true);
+		} catch (Exception e) {
+			fail();
+		}
 	}
 
 	@Test
@@ -88,7 +104,11 @@ public class MasterClientTest2 {
 				+ "\"nome\": \"ALESSANDRO\", " + "\"cognome\": \"DAMONTE\"" + "}";
 		String path = "register-client/" + Integer.toString(MasterClientAbstract.ID_FAMILY_PAGHE);
 
-		HttpMethods.send(input, path, false);
+		try {
+			HttpMethods.send(input, path, false);
+		} catch (Exception e) {
+			fail();
+		}
 	}
 
 	@Test
@@ -97,28 +117,25 @@ public class MasterClientTest2 {
 				+ "\"nome\": \"ALESSANDRO\", " + "\"cognome\": \"DAMONTE\"" + "}";
 		String path = "register-client/" + Integer.toString(MasterClientAbstract.ID_FAMILY_PAGHE);
 
-		HttpMethods.send(input, path, true);
+		try {
+			HttpMethods.send(input, path, true);
+		} catch (Exception e) {
+			fail();
+		}
 
 	}
 
 	@Test
 	public void sendTitolare() {
-		HmacClient masterClient = (HmacClient) clientFactory();
+		TitolareModel titolare = TitolareModelTest.factory();
+
+		ModelsList<TitolareModel> titolari = new ModelsList<TitolareModel>(ClientModelTest.MAC,
+				MasterClientAbstract.ID_APP_PAGHEOPEN, "titolari");
+		titolari.add(titolare);
+		
 		try {
-			masterClient.setAuth(false);
-			TitolareModel titolare = TitolareModelTest.factory();
-
-			ModelsList<TitolareModel> titolari = new ModelsList<TitolareModel>(ClientModelTest.MAC,
-					MasterClientAbstract.ID_APP_PAGHEOPEN, "titolari");
-			titolari.add(titolare);
-
-			JSONObject jsonObjTitolari = masterClient.send(titolari);
-			boolean data = jsonObjTitolari.getBoolean("data");
-
-			assertNotNull(jsonObjTitolari);
-			assertTrue(data);
+			HttpMethods.modlesSend(titolari);
 		} catch (Exception e) {
-			e.printStackTrace();
 			fail();
 		}
 	}
@@ -128,14 +145,22 @@ public class MasterClientTest2 {
 		String path = Integer.toString(MasterClientAbstract.ID_FAMILY_PAGHE) + "/stats/updated/" + "2017-01-01/"
 				+ "2017-05-26";
 
-		HttpMethods.receive(path);
+		try {
+			HttpMethods.receive(path);
+		} catch (Exception e) {
+			fail();
+		}
 	}
 
 	@Test
 	public void receiveAnalisi() {
 		String path = Integer.toString(MasterClientAbstract.ID_FAMILY_PAGHE) + "/analytics";
 
-		HttpMethods.receive(path);
+		try {
+			HttpMethods.receive(path);
+		} catch (Exception e) {
+			fail();
+		}
 	}
 
 	@Test
@@ -143,36 +168,56 @@ public class MasterClientTest2 {
 		String path = Integer.toString(MasterClientAbstract.ID_FAMILY_PAGHE) + "/blacklist/" + "mac/"
 				+ ClientModelTest.MAC;
 
-		HttpMethods.receive(path);
-		HttpMethods.isDataFalse();
+		try {
+			HttpMethods.receive(path);
+			HttpMethods.isDataFalse();
+		} catch (Exception e) {
+			fail();
+		}
 	}
 
 	@Test
 	public void receiveCedolino() {
 		String path = "stats/cedolini/" + "2016-05-06/" + "2017-05-06";
 
-		HttpMethods.receive(path);
+		try {
+			HttpMethods.receive(path);
+		} catch (Exception e) {
+			fail();
+		}
 	}
 
 	@Test
 	public void receiveCountDocumentiMese() {
 		String path = "count-documenti/" + "1/" + "2017-08-19/" + "2017-09-19";
 
-		HttpMethods.receive(path);
+		try {
+			HttpMethods.receive(path);
+		} catch (Exception e) {
+			fail();
+		}
 	}
 
 	@Test
 	public void receiveDocumenti() {
 		String path = "stats/doc/" + "2016-05-06/" + "2017-05-06";
 
-		HttpMethods.receive(path);
+		try {
+			HttpMethods.receive(path);
+		} catch (Exception e) {
+			fail();
+		}
 	}
 
 	@Test
 	public void receiveElencoProvincie() {
 		String path = "provincia/all";
 
-		HttpMethods.receive(path);
+		try {
+			HttpMethods.receive(path);
+		} catch (Exception e) {
+			fail();
+		}
 	}
 
 	@Test
@@ -180,21 +225,33 @@ public class MasterClientTest2 {
 		String path = Integer.toString(MasterClientAbstract.ID_FAMILY_PAGHE) + "/greylist/" + "mac/"
 				+ ClientModelTest.MAC;
 
-		HttpMethods.receive(path);
+		try {
+			HttpMethods.receive(path);
+		} catch (Exception e) {
+			fail();
+		}
 	}
 
 	@Test
 	public void receiveInfoMac() {
 		String path = "info/" + ClientModelTest.MAC;
 
-		HttpMethods.receive(path);
+		try {
+			HttpMethods.receive(path);
+		} catch (Exception e) {
+			fail();
+		}
 	}
 
 	@Test
 	public void receiveInfoTitolare() {
 		String path = "info/" + "cognome/" + "prova";
 
-		HttpMethods.receive(path);
+		try {
+			HttpMethods.receive(path);
+		} catch (Exception e) {
+			fail();
+		}
 	}
 
 	@Test
@@ -202,48 +259,76 @@ public class MasterClientTest2 {
 		String path = Integer.toString(MasterClientAbstract.ID_FAMILY_PAGHE) + "/stats/installed/" + "2017-01-01/"
 				+ "2017-05-26";
 
-		HttpMethods.receive(path);
+		try {
+			HttpMethods.receive(path);
+		} catch (Exception e) {
+			fail();
+		}
 	}
 
 	@Test
 	public void receiveInstallazioni() {
 		String path = Integer.toString(MasterClientAbstract.ID_FAMILY_PAGHE) + "/stats/installed";
 
-		HttpMethods.receive(path);
+		try {
+			HttpMethods.receive(path);
+		} catch (Exception e) {
+			fail();
+		}
 	}
 
 	@Test
 	public void receiveNow() {
 		String path = "now/" + "europe/" + "rome";
 
-		HttpMethods.receive(path);
+		try {
+			HttpMethods.receive(path);
+		} catch (Exception e) {
+			fail();
+		}
 	}
 
 	@Test
 	public void receivePreventivi() {
 		String path = "stats/preventivi/" + "2016-05-06/" + "2017-05-06";
 
-		HttpMethods.receive(path);
+		try {
+			HttpMethods.receive(path);
+		} catch (Exception e) {
+			fail();
+		}
 	}
 
 	@Test
 	public void receiveStatisticheGenerali() {
 		String path = Integer.toString(MasterClientAbstract.ID_FAMILY_PAGHE) + "/stats/" + "2016-05-06/" + "2017-05-06";
 
-		HttpMethods.receive(path);
+		try {
+			HttpMethods.receive(path);
+		} catch (Exception e) {
+			fail();
+		}
 	}
 
 	@Test
 	public void receiveTopUsers() {
 		String path = "top-users/limit/" + "10";
 
-		HttpMethods.receive(path);
+		try {
+			HttpMethods.receive(path);
+		} catch (Exception e) {
+			fail();
+		}
 	}
 
 	@Test
 	public void receiveUltimiUtenti() {
 		String path = "last-users/limit/" + "10";
 
-		HttpMethods.receive(path);
+		try {
+			HttpMethods.receive(path);
+		} catch (Exception e) {
+			fail();
+		}
 	}
 }
