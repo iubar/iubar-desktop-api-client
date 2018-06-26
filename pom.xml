@@ -49,8 +49,9 @@
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
- 				<!--<version>2.22.</version> non supporta junit 5-->
+				<artifactId>maven-surefire-plugin</artifactId>				
+ 				<!-- Non è possibile usare la versione 2.22 del plugin perchè non supporta junit 5 -->
+				<!-- https://stackoverflow.com/questions/36970384/surefire-is-not-picking-up-junit-5-tests?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa -->
 				<version>2.19.1</version>
 				<configuration>
 					<includes>
@@ -87,8 +88,7 @@
 			<version>2.26</version>
 		</dependency>
 
-		<!-- Jersey 2 comes with a JSR330 (dependency injection) implementation 
-			baked in, named HK2 -->
+		<!-- Jersey 2 comes with a JSR330 (dependency injection) implementation baked in, named HK2 -->
 		<!-- https://mvnrepository.com/artifact/org.glassfish.jersey.inject/jersey-hk2 -->
 		<dependency>
 			<groupId>org.glassfish.jersey.inject</groupId>
