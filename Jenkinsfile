@@ -1,10 +1,9 @@
-// iubar-auto-update
 pipeline {
     agent {    
     	docker {   	
-    		image 'iubar-maven-ubuntu'
+    		image 'iubar-maven-alpine'
     		label 'docker'
-    		args '-e MAVEN_CONFIG=/home/jenkins/.m2 -v /home/jenkins/.m2:/home/jenkins/.m2:rw,z'
+    		args '-v /home/jenkins/.m2:/home/jenkins/.m2:rw,z'
     	} 
     }
     stages {
@@ -25,22 +24,38 @@ pipeline {
                 }
             }
         }
+        stage('Analyze') {
+            steps {
+				script {
+					try {
+						sh 'sonar-scanner'
+					} catch (err){
+						echo "SonarQube: analyze failed !!!"
+					}
+				}
+            }
+        }		
+        stage('Quality gate') {
+            steps {
+				sh '''
+				    QUALITYGATE=$(curl http://192.168.0.117:9000/api/qualitygates/project_status?projectKey=java%3Aiubar-desktop-api-client | jq '.projectStatus.status')
+				    QUALITYGATE=$(echo "$QUALITYGATE" | sed -e 's/^"//' -e 's/"$//')
+				    echo "QUALITYGATE: ${QUALITYGATE}"
+                    if [ $QUALITYGATE = OK ]; then
+                       echo "High five !"
+                    else
+                       echo "Poor quality !"
+                       exit 1
+                    fi				    
+				'''
+            }
+        }
 		stage ('Deploy') {
             steps {
             	echo 'Deploying...'
-		sh 'cat /home/jenkins/.m2/settings.xml'
-		sh 'mvn --version'
-		sh 'mvn help:effective-settings'
-		echo '...Deploying...' // @see https://i.stack.imgur.com/wqati.png
-                // sh 'mvn -X -B -DskipTests=true --global-settings /home/jenkins/.m2/settings.xml --settings /home/jenkins/.m2/settings.xml jar:jar deploy:deploy'
-    	        sh 'mvn -X -B -DskipTests=true deploy'
+                sh 'mvn -B -DskipTests=true deploy'
             }
-        }
-        stage('Analyze') {
-            steps {
-                sh 'sonar-scanner'
-            }
-        }
+        }		
     }
 	post {
         changed {
@@ -56,10 +71,3 @@ pipeline {
     }    
 }
 
-
-// 1) If you want to skip tests you can add the following to the command line.
-// mvn -DskipTests build
-// 2) compiles the tests, but skips running them
-// mvn -Dmaven.test.skip=true build
-// 3) skips compiling the tests and does not run them
-// mvn clean install
