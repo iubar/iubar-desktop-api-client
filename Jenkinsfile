@@ -37,7 +37,7 @@ pipeline {
         }		
         stage('Quality gate') {
             environment { 
-				SONAR-PROJECTKEY=java%3Aiubar-desktop-api-client
+				SONAR-PROJECTKEY='java%3Aiubar-desktop-api-client'
             }		
             steps {
 				sh '''
