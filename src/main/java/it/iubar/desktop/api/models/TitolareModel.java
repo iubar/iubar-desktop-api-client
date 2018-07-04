@@ -95,10 +95,9 @@ public class TitolareModel extends RootModel implements IJsonModel {
     }
 
     public void setTel(String tel) {
-    	if(tel !=null && tel.equals(""))
-    	{
-    		throw new IllegalArgumentException();
-    	}
+//    	if(tel !=null && tel.equals("")){
+//    		throw new IllegalArgumentException();
+//    	}
         this.tel = tel;
     }
 
