@@ -1,30 +1,19 @@
 package it.iubar.desktop.api;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
- 
-import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.Form;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.apache.commons.codec.binary.Base64;
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.ClientProperties;
 import org.json.JSONArray;
@@ -40,7 +29,7 @@ import it.iubar.desktop.api.models.TitolareModel;
 
 public abstract class HttpClient {
 
-	private final static Logger LOGGER = Logger.getLogger(HttpClient.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(HttpClient.class.getName());
 
 	private String user = null;
 	private String apiKey = null;

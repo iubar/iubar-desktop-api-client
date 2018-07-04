@@ -25,7 +25,8 @@ import it.iubar.desktop.api.models.IJsonModel;
 import it.iubar.desktop.api.models.ModelsList;
 
 public class HttpMethods {
-	static JSONObject jsonObject;
+	
+	private static JSONObject jsonObject = null;
 
 	private static final Logger LOGGER = Logger.getLogger(HttpMethods.class.getName());
 
@@ -48,36 +49,36 @@ public class HttpMethods {
 
 		JSONObject jsonObjModel = null;
 		try {
-			if(url != null)
-			{
+			if (url != null) {
 				jsonObjModel = masterClient.send(url, model);
-			}
-			else
+			} else {
 				jsonObjModel = masterClient.send(model);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			LOGGER.severe(e.getMessage());
 		}
-		boolean data = jsonObjModel.getBoolean("data");
-
-		assertNotNull(jsonObjModel);
+		boolean data = false;
+		assertNotNull(jsonObjModel);		
+//		if(jsonObjModel!=null) {
+			data = jsonObjModel.getBoolean("data");
+//		}
 		assertTrue(data);
 
 	}
-	
+
 	public static void modlesSend(ModelsList models) {
 		HmacClient masterClient = (HmacClient) clientFactory();
 		masterClient.setAuth(false);
-
 		JSONObject jsonObjModel = null;
 		try {
 			jsonObjModel = masterClient.send(models);
-			
 			boolean data = jsonObjModel.getBoolean("data");
-
 			assertNotNull(jsonObjModel);
 			assertTrue(data);
 		} catch (Exception e) {
 			e.printStackTrace();
+			LOGGER.severe(e.getMessage());
 		}
 	}
 
@@ -92,14 +93,14 @@ public class HttpMethods {
 		Response response = target.path(path).request().accept(MediaType.APPLICATION_JSON).post(Entity.json(input));
 		int statusCode = response.getStatus();
 		String json = response.readEntity(String.class);
-		jsonObject = new JSONObject(json);
-		LOGGER.info("...request: " + input + " | response: " + jsonObject.toString() + "\n");
+		HttpMethods.jsonObject = new JSONObject(json);
+		LOGGER.info("...request: " + input + " | response: " + HttpMethods.jsonObject.toString() + "\n");
 
-		String message = jsonObject.getString("response");
+		String message = HttpMethods.jsonObject.getString("response");
 		boolean data;
 
 		if (request) {
-			data = jsonObject.getBoolean("data");
+			data = HttpMethods.jsonObject.getBoolean("data");
 			isOk(message, statusCode, data);
 		} else {
 			isBadRequest(message, statusCode);
@@ -108,21 +109,23 @@ public class HttpMethods {
 
 	public static void isBadRequest(String message, int statusCode) {
 		assertNotNull(message);
-		System.out.println("Status: " + statusCode + "\n2 :" + jsonObject.getInt("code"));
+		LOGGER.info("Message: " + message);
+		String txt = "Status: " + statusCode + "\n2 :" + HttpMethods.jsonObject.getInt("code");
+		LOGGER.info(txt);
 		assertEquals(Status.BAD_REQUEST.getStatusCode(), statusCode);
-		assertEquals(Status.BAD_REQUEST.getStatusCode(), jsonObject.getInt("code"));
+		assertEquals(Status.BAD_REQUEST.getStatusCode(), HttpMethods.jsonObject.getInt("code"));
 	}
 
 	public static void isOk(String message, int statusCode, boolean data) {
 		assertNotNull(message);
 		assertEquals(Status.OK.getStatusCode(), statusCode);
 		assertTrue(data);
-		assertEquals(Status.OK.getStatusCode(), jsonObject.getInt("code"));
+		assertEquals(Status.OK.getStatusCode(), HttpMethods.jsonObject.getInt("code"));
 	}
 
 	public static void isDataFalse() {
 
-		boolean data = jsonObject.getBoolean("data");
+		boolean data = HttpMethods.jsonObject.getBoolean("data");
 		assertFalse(data);
 	}
 
@@ -141,14 +144,14 @@ public class HttpMethods {
 		int statusCode = response.getStatus();
 
 		String json = response.readEntity(String.class);
-		jsonObject = new JSONObject(json);
+		HttpMethods.jsonObject = new JSONObject(json);
 
-		LOGGER.info("...response: " + jsonObject.toString() + "\n");
+		LOGGER.info("...response: " + HttpMethods.jsonObject.toString() + "\n");
 
-		String message = jsonObject.getString("response");
+		String message = HttpMethods.jsonObject.getString("response");
 
 		assertNotNull(message);
 		assertEquals(Status.OK.getStatusCode(), statusCode);
-		assertEquals(Status.OK.getStatusCode(), jsonObject.getInt("code"));
+		assertEquals(Status.OK.getStatusCode(), HttpMethods.jsonObject.getInt("code"));
 	}
 }

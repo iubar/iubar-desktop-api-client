@@ -3,19 +3,17 @@ pipeline {
     	docker {   	
     		image 'iubar-maven-alpine'
     		label 'docker'
-    		args '-v /home/jenkins/.m2:/home/jenkins/.m2:rw,z'
+    		args '-v $HOME/.m2:/home/jenkins/.m2:rw,z'
     	} 
     }
     stages {
         stage ('Build') {
             steps {
-            	echo 'Building...'
                 sh 'mvn -B -DskipTests=true clean package'
             }
         }
 		stage('Test') {
             steps {
-            	echo 'Testing...'
                 sh 'mvn -B -Djava.io.tmpdir=${WORKSPACE}@tmp -Djava.awt.headless=true test'
             }
             post {
@@ -56,7 +54,6 @@ pipeline {
         }
 		stage ('Deploy') {
             steps {
-            	echo 'Deploying...'
                 sh 'mvn -B -DskipTests=true deploy'
             }
         }		
