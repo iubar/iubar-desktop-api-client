@@ -399,16 +399,19 @@ public abstract class HttpClient {
 	}
 
 	private String getRootUrl(String strUrl) {
+		String baseUrl = null;
 		URL url = null;
 		try {
 			url = new URL(strUrl);
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		}
-		String host = url.getHost();
-		String protocol = url.getProtocol();
-		int port = url.getPort();
-		String baseUrl = protocol + "://" + host + ":" + port;
+		if(url!=null) {
+			String host = url.getHost();
+			String protocol = url.getProtocol();
+			int port = url.getPort();
+			baseUrl = protocol + "://" + host + ":" + port;
+		}
 		return baseUrl;
 	}
 

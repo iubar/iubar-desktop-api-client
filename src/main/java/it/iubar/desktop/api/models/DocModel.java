@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class DocModel extends RootModel implements IJsonModel, Cloneable {
     
 	private DocType doctype;
-	public String cf;
+	private String cf;
 	private int mese;
     private int anno;
     

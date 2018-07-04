@@ -60,9 +60,9 @@ public class HttpMethods {
 		}
 		boolean data = false;
 		assertNotNull(jsonObjModel);		
-//		if(jsonObjModel!=null) {
+		if(jsonObjModel!=null) {
 			data = jsonObjModel.getBoolean("data");
-//		}
+		}
 		assertTrue(data);
 
 	}
