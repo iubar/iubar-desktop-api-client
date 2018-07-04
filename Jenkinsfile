@@ -37,18 +37,18 @@ pipeline {
         }		
         stage('Quality gate') {
             environment { 
-				SONAR-PROJECTKEY='java%3Aiubar-desktop-api-client'
+				SONAR_PROJECTKEY = 'java:iubar-desktop-api-client'
             }		
             steps {
 				sh '''
-				    QUALITYGATE=$(curl http://192.168.0.117:9000/api/qualitygates/project_status?projectKey=$SONAR-PROJECTKEY | jq '.projectStatus.status')
+				    QUALITYGATE=$(curl http://192.168.0.117:9000/api/qualitygates/project_status?projectKey=$SONAR_PROJECTKEY | jq '.projectStatus.status')
 				    QUALITYGATE=$(echo "$QUALITYGATE" | sed -e 's/^"//' -e 's/"$//')
 				    echo "QUALITYGATE: ${QUALITYGATE}"
                     if [ $QUALITYGATE = OK ]; then
                        echo "High five !"
                     else
                        echo "Poor quality !"
-					   echo "( see http://192.168.0.117:9000/dashboard?id=SONAR-PROJECTKEY )"
+					   echo "( see http://192.168.0.117:9000/dashboard?id=$SONAR_PROJECTKEY)"
                        exit 1
                     fi				    
 				'''
