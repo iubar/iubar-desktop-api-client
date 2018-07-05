@@ -3,7 +3,7 @@ pipeline {
     	docker {   	
     		image 'iubar-maven-alpine'
     		label 'docker'
-    		args '-v $HOME/.m2:/home/jenkins/.m2:rw,z'
+    		args '-v $HOME/.m2:/home/jenkins/.m2:rw,z -v $HOME/.sonar:/home/jenkins/.sonar:rw,z'
     	} 
     }
     stages {
