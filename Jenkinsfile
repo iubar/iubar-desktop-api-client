@@ -3,18 +3,18 @@ pipeline {
     	docker {   	
     		image 'iubar-maven-alpine'
     		label 'docker'
-    		args '-v $HOME/.m2:/home/jenkins/.m2:rw,z -v $HOME/.sonar:/home/jenkins/.sonar:rw,z'
+    		args '-v ${HOME}/.m2:/home/jenkins/.m2:rw,z -v ${HOME}/.sonar:/home/jenkins/.sonar:rw,z'
     	} 
     }
     stages {
         stage ('Build') {
             steps {
-                sh 'mvn -B -DskipTests=true clean package'
+                sh 'mvn --batch-mode clean compile'
             }
         }
 		stage('Test') {
             steps {
-                sh 'mvn -B -Djava.io.tmpdir=${WORKSPACE}@tmp -Djava.awt.headless=true test'
+                sh 'mvn --batch-mode -Djava.io.tmpdir=${WORKSPACE}@tmp -Djava.awt.headless=true test'
             }
             post {
                 always {
@@ -33,20 +33,19 @@ pipeline {
 				}
             }
         }		
-        stage('Quality gate') {
-            environment { 
-				SONAR_PROJECTKEY = 'java:iubar-desktop-api-client'
-            }		
+        stage('Quality gate') {	
             steps {
 				sh '''
-				    QUALITYGATE=$(curl ${SONAR_URL}/api/qualitygates/project_status?projectKey=$SONAR_PROJECTKEY | jq '.projectStatus.status')
+					SONAR_PROJECTKEY=$(grep sonar.projectKey sonar-project.properties | cut -d '=' -f2)
+					echo "SONAR_PROJECTKEY: ${SONAR_PROJECTKEY}"				
+				    QUALITYGATE=$(curl --data-urlencode "projectKey=${SONAR_PROJECTKEY}" ${SONAR_URL}/api/qualitygates/project_status | jq '.projectStatus.status')
 				    QUALITYGATE=$(echo "$QUALITYGATE" | sed -e 's/^"//' -e 's/"$//')
 				    echo "QUALITYGATE: ${QUALITYGATE}"
                     if [ $QUALITYGATE = OK ]; then
                        echo "High five !"
                     else
                        echo "Poor quality !"
-					   echo "( see ${SONAR_URL}/dashboard?id=$SONAR_PROJECTKEY)"
+					   echo "( see ${SONAR_URL}/dashboard?id=${SONAR_PROJECTKEY})"
                        exit 1
                     fi				    
 				'''
@@ -54,7 +53,7 @@ pipeline {
         }
 		stage ('Deploy') {
             steps {
-                sh 'mvn -B -DskipTests=true deploy'
+                sh 'mvn --batch-mode -DskipTests=true deploy'
             }
         }		
     }
@@ -71,4 +70,3 @@ pipeline {
         }
     }    
 }
-
