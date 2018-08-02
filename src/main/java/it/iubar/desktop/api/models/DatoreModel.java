@@ -41,8 +41,9 @@ public class DatoreModel extends RootModel implements IJsonModel {
 
     public void setPiva(String piva) {
     	if(piva !=null && piva.equals(""))
-    	{
-    		throw new IllegalArgumentException();
+    	{    		
+    		// Evito che la Rest Api inserisca la stringa vuota nel DB
+    		piva = null;
     	}
         this.piva = piva;
     }
@@ -54,7 +55,8 @@ public class DatoreModel extends RootModel implements IJsonModel {
     public void setDenom(String denom) {
     	if(denom !=null && denom.equals(""))
     	{
-    		throw new IllegalArgumentException();
+    		// Evito che la Rest Api inserisca la stringa vuota nel DB
+    		denom = null;
     	}
         this.denom = denom;
     }
@@ -82,7 +84,8 @@ public class DatoreModel extends RootModel implements IJsonModel {
     public void setEmail(String email) {
     	if(email !=null && email.equals(""))
     	{
-    		throw new IllegalArgumentException();
+    		// Evito che la Rest Api inserisca la stringa vuota nel DB
+    		email = null;
     	}
         this.email = email;
     }
@@ -94,7 +97,8 @@ public class DatoreModel extends RootModel implements IJsonModel {
     public void setTel(String tel) {
     	if(tel !=null && tel.equals(""))
     	{
-    		throw new IllegalArgumentException();
+    		// Evito che la Rest Api inserisca la stringa vuota nel DB
+    		tel = null;
     	}
         this.tel = tel;
     }
@@ -106,7 +110,8 @@ public class DatoreModel extends RootModel implements IJsonModel {
     public void setIdcomune(String idcomune) {
     	if(idcomune !=null && idcomune.equals(""))
     	{
-    		throw new IllegalArgumentException();
+    		// Evito che la Rest Api inserisca la stringa vuota nel DB
+    		idcomune = null;
     	}
         this.idcomune = idcomune;
     }

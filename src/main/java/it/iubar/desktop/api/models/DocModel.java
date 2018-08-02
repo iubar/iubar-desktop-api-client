@@ -66,6 +66,5 @@ public class DocModel extends RootModel implements IJsonModel, Cloneable {
 	        return (DocModel) super.clone();
 	    }
 
-
 	 
 }

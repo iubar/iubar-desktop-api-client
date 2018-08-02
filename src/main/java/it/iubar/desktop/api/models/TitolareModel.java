@@ -37,7 +37,8 @@ public class TitolareModel extends RootModel implements IJsonModel {
     public void setPiva(String piva) {
     	if(piva !=null && piva.equals(""))
     	{
-    		throw new IllegalArgumentException();
+    		// Evito che la Rest Api inserisca la stringa vuota nel DB
+    		piva = null;
     	}
         this.piva = piva;
     }
@@ -49,7 +50,8 @@ public class TitolareModel extends RootModel implements IJsonModel {
     public void setDenom(String denom) {
     	if(denom !=null && denom.equals(""))
     	{
-    		throw new IllegalArgumentException();
+    		// Evito che la Rest Api inserisca la stringa vuota nel DB
+    		denom = null;
     	}
         this.denom = denom;
     }
@@ -61,7 +63,8 @@ public class TitolareModel extends RootModel implements IJsonModel {
     public void setCognome(String cognome) {
     	if(cognome !=null && cognome.equals(""))
     	{
-    		throw new IllegalArgumentException();
+    		// Evito che la Rest Api inserisca la stringa vuota nel DB
+    		cognome = null;
     	}
         this.cognome = cognome;
     }
@@ -73,7 +76,8 @@ public class TitolareModel extends RootModel implements IJsonModel {
     public void setIndirizzo(String indirizzo) {
     	if(indirizzo !=null && indirizzo.equals(""))
     	{
-    		throw new IllegalArgumentException();
+    		// Evito che la Rest Api inserisca la stringa vuota nel DB
+    		indirizzo = null;
     	}
         this.indirizzo = indirizzo;
     }
@@ -85,7 +89,8 @@ public class TitolareModel extends RootModel implements IJsonModel {
     public void setEmail(String email) {
     	if(email!=null && email.equals(""))
     	{
-    		throw new IllegalArgumentException();
+    		// Evito che la Rest Api inserisca la stringa vuota nel DB
+    		email = null;
     	}
         this.email = email;
     }
@@ -95,9 +100,10 @@ public class TitolareModel extends RootModel implements IJsonModel {
     }
 
     public void setTel(String tel) {
-//    	if(tel !=null && tel.equals("")){
-//    		throw new IllegalArgumentException();
-//    	}
+    	if(tel !=null && tel.equals("")){
+    		// Evito che la Rest Api inserisca la stringa vuota nel DB
+    		tel = null;
+    	}
         this.tel = tel;
     }
 
@@ -124,7 +130,8 @@ public class TitolareModel extends RootModel implements IJsonModel {
     public void setIdcomune(String idcomune) {
     	if(idcomune !=null && idcomune.equals(""))
     	{
-    		throw new IllegalArgumentException();
+    		// Evito che la Rest Api inserisca la stringa vuota nel DB
+    		idcomune = null;
     	}
         this.idcomune = idcomune;
     }
@@ -136,7 +143,8 @@ public class TitolareModel extends RootModel implements IJsonModel {
     public void setChiave_pubblica(String chiave_pubblica) {
     	if(chiave_pubblica !=null && chiave_pubblica.equals(""))
     	{ 
-    		throw new IllegalArgumentException();
+    		// Evito che la Rest Api inserisca la stringa vuota nel DB
+    		chiave_pubblica = null;
     	}
         this.chiave_pubblica = chiave_pubblica;
     }
