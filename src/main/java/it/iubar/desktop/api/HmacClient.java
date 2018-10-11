@@ -52,7 +52,7 @@ public class HmacClient extends HttpClient implements IHttpClient {
 	String hash_encoded = null;
 	final String algo = "HmacSHA256";
 	if (secret == null || secret.equals("")) {
-		throw new RuntimeException("apikey is null or empty");
+		LOGGER.log(Level.SEVERE, "apikey is null or empty");
 	}
 	try {
 		Mac sha256_HMAC = Mac.getInstance(algo);
@@ -62,7 +62,6 @@ public class HmacClient extends HttpClient implements IHttpClient {
 		hash_encoded = Base64.encodeBase64String(hash);
 	} catch (Exception e) {
 		LOGGER.log(Level.SEVERE, "Unable to generate encypted data.");
-		throw new RuntimeException("Unable to generate encypted data.");
 	}
 	return hash_encoded;
 }

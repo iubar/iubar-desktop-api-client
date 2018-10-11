@@ -105,7 +105,6 @@ public class RootModel {
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 			LOGGER.log(Level.SEVERE, "Jackson could not convert the object correctly.", JsonProcessingException.class);
-			throw new RuntimeException("Jackson could not convert the object correctly.");
 		}
 		return jsonString;
 	}
@@ -118,7 +117,6 @@ public class RootModel {
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 			LOGGER.log(Level.SEVERE, "Jackson could not convert the object correctly.", JsonProcessingException.class);
-			throw new RuntimeException("Jackson could not convert the object correctly.");
 		}
 		return jsonString;
 	}
@@ -268,10 +266,8 @@ public class RootModel {
 	}
 
 	protected static GregorianCalendar toCal(Date d) {
-		GregorianCalendar cal = new GregorianCalendar();
-		if (cal != null) {
-			cal.setTime(d);
-		}
+		GregorianCalendar cal = new GregorianCalendar(); 
+		cal.setTime(d);
 		return cal;
 	}
 

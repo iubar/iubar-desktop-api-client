@@ -36,11 +36,10 @@ public abstract class HttpClient {
 	private boolean isAuth = false;
 	private String url = null;
 
-
-//	private final String IS_AUTH_VALUE = "is_auth";
-//	private final String HOST_VALUE = "host";
-//	private final String USER_VALUE = "user";
-//	private final String API_KEY_VALUE = "api_key";
+	//	private final String IS_AUTH_VALUE = "is_auth";
+	//	private final String HOST_VALUE = "host";
+	//	private final String USER_VALUE = "user";
+	//	private final String API_KEY_VALUE = "api_key";
 
 	public final static String INSERT_CLIENT = "client";
 	public final static String INSERT_TITOLARI = "titolari";
@@ -50,54 +49,54 @@ public abstract class HttpClient {
 	public final static String INSERT_MAC = "list/mac";
 
 	abstract protected JSONObject genAuth2(String destUrl);
+
 	abstract public Response get(String restUrl);
-	
-//	public void loadConfigFromFile(String cfgFile) throws IOException {
-//		File file = new File(cfgFile);
-//		InputStream is = new FileInputStream(file);
-//		this.setUpIni(is);
-//	}
 
+	//	public void loadConfigFromFile(String cfgFile) throws IOException {
+	//		File file = new File(cfgFile);
+	//		InputStream is = new FileInputStream(file);
+	//		this.setUpIni(is);
+	//	}
 
-//	public void loadConfigFromJar() {
-//		// Soluzione 1
-//		ClassLoader classLoader = getClass().getClassLoader();
-//		File file = new File(classLoader.getResource("config.ini").getFile());
-//		// Soluzione 2
-//		// NO: File file = new File("src/main/resources/config.ini");
-//		// Soluzione 3
-//		InputStream is = getClass().getResourceAsStream("/config.ini");
-//		// eg: BufferedReader reader = new BufferedReader(new
-//		// InputStreamReader(in));
-//
-//		this.setUpIni(is);
-//	}
+	//	public void loadConfigFromJar() {
+	//		// Soluzione 1
+	//		ClassLoader classLoader = getClass().getClassLoader();
+	//		File file = new File(classLoader.getResource("config.ini").getFile());
+	//		// Soluzione 2
+	//		// NO: File file = new File("src/main/resources/config.ini");
+	//		// Soluzione 3
+	//		InputStream is = getClass().getResourceAsStream("/config.ini");
+	//		// eg: BufferedReader reader = new BufferedReader(new
+	//		// InputStreamReader(in));
+	//
+	//		this.setUpIni(is);
+	//	}
 
 	// Sets all the variables looking at the ".ini" file.
-//	private void setUpIni(InputStream inputStream) {
-//		Properties properties = new Properties();
-//		try {
-//			properties.load(inputStream);
-//		} catch (FileNotFoundException e1) {
-//			e1.printStackTrace();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//
-//		String host = properties.getProperty(HOST_VALUE);
-//		String auth = properties.getProperty(IS_AUTH_VALUE, "false");
-//		this.setAuth(fromStringToBool(auth));
-//		this.setBaseUrl(host);
-//
-//		if (isAuth()) {
-//			String apiKey = properties.getProperty(API_KEY_VALUE);
-//			String user = properties.getProperty(USER_VALUE);
-//			this.setUser(user);
-//			this.setApiKey(apiKey);
-//		}
-//		LOGGER.log(Level.FINE, "Config file parsed succesfully");
-//
-//	}
+	//	private void setUpIni(InputStream inputStream) {
+	//		Properties properties = new Properties();
+	//		try {
+	//			properties.load(inputStream);
+	//		} catch (FileNotFoundException e1) {
+	//			e1.printStackTrace();
+	//		} catch (IOException e) {
+	//			e.printStackTrace();
+	//		}
+	//
+	//		String host = properties.getProperty(HOST_VALUE);
+	//		String auth = properties.getProperty(IS_AUTH_VALUE, "false");
+	//		this.setAuth(fromStringToBool(auth));
+	//		this.setBaseUrl(host);
+	//
+	//		if (isAuth()) {
+	//			String apiKey = properties.getProperty(API_KEY_VALUE);
+	//			String user = properties.getProperty(USER_VALUE);
+	//			this.setUser(user);
+	//			this.setApiKey(apiKey);
+	//		}
+	//		LOGGER.log(Level.FINE, "Config file parsed succesfully");
+	//
+	//	}
 
 	private boolean fromStringToBool(String s) {
 		return s.equalsIgnoreCase("true");
@@ -112,7 +111,6 @@ public abstract class HttpClient {
 		return finalPath;
 	}
 
- 
 	public <T> JSONObject send(IJsonModel obj) throws Exception {
 		return send(getRoute(obj), obj);
 	}
@@ -157,7 +155,7 @@ public abstract class HttpClient {
 		}
 	}
 
-	private <T> String getRoute(T obj) {
+	private <T> String getRoute(T obj) throws Exception {
 		String urlToSend = this.getBaseUrl();
 		String lastChar = urlToSend.substring(urlToSend.length() - 1);
 		if (!lastChar.equals("/")) {
@@ -196,53 +194,52 @@ public abstract class HttpClient {
 	// Spaghetti code
 	public JSONObject responseManager(Response response) throws Exception {
 		JSONObject answer = null;
- if(response!=null) {
-		int status = response.getStatus();
-		String output = response.readEntity(String.class);
-		answer = new JSONObject(output);
-		System.out.println("Response status: " + status);
-		System.out.println("Response data: " + output);
+		if (response != null) {
+			int status = response.getStatus();
+			String output = response.readEntity(String.class);
+			answer = new JSONObject(output);
+			System.out.println("Response status: " + status);
+			System.out.println("Response data: " + output);
 
-		if (status == 201 || status == 200) {
+			if (status == 201 || status == 200) {
 
-			String resp = "";
-			if (answer.has("response")) {
-				resp = answer.getString("response");
+				String resp = "";
+				if (answer.has("response")) {
+					resp = answer.getString("response");
+				}
+
+				try {
+					String msg = "Query ok, code: " + status + ", rows affected: " + resp;
+					LOGGER.log(Level.FINE, msg);
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+
+			} else if (status == 400) {
+				String msg = "Bad request, code: " + status + ", output: " + output;
+				LOGGER.log(Level.SEVERE, msg);
+				throw new Exception(msg);
+			} else if (status == 404) {
+				String msg = "Not found, code: " + status + ", output: " + output;
+				LOGGER.log(Level.SEVERE, msg);
+				throw new Exception(msg);
+			} else if (status == 500) {
+				String msg = "Internal server error, code: " + status + ", output: " + output;
+				LOGGER.log(Level.SEVERE, msg);
+				throw new Exception(msg);
+			} else {
+				String msg = "Unknown error, code: " + status + ", output: " + output;
+				LOGGER.log(Level.SEVERE, msg);
+				throw new Exception(msg);
 			}
-
-			try {
-				String msg = "Query ok, code: " + status + ", rows affected: " + resp;
-				LOGGER.log(Level.FINE, msg);
-			} catch (JSONException e) {
-				e.printStackTrace();
-			}
-
-		} else if (status == 400) {
-			String msg = "Bad request, code: " + status + ", output: " + output;
-			LOGGER.log(Level.SEVERE, msg);
-			throw new Exception(msg);
-		} else if (status == 404) {
-			String msg = "Not found, code: " + status + ", output: " + output;
-			LOGGER.log(Level.SEVERE, msg);
-			throw new Exception(msg);
-		} else if (status == 500) {
-			String msg = "Internal server error, code: " + status + ", output: " + output;
-			LOGGER.log(Level.SEVERE, msg);
-			throw new Exception(msg);
 		} else {
-			String msg = "Unknown error, code: " + status + ", output: " + output;
+			String msg = "Response is null";
+			;
 			LOGGER.log(Level.SEVERE, msg);
 			throw new Exception(msg);
 		}
- }else {
-		String msg = "Response is null";;
-		LOGGER.log(Level.SEVERE, msg);
-		throw new Exception(msg);
- }
 		return answer;
 	}
- 
-
 
 	public HttpClient() {
 		super();
@@ -296,8 +293,6 @@ public abstract class HttpClient {
 		return authData;
 	}
 
- 
-
 	/**
 	 * Il metodo implementa la funzione PHP rawurlencode()
 	 * 
@@ -314,7 +309,7 @@ public abstract class HttpClient {
 			encoded = encoded.replace("+", "%20"); // converts all space chars (the plus char in a mime encoded string) to "%20" like the rawurlencode() function in Php
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
-		}			
+		}
 		return encoded;
 	}
 
@@ -326,7 +321,7 @@ public abstract class HttpClient {
 			String str = data2.toString();
 			d3 = Entity.json(str);
 		} else {
-			d3 = Entity.json(data.toString());			
+			d3 = Entity.json(data.toString());
 		}
 		return post(restUrl, d3);
 	}
@@ -339,10 +334,10 @@ public abstract class HttpClient {
 		Entity<String> d1 = Entity.text(data.toString());
 		Entity<String> d2 = Entity.entity(data.toString(), MediaType.APPLICATION_JSON);
 		Entity<String> d3 = Entity.json(data.toString()); // See: https://jersey.java.net/documentation/latest/client.html#d0e4692		
-// Se volessi utilizzare il post di tipo "application/x-www-form-urlencoded"	
-//		Form form = new Form();
-//	    form.param("user", "XXX");
-//	    Entity d4 = Entity.entity(form,MediaType.APPLICATION_FORM_URLENCODED);
+		// Se volessi utilizzare il post di tipo "application/x-www-form-urlencoded"	
+		//		Form form = new Form();
+		//	    form.param("user", "XXX");
+		//	    Entity d4 = Entity.entity(form,MediaType.APPLICATION_FORM_URLENCODED);
 
 		return post(restUrl, d3);
 	}
@@ -352,7 +347,8 @@ public abstract class HttpClient {
 		Client client = HttpClient.newClient();
 		WebTarget target = client.target(restUrl);
 		// Accetto risposte di tipo Json
-		Response response = target.request(MediaType.APPLICATION_JSON).accept("application/json").header("X-Requested-With", "XMLHttpRequest").post(d3);	
+		Response response = target.request(MediaType.APPLICATION_JSON).accept("application/json")
+				.header("X-Requested-With", "XMLHttpRequest").post(d3);
 		return response;
 	}
 
@@ -406,7 +402,7 @@ public abstract class HttpClient {
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		}
-		if(url!=null) {
+		if (url != null) {
 			String host = url.getHost();
 			String protocol = url.getProtocol();
 			int port = url.getPort();
@@ -415,12 +411,9 @@ public abstract class HttpClient {
 		return baseUrl;
 	}
 
-
 	protected JSONObject genAuth(String destUrl) {
 		JSONObject authData = genAuth2(destUrl);
 		return authData;
 	}
-
-
 
 }
