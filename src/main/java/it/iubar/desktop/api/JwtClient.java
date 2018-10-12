@@ -75,10 +75,6 @@ import it.iubar.desktop.api.models.ModelsList;
 			        .withExpiresAt(expiresAt.getTime());
 		    		    
 		    token = builder.sign(algorithm);
-		    
-		} catch (UnsupportedEncodingException e){
-		    //UTF-8 encoding not supported
-			e.printStackTrace();
 		} catch (JWTCreationException e){
 		    //Invalid Signing configuration / Couldn't convert Claims.
 			e.printStackTrace();
