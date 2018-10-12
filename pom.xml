@@ -50,9 +50,8 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>				
- 				<!-- Non è possibile usare la versione 2.22 del plugin perchè non supporta junit 5 -->
-				<!-- https://stackoverflow.com/questions/36970384/surefire-is-not-picking-up-junit-5-tests?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa -->
-				<version>2.19.1</version>
+ 				<!-- LEGGERE: https://stackoverflow.com/questions/36970384/surefire-is-not-picking-up-junit-5-tests?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa -->
+				<version>2.22.0</version>
 				<configuration>
 					<includes>
 						<include>MasterClientTest.java</include>
@@ -143,7 +142,7 @@
 		<dependency>
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
-			<version>20180130</version>
+			<version>20180813</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-codec</groupId>
@@ -157,14 +156,14 @@
 		<dependency>
 			<groupId>com.auth0</groupId>
 			<artifactId>java-jwt</artifactId>
-			<version>3.3.0</version>
+			<version>3.4.0</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/com.google.firebase/firebase-admin -->
 		<!-- <dependency> -->
 		<!-- <groupId>com.google.firebase</groupId> -->
 		<!-- <artifactId>firebase-admin</artifactId> -->
-		<!-- <version>5.7.0</version> -->
+		<!-- <version>6.5.0</version> -->
 		<!-- </dependency> -->
 
 

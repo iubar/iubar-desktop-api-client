@@ -11,12 +11,6 @@
 	<name>Iubar Test Crm Client</name>
 	<description>Send data to the Crm Api</description>
 
-	<!-- <parent> -->
-	<!-- <artifactId>iubar_pom</artifactId> -->
-	<!-- <groupId>it.iubar.pom</groupId> -->
-	<!-- <version>0.0.4</version> -->
-	<!-- </parent> -->
-
 	<build>
 
 		<resources>
@@ -53,7 +47,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
- 				<!--<version>2.22.</version> non supporta junit 5-->
+ 				<!-- LEGGERE: https://stackoverflow.com/questions/36970384/surefire-is-not-picking-up-junit-5-tests?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa -->
 				<version>2.19.1</version>
 				<configuration>
 					<includes>
