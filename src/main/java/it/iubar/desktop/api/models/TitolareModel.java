@@ -156,13 +156,6 @@ public class TitolareModel extends RootModel implements IJsonModel {
 	public void setCf(String cf) {
 		this.cf = cf;
 	}
-
-//    public void setIdapp(int idapp) {
-//        this.idapp = idapp;
-//    }
-// 
-//    public int getIdapp() {
-//        return this.idapp;
-//    }
+ 
     
 }
