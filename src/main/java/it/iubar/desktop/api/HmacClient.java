@@ -25,7 +25,7 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class HmacClient extends HttpClient implements IHttpClient {
+public class HmacClient extends AuthHttpClient implements IHttpClient {
 
 	private final static Logger LOGGER = Logger.getLogger(HmacClient.class.getName());
 

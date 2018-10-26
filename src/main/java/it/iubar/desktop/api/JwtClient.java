@@ -41,7 +41,7 @@ import com.auth0.jwt.exceptions.JWTCreationException;
 import it.iubar.desktop.api.models.IJsonModel;
 import it.iubar.desktop.api.models.ModelsList;
 
- public class JwtClient extends HttpClient implements IHttpClient {
+ public class JwtClient extends AuthHttpClient implements IHttpClient {
 
 	private final static Logger LOGGER = Logger.getLogger(JwtClient.class.getName());
 
