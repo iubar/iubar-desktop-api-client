@@ -10,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+import java.util.logging.Logger;
 
 import org.json.JSONObject;
 import org.junit.jupiter.api.AfterAll;
@@ -25,13 +26,18 @@ import it.iubar.desktop.api.models.DatoreModel;
 import it.iubar.desktop.api.models.DatoreModelTest;
 import it.iubar.desktop.api.models.DocModel;
 import it.iubar.desktop.api.models.DocModelTest;
+import it.iubar.desktop.api.models.MacUtils;
 import it.iubar.desktop.api.models.ModelsList;
 import it.iubar.desktop.api.models.TitolareModel;
 import it.iubar.desktop.api.models.TitolareModelTest;
+ 
+
 
 
 public abstract class MasterClientAbstract {
 
+	private static final Logger LOGGER = Logger.getLogger(MasterClientAbstract.class.getName());
+	
     private static final String MAC_1 = "0000099999";
     private static final String MAC_2 = "0000099999";
     private static final String MAC_3 = "0000099999";
@@ -86,7 +92,7 @@ public abstract class MasterClientAbstract {
     public static void initData() throws IOException {
     	int idApp = MasterClientAbstract.ID_APP_PAGHEOPEN;
     	MasterClientAbstract.client = ClientModelTest.factory();
-        
+ 
     	MasterClientAbstract.datori = new ModelsList<DatoreModel>(MAC_1, idApp, "datori");
         DatoreModel datore = DatoreModelTest.factory();
         MasterClientAbstract.datori.add(datore);
@@ -111,6 +117,7 @@ public abstract class MasterClientAbstract {
     
 	private boolean checkMacBlacklist(String mac){
 		boolean b = false;
+		if (MacUtils.isMacValid(mac)) {
     	IHttpClient masterClient = clientFactory();
 		try {
 			JSONObject jsonObject = masterClient.responseManager(masterClient.get(APP_FAMILY_PAGHE + "/blacklist/mac/" + mac));
@@ -122,33 +129,25 @@ public abstract class MasterClientAbstract {
 			}			
 		} catch (Exception e) {
 			e.printStackTrace();
-			fail();
+		}
 		}
 		return b;
 	}
     
    
-    private int checkMacGreylist(String mac){ 	
+    private int checkMacGreylist(String mac){
     	int idreason = 0; // false
     	IHttpClient masterClient = clientFactory();
 		try{		
 	    	JSONObject jsonObject = masterClient.responseManager(masterClient.get(APP_FAMILY_PAGHE + "/greylist/mac/" + mac));
-	    	Object obj = jsonObject.get("data");
-			if(obj instanceof JSONObject){
-				JSONObject jsonObject2 = jsonObject.getJSONObject("data");
+	    	JSONObject jsonObject2 = jsonObject.getJSONObject("data");
 				if(jsonObject2.has("idreason")){			
 					idreason = jsonObject2.getInt("idreason");
-					System.out.println("The mac address is grey-listed. Idreason is " + idreason);
+					LOGGER.info("The mac address is grey-listed. Idreason is " + idreason);
 				}else{
 					fail();
 				}
-			}else if(obj instanceof Boolean){
-				boolean b = jsonObject.getBoolean("data");
-				assertFalse(b);
-				System.out.println("The mac address is NOT grey-listed");
-			}else{
-				fail();
-			}
+ 
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail();

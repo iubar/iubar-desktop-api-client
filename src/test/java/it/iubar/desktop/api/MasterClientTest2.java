@@ -46,7 +46,6 @@ public class MasterClientTest2 {
 
 	@Test
 	public void sendContatto() {
-
 		CcnlModel contratto = CcnlModelTest.factory();
 		ModelsList<CcnlModel> contratti = new ModelsList<CcnlModel>(ClientModelTest.MAC,
 				MasterClientAbstract.ID_APP_PAGHEOPEN, "contratti");
@@ -127,11 +126,8 @@ public class MasterClientTest2 {
 	@Test
 	public void sendTitolare() {
 		TitolareModel titolare = TitolareModelTest.factory();
-
-		ModelsList<TitolareModel> titolari = new ModelsList<TitolareModel>(ClientModelTest.MAC,
-				MasterClientAbstract.ID_APP_PAGHEOPEN, "titolari");
-		titolari.add(titolare);
-		
+		ModelsList<TitolareModel> titolari = new ModelsList<TitolareModel>(ClientModelTest.MAC, MasterClientAbstract.ID_APP_PAGHEOPEN, "titolari");
+		titolari.add(titolare);		
 		try {
 			HttpMethods.modlesSend(titolari);
 		} catch (Exception e) {
