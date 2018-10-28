@@ -140,14 +140,16 @@ public abstract class MasterClientAbstract {
     	IHttpClient masterClient = clientFactory();
 		try{		
 	    	JSONObject jsonObject = masterClient.responseManager(masterClient.get(APP_FAMILY_PAGHE + "/greylist/mac/" + mac));
-	    	JSONObject jsonObject2 = jsonObject.getJSONObject("data");
-				if(jsonObject2.has("idreason")){			
-					idreason = jsonObject2.getInt("idreason");
+	    	Object obj3 = jsonObject.get("data");
+	    	
+	    	if(!String.valueOf(obj3).equals("false")){
+	    		idreason = Integer.valueOf(String.valueOf(obj3));
+	    	}
+	    	
+				if(idreason>0) { // jsonObject2.has("idreason")){			
+					// idreason = jsonObject2.getInt("idreason");
 					LOGGER.info("The mac address is grey-listed. Idreason is " + idreason);
-				}else{
-					fail();
-				}
- 
+				} 
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail();
