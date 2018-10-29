@@ -51,18 +51,6 @@ public abstract class HttpClient {
 		}
 		return answer;
 	}
-	public static boolean toBoolean(String str) {
-		boolean b = false;
-		if (str != null) {
-			if (str.equals("1")) {
-				b = true;
-			} else if (str.toLowerCase().equals("true")) {
-				b = true;
-			} else if (str.toLowerCase().equals("yes")) {
-				b = true;
-			}
-		}
-		return b;
-	}
+ 
 
 }
