@@ -41,6 +41,14 @@ import com.auth0.jwt.exceptions.JWTCreationException;
 import it.iubar.desktop.api.models.IJsonModel;
 import it.iubar.desktop.api.models.ModelsList;
 
+/**
+ * 
+ * Client http che utilizza autenticazione jwt con preshared-key (the HMAC512 algorithm)
+ * Sarebbe meglio una implementazione con chiave pubblica, come utilizzato dal progetto KeyGen
+ * 
+ * @author Borgo
+ *
+ */
  public class JwtClient extends AuthHttpClient implements IHttpClient {
 
 	private final static Logger LOGGER = Logger.getLogger(JwtClient.class.getName());
