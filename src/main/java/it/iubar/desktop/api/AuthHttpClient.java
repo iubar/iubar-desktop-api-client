@@ -232,7 +232,6 @@ public abstract class AuthHttpClient extends HttpClient {
 			}
 		} else {
 			String msg = "Response is null";
-			;
 			LOGGER.log(Level.SEVERE, msg);
 			throw new Exception(msg);
 		}
