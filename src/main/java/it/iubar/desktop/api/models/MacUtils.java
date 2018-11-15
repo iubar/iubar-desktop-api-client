@@ -1,6 +1,8 @@
 package it.iubar.desktop.api.models;
 
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
  
 
@@ -23,18 +25,29 @@ public class MacUtils {
 		return b;
 	}
 
-	public static String formatMac(String mac) {		
-		if (!MacUtils.isMacValid(mac)){
-			int len = mac.length();
-			if (len != 6 && len !=11){				
-				LOGGER.warning("Lunghezza indirizzo mac non valida: " + mac + " (" + len + ")");
-				mac = "<not valid>";
-			}
-			mac =  mac.replaceAll(MacUtils.MAC_ADDRESS_SEPARATOR_1, "").toLowerCase();
-			if (MacUtils.isMacWithoutSep(mac)){
-				mac = mac.toUpperCase().replaceAll("(.{2})", "$1" + MacUtils.MAC_ADDRESS_SEPARATOR_2).substring(0,17);
-			}
+	/**
+	 * 
+	 * uguale a: text.replaceAll("(.{" + period + "})", "$1" + insert)
+	 * 
+	 * @param text
+	 * @param insert
+	 * @param period
+	 * @return
+	 */
+	public static String insert(String text, String insert, int period) {
+	    Pattern p = Pattern.compile("(.{" + period + "})", Pattern.DOTALL);
+	    Matcher m = p.matcher(text);
+	    return m.replaceAll("$1" + insert);
+	}
+	
+	public static String formatMac(String mac) {
+		// Pulisco la stringa
+		mac =  mac.replaceAll(MacUtils.MAC_ADDRESS_SEPARATOR_1, "").toUpperCase();
+		// Verifico se si tratta di un indirizzo mac senza separatori
+		if (!MacUtils.isMacValid(mac) && MacUtils.isMacWithoutSep(mac)){
+			mac = insert(mac, MAC_ADDRESS_SEPARATOR_2, 2).substring(0,17);
 		}
+ 
 		return mac;
 	}
 					/**

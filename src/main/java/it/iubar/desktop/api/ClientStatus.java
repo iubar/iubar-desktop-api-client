@@ -23,8 +23,12 @@ public class ClientStatus {
 
 	public static String getString() {
 		String s1 = ClientStatus.app_status.toString();
-		String s2 = ClientStatus.app_status2.toString();
-		String status = s1 + " / " + s2;
+
+		String status = s1;
+		if(ClientStatus.app_status2 != AppStatus2.UNKNWON) {
+			String s2 = ClientStatus.app_status2.toString();
+			s1 = s1 + " / " + s2;
+		}
 		if(ClientStatus.app_status == AppStatus.UNKNWON) {
 			status = "<sconosciuto>";
 		}
