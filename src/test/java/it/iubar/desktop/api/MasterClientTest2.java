@@ -217,7 +217,7 @@ public class MasterClientTest2 {
 
 	@Test
 	public void receiveGreylist() {
-		String path = Integer.toString(MasterClientAbstract.ID_FAMILY_PAGHE) + "/greylist/" + "mac/"
+		String path = Integer.toString(MasterClientAbstract.ID_FAMILY_PAGHE) + "/greylist/mac/"
 				+ ClientModelTest.MAC;
 
 		try {

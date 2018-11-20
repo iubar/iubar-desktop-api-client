@@ -137,7 +137,7 @@ public abstract class MasterClientAbstract {
     	int idreason = 0; // false
     	IHttpClient masterClient = clientFactory();
 		try{		
-	    	JSONObject jsonObject = masterClient.responseManager(masterClient.get(APP_FAMILY_PAGHE + "/greylist/mac/" + mac));
+	    	JSONObject jsonObject = masterClient.responseManager(masterClient.get(MasterClientAbstract.APP_FAMILY_PAGHE + "/greylist/mac/" + mac));
 	    	Object obj3 = jsonObject.get("data");
 	    	
 	    	if(!String.valueOf(obj3).equals("false")){

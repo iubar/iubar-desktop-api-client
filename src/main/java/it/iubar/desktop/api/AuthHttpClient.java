@@ -389,15 +389,20 @@ public abstract class AuthHttpClient extends HttpClient {
 		URL url = null;
 		try {
 			url = new URL(strUrl);
+			baseUrl = url.toString();
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		}
-		if (url != null) {
-			String host = url.getHost();
-			String protocol = url.getProtocol();
-			int port = url.getPort();
-			baseUrl = protocol + "://" + host + ":" + port;
-		}
+
+//		if (url != null) {
+//			String host = url.getHost();
+//			String protocol = url.getProtocol();
+//			baseUrl = protocol + "://" + host;
+//			int port = url.getPort();
+//			if(port>-1) {
+//				baseUrl = baseUrl + ":" + port;
+//			}
+//		}
 		return baseUrl;
 	}
 
