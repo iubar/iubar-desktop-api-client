@@ -11,8 +11,6 @@ import org.junit.jupiter.api.Test;
 public class MasterClientTest extends MasterClientAbstract {
 
 
-	protected static final String ECHO_API_2 = "http://www.iubar.it/extranet/api/echo2";
-
     @BeforeAll
     public static void setUpBeforeClass() throws Exception {
     	MasterClientAbstract.loadConfig();
@@ -37,7 +35,7 @@ public class MasterClientTest extends MasterClientAbstract {
     	HmacClient masterClient = (HmacClient) clientFactory();
         try {       	
         	// Test on Echo server        
-        	String url1 = ECHO_API_2;
+        	String url1 = HttpClientTest.ECHO_API_2;
         	masterClient.setAuth(true);
         	masterClient.setUser(MasterClientAbstract.user);			
         	masterClient.setApiKey(MasterClientAbstract.apiKey);        	

@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import com.sun.org.apache.xerces.internal.impl.dtd.models.CMAny;
+
 import it.iubar.desktop.api.models.CcnlModel;
 import it.iubar.desktop.api.models.CcnlModelTest;
 import it.iubar.desktop.api.models.ClientModel;
@@ -33,10 +35,8 @@ public class MasterClientTest2 {
 
 	@Test
 	public void sendClient() {
-
-		String url = "http://iubar.it/crm/api/crm/v1/client";
 		ClientModel client = ClientModelTest.factory();
-
+		String url = AuthHttpClient.INSERT_CLIENT; // questo è solo un test, potrei tranquillamente invocare  HttpMethods.modelSend(null, client); senza specificare la rotta
 		try {
 			HttpMethods.modelSend(url, client);
 		} catch (Exception e) {

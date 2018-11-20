@@ -29,7 +29,9 @@ public class HttpMethods {
 	private static JSONObject jsonObject = null;
 
 	private static final Logger LOGGER = Logger.getLogger(HttpMethods.class.getName());
+	
 
+		
 	@BeforeAll
 	public static void setUpBeforeClass() throws Exception {
 		MasterClientAbstract.loadConfig();
@@ -86,7 +88,7 @@ public class HttpMethods {
 		ClientConfig config = new ClientConfig();
 		Client client = ClientBuilder.newClient(config);
 
-		URI baseUri = UriBuilder.fromUri("http://iubar.it/crm/api/crm/v1").build();
+		URI baseUri = UriBuilder.fromUri(RestApiConsts.CRM_BASE_ROUTE).build();
 		WebTarget target = client.target(baseUri);
 
 		LOGGER.info("Testing path \"" + baseUri.toString() + "/" + path + "\" ...");
@@ -133,8 +135,7 @@ public class HttpMethods {
 		ClientConfig config = new ClientConfig();
 		Client client = ClientBuilder.newClient(config);
 
-		URI baseUri = UriBuilder.fromUri("http://iubar.it/crm/api/crm/v1").build();
-
+		URI baseUri = UriBuilder.fromUri(RestApiConsts.CRM_BASE_ROUTE).build();
 		WebTarget target = client.target(baseUri);
 
 		LOGGER.info("Testing path \"" + baseUri.toString() + "/" + path + "\" ...");

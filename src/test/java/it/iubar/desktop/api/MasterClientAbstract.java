@@ -41,8 +41,6 @@ public abstract class MasterClientAbstract {
     private static final String MAC_1 = "0000099999";
     private static final String MAC_2 = "0000099999";
     private static final String MAC_3 = "0000099999";
-    
-	private static final String ECHO_API = "http://www.iubar.it/extranet/api/echo";
 
 	private static final String APP_FAMILY_PAGHE = "paghe";
 	public static final int ID_APP_PAGHEOPEN = 11;
@@ -221,7 +219,7 @@ public abstract class MasterClientAbstract {
            IHttpClient masterClient = clientFactory();
            try {
            	// Test on Echo server        
-           	String url1 = ECHO_API;
+           	String url1 = HttpClientTest.ECHO_API;
            	JSONObject jsonObj = masterClient.send(url1, MasterClientAbstract.client);
            	assertNotNull(jsonObj);
            } catch (Exception e) {

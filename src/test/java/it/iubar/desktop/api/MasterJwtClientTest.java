@@ -13,11 +13,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 public class MasterJwtClientTest extends MasterClientAbstract {
-    
-	protected static final String ROUTE_1 = "http://www.iubar.it/extranet/api/jwt/token"; // POST
-	protected static final String ECHO_API_3 = "http://www.iubar.it/extranet/api/jwt/data"; // ANY
- 
-    
+        
     @BeforeAll
     public static void setUpBeforeClass() throws Exception {
     	MasterClientAbstract.loadConfig();
@@ -28,7 +24,7 @@ public class MasterJwtClientTest extends MasterClientAbstract {
     	JwtClient masterClient = (JwtClient) clientFactory();
         try {       	    
         	// Test on Echo server        
-        	String url1 = ECHO_API_3;
+        	String url1 = HttpClientTest.ECHO_API_3;
         	masterClient.setAuth(true);
         	masterClient.setUser(MasterClientAbstract.user);			
         	masterClient.setApiKey(MasterClientAbstract.apiKey);         	
@@ -43,7 +39,7 @@ public class MasterJwtClientTest extends MasterClientAbstract {
     
     @Test
     public void sendTestOnEchoJwtServer2(){
-    	String url1 = ECHO_API_3 + "?msg=HelloWorld";  	
+    	String url1 = HttpClientTest.ECHO_API_3 + "?msg=HelloWorld";  	
     	JwtClient masterClient = (JwtClient) clientFactory();
     	masterClient.setAuth(true);
     	masterClient.setUser(MasterClientAbstract.user);			
