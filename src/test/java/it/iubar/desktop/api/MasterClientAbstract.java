@@ -38,9 +38,9 @@ public abstract class MasterClientAbstract {
 
 	private static final Logger LOGGER = Logger.getLogger(MasterClientAbstract.class.getName());
 	
-    private static final String MAC_1 = "0000099999";
-    private static final String MAC_2 = "0000099999";
-    private static final String MAC_3 = "0000099999";
+    private static final String MAC_1 = "B8-CA-3A-96-BD-03";
+    private static final String MAC_2 = MAC_1;
+ 
 
 	private static final String APP_FAMILY_PAGHE = "paghe";
 	public static final int ID_APP_PAGHEOPEN = 11;
