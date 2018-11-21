@@ -111,8 +111,6 @@ public abstract class MasterClientAbstract {
 
     abstract protected IHttpClient clientFactory();
     
-
-    
 	private boolean checkMacBlacklist(String mac){
 		boolean b = false;
 		if (MacUtils.isMacValid(mac)) {
@@ -132,7 +130,6 @@ public abstract class MasterClientAbstract {
 		return b;
 	}
     
-   
     private int checkMacGreylist(String mac){
     	int idreason = 0; // false
     	IHttpClient masterClient = clientFactory();
@@ -155,9 +152,7 @@ public abstract class MasterClientAbstract {
 		return idreason;
 	}    
 	
-
-
-    @Disabled("Ignoring test until the service is online")
+    @Test
     public void sendTest() {
     	IHttpClient masterClient = clientFactory();
         try {

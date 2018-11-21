@@ -34,7 +34,6 @@ public class MasterClientTest extends MasterClientAbstract {
 	}
  
     @Test
-    @Disabled
     public void sendTestOnEchoServer2(){
     	HmacClient masterClient = (HmacClient) clientFactory();
         try {       	
