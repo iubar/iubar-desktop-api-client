@@ -184,4 +184,4 @@ buildNumber.properties
 hs_err_pid*
 
 ### CUSTOM ###
-#secret.properties # se lo ignoro poi come faccio ad eseguire i test ?
+secret.properties # se lo ignoro poi come faccio ad eseguire i test ? Con le variabili d'ambiente

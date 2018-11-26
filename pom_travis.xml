@@ -17,9 +17,9 @@
 			<!-- regular resource processsing for everything except config.ini.example -->
 			<resource>
 				<directory>src/main/resources</directory>
-				<excludes>
-					<exclude>config.ini.example</exclude>
-				</excludes>
+				<includes>
+					<include>secret.properties.dist</include>
+				</includes>
 			</resource>
 			<!-- resource processsing with a different output directory for config.ini -->
 			<!-- <resource> -->
