@@ -21,7 +21,7 @@
 
 
 		<resources>
-			<!-- regular resource processsing for everything except config.ini.example -->
+			<!-- regular resource processing for everything except config.ini.example -->
 			<resource>
 				<directory>src/test/resources</directory>
 				<includes>
