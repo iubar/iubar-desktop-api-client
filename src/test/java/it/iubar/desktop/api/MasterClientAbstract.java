@@ -47,8 +47,6 @@ public abstract class MasterClientAbstract {
 	public static final int ID_FAMILY_PAGHE = 1;
 	public static String user = null;
 	public static String apiKey = null;
-
-
 	  
 	protected static ClientModel client = null;
     private static ModelsList<DatoreModel> datori = null;
