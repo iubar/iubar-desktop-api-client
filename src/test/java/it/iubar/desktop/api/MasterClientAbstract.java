@@ -66,10 +66,6 @@ public abstract class MasterClientAbstract {
     		InputStream is = null;
     		try {
     			is = MasterJwtClientTest.class.getResourceAsStream(config);
-    			if(is==null) {
-    				LOGGER.severe("Impossibile leggere la risorsa " + config);
-    				System.exit(1);
-    			}
     			prop.load(is);
     			MasterClientAbstract.user = prop.getProperty("JWT_USER");
     			MasterClientAbstract.apiKey = prop.getProperty("JWT_APIKEY");
