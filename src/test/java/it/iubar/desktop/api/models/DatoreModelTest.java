@@ -16,7 +16,7 @@ public class DatoreModelTest {
 		DatoreModel datore = new DatoreModel();
 		datore.setIdapp(MasterClientTest.ID_APP_PAGHEOPEN);
         datore.setIdcomune(null);
-        datore.setPiva("12345678901");
+        datore.setPiva(ClientModelTest.PIVA);
         datore.setDenom("AWDBAWJDBJLA");
         datore.setSub(3);
         datore.setPara(7);

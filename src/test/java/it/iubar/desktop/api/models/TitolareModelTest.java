@@ -5,7 +5,7 @@ public class TitolareModelTest {
 	public static TitolareModel factory() {
 		TitolareModel titolare = new TitolareModel();
         titolare.setIdtipo(0);
-        titolare.setPiva("12345678901");
+        titolare.setPiva(ClientModelTest.PIVA);
         titolare.setDenom("Studio Eccol");
         titolare.setCognome("Tommaso");
         titolare.setIndirizzo("Via Sant'Antonio");
