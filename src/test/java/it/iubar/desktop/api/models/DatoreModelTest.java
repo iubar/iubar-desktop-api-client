@@ -16,7 +16,7 @@ public class DatoreModelTest {
 		DatoreModel datore = new DatoreModel();
 		datore.setIdapp(MasterClientTest.ID_APP_PAGHEOPEN);
         datore.setIdcomune(null);
-        datore.setPiva("obaojwdboawdb");
+        datore.setPiva("12345678901");
         datore.setDenom("AWDBAWJDBJLA");
         datore.setSub(3);
         datore.setPara(7);
@@ -28,7 +28,7 @@ public class DatoreModelTest {
 	
 //    @Test
 //    public void testToJson() throws Exception{
-//        String string = "{\"cf\":\"AIHDUAWHDOU\",\"piva\":\"obaojwdboawdb\",\"denom\":\"AWDBAWJDBJLA\",\"sub\":\"ADWADAWD\",\"para\":\"EBOLA\",\"email\":\"awdnaowdj@gmail.com\",\"tel\":\"0129300823\",\"idcomune\":2,\"idprovincia\":4}";
+//        String string = "{\"cf\":\"AIHDUAWHDOU\",\"piva\":\"12345678901\",\"denom\":\"AWDBAWJDBJLA\",\"sub\":\"ADWADAWD\",\"para\":\"EBOLA\",\"email\":\"awdnaowdj@gmail.com\",\"tel\":\"0129300823\",\"idcomune\":2,\"idprovincia\":4}";
 //        Assert.assertEquals(string, JSONPrinter.toJson(datore));
 //    }
 
