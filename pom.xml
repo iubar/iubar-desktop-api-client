@@ -42,7 +42,7 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>				
  				<!-- LEGGERE: https://stackoverflow.com/questions/36970384/surefire-is-not-picking-up-junit-5-tests?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa -->
-				<version>2.22.0</version>
+				<version>3.0.0-M3</version>
 				<configuration>
 					<includes>
 						<include>MasterClientTest.java</include>
