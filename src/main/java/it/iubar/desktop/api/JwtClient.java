@@ -143,15 +143,21 @@ import it.iubar.desktop.api.models.ModelsList;
 	
 	@Override
 	public Response get(String restUrl) {
-		restUrl = resolveUrl(restUrl);
-		System.out.println("GET:" + restUrl);
-		Client client = HttpClient.newClient();
-		WebTarget target = client.target(restUrl); // il metodo codifica il parametro (la stringa che rappresenta l'url) in modo analogo alla funzione PHP rawurlencode()
-		if (this.isAuth()) {
-			JSONObject dataToSend = genAuth(restUrl);
-			target = target.queryParam("email", dataToSend.get("email")).queryParam("token", dataToSend.get("token"));
+		Response response = null;
+		try {
+			restUrl = resolveUrl(restUrl);
+			System.out.println("GET:" + restUrl);
+			Client client = HttpClient.newClient();
+			WebTarget target = client.target(restUrl); // il metodo codifica il parametro (la stringa che rappresenta l'url) in modo analogo alla funzione PHP rawurlencode()
+			if (this.isAuth()) {
+				JSONObject dataToSend = genAuth(restUrl);
+				target = target.queryParam("email", dataToSend.get("email")).queryParam("token", dataToSend.get("token"));
+			}
+			response = target.request(MediaType.APPLICATION_JSON).accept("application/json").header("X-Requested-With", "XMLHttpRequest").get();
+		} catch (Exception e) {
+			
 		}
-		Response response = target.request(MediaType.APPLICATION_JSON).accept("application/json").header("X-Requested-With", "XMLHttpRequest").get();
+		
 		return response;
 	}
  
