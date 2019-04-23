@@ -5,7 +5,8 @@ import it.iubar.desktop.api.MasterClientTest;
 public class ClientModelTest {
 
 	public static final String MAC = "123325345234134";
-	public static final String CF = "123123123";
+	public static final String CF = "ABABABABABABABAB"; // deve essere di 11 o 16 caratteri
+	public static final String PIVA = "12345678901";
 	
     public static ClientModel factory() {
     	ClientModel client = new ClientModel(ClientModelTest.MAC, MasterClientTest.ID_APP_PAGHEOPEN);

@@ -10,9 +10,11 @@ import java.util.logging.Logger;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.Configuration;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.glassfish.jersey.client.ClientProperties;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -340,12 +342,25 @@ public abstract class AuthHttpClient extends HttpClient {
 	}
 
 	public Response post(String restUrl, Entity<String> d3) {
-		System.out.println("POST: " + restUrl);
+		LOGGER.log(Level.INFO, "POST: " + restUrl);
 		Client client = HttpClient.newClient();
 		WebTarget target = client.target(restUrl);
 		// Accetto risposte di tipo Json
-		Response response = target.request(MediaType.APPLICATION_JSON).accept("application/json")
+		Response response = null;
+		try {
+			response = target.request(MediaType.APPLICATION_JSON).accept("application/json")
 				.header("X-Requested-With", "XMLHttpRequest").post(d3);
+		}catch (javax.ws.rs.ProcessingException e) {
+			String msg = e.getMessage();
+			LOGGER.log(Level.SEVERE, msg, e);
+			if(msg.indexOf("connect timed out")>-1) {
+				Configuration config = client.getConfiguration();
+				Object connTimeout = config.getProperty(ClientProperties.CONNECT_TIMEOUT);
+				Object readTimeout = config.getProperty(ClientProperties.READ_TIMEOUT);
+				LOGGER.log(Level.CONFIG, "CONNECT_TIMEOUT: " + String.valueOf(connTimeout));
+				LOGGER.log(Level.CONFIG, "READ_TIMEOUT: " + String.valueOf(readTimeout));
+			}
+		}
 		return response;
 	}
 

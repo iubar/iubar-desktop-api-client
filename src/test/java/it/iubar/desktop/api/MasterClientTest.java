@@ -40,6 +40,8 @@ public class MasterClientTest extends MasterClientAbstract {
         	// Test on Echo server        
         	String url1 = HttpClientTest.ECHO_API_2;
         	masterClient.setAuth(true);
+        	// Non deve soprendere, ma utilizzo le stesse credenziali 
+        	// sia per autenticazione HMAC che per JWT
         	masterClient.setUser(MasterClientAbstract.user);			
         	masterClient.setApiKey(MasterClientAbstract.apiKey);        	
         	JSONObject jsonObj = masterClient.send(url1, MasterClientAbstract.client);  

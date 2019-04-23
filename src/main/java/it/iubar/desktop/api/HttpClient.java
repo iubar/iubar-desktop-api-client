@@ -30,11 +30,13 @@ import it.iubar.desktop.api.models.TitolareModel;
 public abstract class HttpClient {
 
 	private static final Logger LOGGER = Logger.getLogger(HttpClient.class.getName());
-
+	private static final int DEF_CONNECT_TIMEOUT = 1500;
+	private static final int DEF_READ_TIMEOUT = 3000;
+	
 	public static Client newClient() {
 		ClientConfig configuration = new ClientConfig();
-		configuration.property(ClientProperties.CONNECT_TIMEOUT, 1500);
-		configuration.property(ClientProperties.READ_TIMEOUT, 3000);
+		configuration.property(ClientProperties.CONNECT_TIMEOUT, DEF_CONNECT_TIMEOUT);
+		configuration.property(ClientProperties.READ_TIMEOUT, DEF_READ_TIMEOUT);
 		Client client = ClientBuilder.newClient(configuration);
 		return client;
 	}

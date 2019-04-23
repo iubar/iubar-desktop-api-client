@@ -29,7 +29,6 @@ public class MasterJwtClientTest extends MasterClientAbstract {
         	masterClient.setUser(MasterClientAbstract.user);			
         	masterClient.setApiKey(MasterClientAbstract.apiKey);         	
         	JSONObject jsonObj = masterClient.send(url1, MasterClientAbstract.client);
-
         	assertNotNull(jsonObj);
         } catch (Exception e) {
         	e.printStackTrace();

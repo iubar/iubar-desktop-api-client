@@ -67,8 +67,7 @@ public class MacUtils {
 						if(!b) {
 							LOGGER.warning("Mac non valido: " + mac);
 						}
-					        return b;
-	 
+					    return b;
 					}
 
 					private static boolean isNotEmpty(String str) {

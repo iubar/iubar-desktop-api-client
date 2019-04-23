@@ -47,8 +47,6 @@ public abstract class MasterClientAbstract {
 	public static final int ID_FAMILY_PAGHE = 1;
 	public static String user = null;
 	public static String apiKey = null;
-
-
 	  
 	protected static ClientModel client = null;
     private static ModelsList<DatoreModel> datori = null;
@@ -56,7 +54,7 @@ public abstract class MasterClientAbstract {
     private static ModelsList<CcnlModel> contratti = null;
     private static ModelsList<DocModel> documenti = null;
 
-    public static void loadConfig() throws Exception {
+    public static void loadConfig() {
     	String jwtUser = System.getenv("JWT_USER");
     	String jwtApiKey = System.getenv("JWT_APIKEY");
     	if(jwtUser!=null && jwtUser.length()>0) {
@@ -71,7 +69,6 @@ public abstract class MasterClientAbstract {
     			prop.load(is);
     			MasterClientAbstract.user = prop.getProperty("JWT_USER");
     			MasterClientAbstract.apiKey = prop.getProperty("JWT_APIKEY");
-
     		} catch (IOException ex) {
     			ex.printStackTrace();
     		} finally {
