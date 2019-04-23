@@ -155,7 +155,7 @@ import it.iubar.desktop.api.models.ModelsList;
 			}
 			response = target.request(MediaType.APPLICATION_JSON).accept("application/json").header("X-Requested-With", "XMLHttpRequest").get();
 		} catch (Exception e) {
-			
+			e.printStackTrace();
 		}
 		
 		return response;
