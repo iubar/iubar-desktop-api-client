@@ -18,8 +18,6 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import com.sun.xml.internal.ws.util.StringUtils;
-
 import it.iubar.desktop.api.models.CcnlModel;
 import it.iubar.desktop.api.models.CcnlModelTest;
 import it.iubar.desktop.api.models.ClientModel;
@@ -32,7 +30,6 @@ import it.iubar.desktop.api.models.MacUtils;
 import it.iubar.desktop.api.models.ModelsList;
 import it.iubar.desktop.api.models.TitolareModel;
 import it.iubar.desktop.api.models.TitolareModelTest;
-import javassist.runtime.Cflow;
  
 public abstract class MasterClientAbstract {
 
