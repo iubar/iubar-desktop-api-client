@@ -10,13 +10,15 @@ import static org.junit.jupiter.api.Assertions.fail;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.json.JSONObject;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+
+import com.sun.xml.internal.ws.util.StringUtils;
 
 import it.iubar.desktop.api.models.CcnlModel;
 import it.iubar.desktop.api.models.CcnlModelTest;
@@ -30,10 +32,8 @@ import it.iubar.desktop.api.models.MacUtils;
 import it.iubar.desktop.api.models.ModelsList;
 import it.iubar.desktop.api.models.TitolareModel;
 import it.iubar.desktop.api.models.TitolareModelTest;
+import javassist.runtime.Cflow;
  
-
-
-
 public abstract class MasterClientAbstract {
 
 	private static final Logger LOGGER = Logger.getLogger(MasterClientAbstract.class.getName());
@@ -64,13 +64,16 @@ public abstract class MasterClientAbstract {
     		String config = "/secret.properties";    		
     		Properties prop = new Properties();
     		InputStream is = null;
+    		
     		try {
     			is = MasterJwtClientTest.class.getResourceAsStream(config);
     			prop.load(is);
     			MasterClientAbstract.user = prop.getProperty("JWT_USER");
     			MasterClientAbstract.apiKey = prop.getProperty("JWT_APIKEY");
     		} catch (IOException ex) {
-    			ex.printStackTrace();
+    			LOGGER.log(Level.WARNING, "Impossibile leggere la configurazione dal file " + config);
+    			LOGGER.log(Level.WARNING, ex.getMessage());
+    			// ex.printStackTrace();
     		} finally {
     			if (is != null) {
     				try {
@@ -81,6 +84,15 @@ public abstract class MasterClientAbstract {
     			}
     		}
     	}
+    	
+    	if(MasterClientAbstract.user == null || MasterClientAbstract.user.length()==0) { 
+    		LOGGER.log(Level.SEVERE,"Impossibile continuare: user non specificato");
+    		System.exit(1);
+    	}else if(MasterClientAbstract.apiKey == null || MasterClientAbstract.apiKey.length()==0) {
+    		LOGGER.log(Level.SEVERE, "Impossibile continuare: apiKey non specificata");
+    		System.exit(1);
+    	}
+    	
     }
     
     @BeforeAll
@@ -116,9 +128,9 @@ public abstract class MasterClientAbstract {
 			JSONObject jsonObject = masterClient.responseManager(masterClient.get(APP_FAMILY_PAGHE + "/blacklist/mac/" + mac));
 			b = jsonObject.getBoolean("data");
 			if (b) {
-				System.out.println("The mac address is black-listed");
+				LOGGER.log(Level.WARNING, "The mac address is black-listed");
 			} else {
-				System.out.println("The mac address is NOT black-listed");
+				LOGGER.log(Level.INFO, "The mac address is NOT black-listed");
 			}			
 		} catch (Exception e) {
 			e.printStackTrace();
