@@ -1,31 +1,14 @@
 package it.iubar.desktop.api;
 
-import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.ClientProperties;
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
-
-import it.iubar.desktop.api.models.CcnlModel;
-import it.iubar.desktop.api.models.DatoreModel;
-import it.iubar.desktop.api.models.DocModel;
-import it.iubar.desktop.api.models.IJsonModel;
-import it.iubar.desktop.api.models.ModelsList;
-import it.iubar.desktop.api.models.TitolareModel;
 
 public abstract class HttpClient {
 

@@ -5,8 +5,6 @@ import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import com.sun.org.apache.xerces.internal.impl.dtd.models.CMAny;
-
 import it.iubar.desktop.api.models.CcnlModel;
 import it.iubar.desktop.api.models.CcnlModelTest;
 import it.iubar.desktop.api.models.ClientModel;

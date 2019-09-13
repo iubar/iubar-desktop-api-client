@@ -26,7 +26,7 @@ public class ListMac extends RootModel implements IJsonModel {
     }
 
     public boolean isBlackList() {
-        return blackList;
+        return this.blackList;
     }
 
     private void setBlackList(boolean blackList) {
@@ -34,11 +34,11 @@ public class ListMac extends RootModel implements IJsonModel {
     }
 
     public boolean isGreyList(){
-        return codeGreyList != 0;
+        return this.codeGreyList != 0;
     }
 
     public int getCodeGreyList() {
-        return codeGreyList;
+        return this.codeGreyList;
     }
 
     private void setCodeGreyList(int codeGreyList) {
@@ -46,7 +46,7 @@ public class ListMac extends RootModel implements IJsonModel {
     }
 
     public String getDescGreyList() {
-        return descGreyList;
+        return this.descGreyList;
     }
 
     private void setDescGreyList(String descGreyList) {

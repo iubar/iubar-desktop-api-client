@@ -10,7 +10,7 @@ public class CcnlModel extends RootModel implements IJsonModel {
     }
 
     public String getIdccnl() {
-        return idccnl;
+        return this.idccnl;
     }
 
 //    public void setIdapp(int idapp) {

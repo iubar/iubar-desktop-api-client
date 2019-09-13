@@ -4,11 +4,8 @@ import javax.ws.rs.core.Response;
 
 import org.json.JSONObject;
 
-import it.iubar.desktop.api.models.CcnlModel;
-import it.iubar.desktop.api.models.ClientModel;
 import it.iubar.desktop.api.models.IJsonModel;
 import it.iubar.desktop.api.models.ModelsList;
-import it.iubar.desktop.api.models.TitolareModel;
 
 public interface IHttpClient {
 

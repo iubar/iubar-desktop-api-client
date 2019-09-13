@@ -49,7 +49,7 @@ public class DatoreModel extends RootModel implements IJsonModel {
     }
 
     public String getDenom() {
-        return denom;
+        return this.denom;
     }
 
     public void setDenom(String denom) {
@@ -62,7 +62,7 @@ public class DatoreModel extends RootModel implements IJsonModel {
     }
 
     public int getSub() {
-        return sub;
+        return this.sub;
     }
 
     public void setSub(int sub) {
@@ -70,7 +70,7 @@ public class DatoreModel extends RootModel implements IJsonModel {
     }
 
     public int getPara() {
-        return para;
+        return this.para;
     }
 
     public void setPara(int para) {
@@ -78,7 +78,7 @@ public class DatoreModel extends RootModel implements IJsonModel {
     }
 
     public String getEmail() {
-        return email;
+        return this.email;
     }
 
     public void setEmail(String email) {
@@ -91,7 +91,7 @@ public class DatoreModel extends RootModel implements IJsonModel {
     }
 
     public String getTel() {
-        return tel;
+        return this.tel;
     }
 
     public void setTel(String tel) {
@@ -104,7 +104,7 @@ public class DatoreModel extends RootModel implements IJsonModel {
     }
 
     public String getIdcomune() {
-        return idcomune;
+        return this.idcomune;
     }
 
     public void setIdcomune(String idcomune) {

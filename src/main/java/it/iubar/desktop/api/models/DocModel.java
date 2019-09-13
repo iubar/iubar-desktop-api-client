@@ -46,7 +46,7 @@ public class DocModel extends RootModel implements IJsonModel, Cloneable {
     }
 
     public int getMese() {
-        return mese;
+        return this.mese;
     }
 
     public void setMese(int mese) {
@@ -54,7 +54,7 @@ public class DocModel extends RootModel implements IJsonModel, Cloneable {
     }
 
     public int getAnno() {
-        return anno;
+        return this.anno;
     }
 
     public void setAnno(int anno) {

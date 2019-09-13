@@ -1,6 +1,6 @@
 package it.iubar.desktop.api.models;
 
-import it.iubar.desktop.api.MasterClientTest;
+import it.iubar.desktop.api.MasterClientAbstract;
 
 public class ClientModelTest {
 
@@ -9,7 +9,7 @@ public class ClientModelTest {
 	public static final String PIVA = "12345678901";
 	
     public static ClientModel factory() {
-    	ClientModel client = new ClientModel(ClientModelTest.MAC, MasterClientTest.ID_APP_PAGHEOPEN);
+    	ClientModel client = new ClientModel(ClientModelTest.MAC, MasterClientAbstract.ID_APP_PAGHEOPEN);
 		client.setVersion("8697623");		
         client.setOs_name("Windows Vista");
         client.setOs_version("6.3");

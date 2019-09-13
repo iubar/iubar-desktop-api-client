@@ -1,6 +1,6 @@
 package it.iubar.desktop.api.models;
 
-import it.iubar.desktop.api.MasterClientTest;
+import it.iubar.desktop.api.MasterClientAbstract;
 import org.junit.jupiter.api.BeforeAll;
 
 public class DatoreModelTest {
@@ -14,7 +14,7 @@ public class DatoreModelTest {
 
 	public static DatoreModel factory() {
 		DatoreModel datore = new DatoreModel();
-		datore.setIdapp(MasterClientTest.ID_APP_PAGHEOPEN);
+		datore.setIdapp(MasterClientAbstract.ID_APP_PAGHEOPEN);
         datore.setIdcomune(null);
         datore.setPiva(ClientModelTest.PIVA);
         datore.setDenom("AWDBAWJDBJLA");

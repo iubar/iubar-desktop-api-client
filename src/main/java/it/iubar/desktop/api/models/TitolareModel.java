@@ -22,7 +22,7 @@ public class TitolareModel extends RootModel implements IJsonModel {
     }
 
     public int getIdtipo() {
-        return idtipo;
+        return this.idtipo;
     }
 
     public void setIdtipo(int idtipo) {
@@ -31,7 +31,7 @@ public class TitolareModel extends RootModel implements IJsonModel {
 
 
     public String getPiva() {
-        return piva;
+        return this.piva;
     }
 
     public void setPiva(String piva) {
@@ -44,7 +44,7 @@ public class TitolareModel extends RootModel implements IJsonModel {
     }
 
     public String getDenom() {
-        return denom;
+        return this.denom;
     }
 
     public void setDenom(String denom) {
@@ -57,7 +57,7 @@ public class TitolareModel extends RootModel implements IJsonModel {
     }
 
     public String getCognome() {
-        return cognome;
+        return this.cognome;
     }
 
     public void setCognome(String cognome) {
@@ -70,7 +70,7 @@ public class TitolareModel extends RootModel implements IJsonModel {
     }
 
     public String getIndirizzo() {
-        return indirizzo;
+        return this.indirizzo;
     }
 
     public void setIndirizzo(String indirizzo) {
@@ -83,7 +83,7 @@ public class TitolareModel extends RootModel implements IJsonModel {
     }
 
     public String getEmail() {
-        return email;
+        return this.email;
     }
 
     public void setEmail(String email) {
@@ -96,7 +96,7 @@ public class TitolareModel extends RootModel implements IJsonModel {
     }
 
     public String getTel() {
-        return tel;
+        return this.tel;
     }
 
     public void setTel(String tel) {
@@ -108,7 +108,7 @@ public class TitolareModel extends RootModel implements IJsonModel {
     }
 
     public int getDatori() {
-        return datori;
+        return this.datori;
     }
 
     public void setDatori(int datori) {
@@ -116,7 +116,7 @@ public class TitolareModel extends RootModel implements IJsonModel {
     }
 
     public int getLavoratori() {
-        return lavoratori;
+        return this.lavoratori;
     }
 
     public void setLavoratori(int lavoratori) {
@@ -124,7 +124,7 @@ public class TitolareModel extends RootModel implements IJsonModel {
     }
 
     public String getIdcomune() {
-        return idcomune;
+        return this.idcomune;
     }
 
     public void setIdcomune(String idcomune) {
@@ -137,7 +137,7 @@ public class TitolareModel extends RootModel implements IJsonModel {
     }
 
     public String getChiave_pubblica() {
-        return chiave_pubblica;
+        return this.chiave_pubblica;
     }
 
     public void setChiave_pubblica(String chiave_pubblica) {
@@ -150,7 +150,7 @@ public class TitolareModel extends RootModel implements IJsonModel {
     }
 
 	public String getCf() {
-		return cf;
+		return this.cf;
 	}
 
 	public void setCf(String cf) {

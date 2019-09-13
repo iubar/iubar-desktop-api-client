@@ -184,7 +184,7 @@ public class ClientModel extends RootModel implements IJsonModel {
 	}
 
 	public String getCf() {
-		return cf;
+		return this.cf;
 	}
 
 	public void setCf(String cf) {

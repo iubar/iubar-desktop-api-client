@@ -245,7 +245,7 @@ public abstract class AuthHttpClient extends HttpClient {
 	}
 
 	protected String getUser() {
-		return user;
+		return this.user;
 	}
 
 	public void setUser(String user) {

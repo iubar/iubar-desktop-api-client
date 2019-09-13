@@ -58,6 +58,7 @@ public class MasterJwtClientTest extends MasterClientAbstract {
     	assertEquals(200, response.getStatus());
     }
  
+	@Override
 	protected IHttpClient clientFactory() {
     	JwtClient masterClient = null;
     	 
