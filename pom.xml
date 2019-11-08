@@ -75,7 +75,7 @@
 		<dependency>
 			<groupId>org.glassfish.jersey.core</groupId>
 			<artifactId>jersey-client</artifactId>
-			<version>2.26</version>
+			<version>2.29.1</version>
 		</dependency>
 
 		<!-- Jersey 2 comes with a JSR330 (dependency injection) implementation baked in, named HK2 -->
