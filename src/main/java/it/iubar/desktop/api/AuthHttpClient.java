@@ -291,6 +291,11 @@ public abstract class AuthHttpClient extends HttpClient {
 		}
 		return authData;
 	}
+	
+	protected JSONObject genAuth(String destUrl) {
+		JSONObject authData = genAuth2(destUrl);
+		return authData;
+	}	
 
 	/**
 	 * Il metodo implementa la funzione PHP rawurlencode()
@@ -421,9 +426,6 @@ public abstract class AuthHttpClient extends HttpClient {
 		return baseUrl;
 	}
 
-	protected JSONObject genAuth(String destUrl) {
-		JSONObject authData = genAuth2(destUrl);
-		return authData;
-	}
+
 	
 }

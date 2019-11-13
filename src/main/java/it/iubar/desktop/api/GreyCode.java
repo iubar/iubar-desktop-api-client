@@ -2,8 +2,8 @@ package it.iubar.desktop.api;
 
 public enum GreyCode {
 DEFAULT(0, "Not in grey status"),
-DOVREBBE_ABBONARSI(1, "Dovrebbe abbonarsi"),
-NON_HA_PAGATO(2, "Non ha pagato"),
+DOVREBBE_ABBONARSI(1, "Dovrebbe abbonarsi"), // Non più utilizzato, perchè c'è watermark su stampe
+NON_HA_PAGATO(2, "Non ha pagato"), // Usato nei confronti di chi non paga la seconda data
 BLOCCATO(3, "Bloccato");
  
 private int cod;
