@@ -78,6 +78,15 @@
 	</build>
 
 	<dependencies>
+		
+<!-- https://mvnrepository.com/artifact/javax.activation/activation -->
+<!-- https://stackoverflow.com/questions/49436818/rest-client-hk2-failure-detected -->		
+<dependency>
+    <groupId>javax.activation</groupId>
+    <artifactId>activation</artifactId>
+    <version>1.1.1</version>
+</dependency>
+		
 		<dependency>
 			<groupId>org.glassfish.jersey.core</groupId>
 			<artifactId>jersey-client</artifactId>
