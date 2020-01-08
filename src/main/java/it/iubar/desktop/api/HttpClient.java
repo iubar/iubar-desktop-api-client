@@ -27,12 +27,14 @@ public abstract class HttpClient {
 
 	public static JSONObject getAnswer(Response response) {
 		JSONObject answer = null;
+		if(response!=null) {
 		String output = response.readEntity(String.class);
  
 		try {
 			answer = new JSONObject(output);
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
 		}
 		return answer;
 	}

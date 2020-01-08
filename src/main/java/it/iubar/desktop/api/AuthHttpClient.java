@@ -180,10 +180,10 @@ public abstract class AuthHttpClient extends HttpClient {
 					throw new RuntimeException("Situazione imprevista");
 				}
 			} else {
-				throw new RuntimeException("Situazione imprevista");
+				throw new RuntimeException("Situazione imprevista per classe " + ml.getClass().getCanonicalName());
 			}
 		} else {
-			throw new RuntimeException("Situazione imprevista");
+			throw new RuntimeException("Situazione imprevista per classe " + obj.getClass().getCanonicalName());
 		}
 
 		return urlToSend;
@@ -208,12 +208,10 @@ public abstract class AuthHttpClient extends HttpClient {
 					resp = answer.getString("response");
 				}
 
-				try {
+			 
 					String msg = "Query ok, code: " + status + ", rows affected: " + resp;
 					LOGGER.log(Level.FINE, msg);
-				} catch (JSONException e) {
-					e.printStackTrace();
-				}
+		 
 
 			} else if (status == 400) {
 				String msg = "Bad request, code: " + status + ", output: " + output;
