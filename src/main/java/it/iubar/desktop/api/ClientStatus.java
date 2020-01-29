@@ -34,5 +34,12 @@ public class ClientStatus {
 		}
 		return status;
 	}
+
+	public static boolean isAppRegistered() {
+		if(ClientStatus.app_status2 == AppStatus2.OK) {
+			return true;
+		}
+		return false;
+	}
 	
 }
