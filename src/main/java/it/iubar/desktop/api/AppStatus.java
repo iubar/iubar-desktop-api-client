@@ -4,8 +4,6 @@ public enum AppStatus {
 	SERIAL_NOT_VALIDATED("Codice attivazione non valido"), 
 	SERIAL_VALIDATED("Codice attivazione valido"),
 	BLACK_LISTED("Codice attivazione in blacklist"),
-	GREY_LISTED("Client in graylist"),
-	TIME_HACK("Tentativo di hack del codice attivazione"),
 	UNKNWON("Sconosciuto");
 	
 	 private String desc = null;
