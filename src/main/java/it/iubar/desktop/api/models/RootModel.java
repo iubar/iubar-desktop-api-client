@@ -169,8 +169,7 @@ public class RootModel {
 		// Feature is enabled by default.
 		mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
 
-		// SerializationInclusion: ovvero gestione di null, stringhe vuote e collection
-		// vuote !!!
+		// SerializationInclusion: ovvero gestione di null, stringhe vuote e collection vuote !!!
 		mapper.setSerializationInclusion(Include.ALWAYS); 	// Includo null e stringhe vuote // Value that indicates that
 															// property is to be always included, independent of value
 															// of the property.
