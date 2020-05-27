@@ -1,25 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-
 	<groupId>it.iubar.desktop.api</groupId>
 	<artifactId>iubar-desktop-api</artifactId>
 	<version>1.1</version>
-
 	<name>Iubar Desktop Api Client</name>
 	<description>Desktop Api Client classes</description>
-
 	<parent>
 		<groupId>it.iubar.pom</groupId>
-		<artifactId>iubar-pom</artifactId>
-		<version>0.0.6</version>
+		<artifactId>iubar-pom-next</artifactId>
+		<version>0.0.1</version>
 	</parent>
-
+	<properties>
+		<jersey.client.version>3.0.0-M1</jersey.client.version>
+		<jackson.version>2.11.0</jackson.version>
+		<jdk.source.version>1.7</jdk.source.version>
+		<jdk.target.version>${jdk.source.version}</jdk.target.version>		
+	</properties>
 	<build>
-
-
 		<resources>
 			<!-- regular resource processing for everything except config.ini.example -->
 			<resource>
@@ -29,20 +27,14 @@
 				</includes>
 			</resource>
 		</resources>
-
-
 		<plugins>
+			<!-- Plugins managed by the parent pom -->
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<!-- inherits config from parent: can override if required -->
 			</plugin>
-
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>				
- 				<!-- LEGGERE: https://stackoverflow.com/questions/36970384/surefire-is-not-picking-up-junit-5-tests?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa -->
-				<version>3.0.0-M3</version>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<!-- LEGGERE: https://stackoverflow.com/questions/36970384/surefire-is-not-picking-up-junit-5-tests?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa -->
 				<configuration>
 					<includes>
 						<include>MasterClientTest.java</include>
@@ -54,48 +46,43 @@
 						<exclude>HttpMethods.java</exclude>
 					</excludes>
 				</configuration>
-				<dependencies>
-        <dependency>
-          <groupId>org.junit.platform</groupId>
-          <artifactId>junit-platform-surefire-provider</artifactId>
-          <version>1.3.1</version>
-        </dependency>				
-					<dependency>
-						<groupId>org.junit.jupiter</groupId>
-						<artifactId>junit-jupiter-engine</artifactId>
-						<version>5.3.1</version>
-					</dependency>
-				</dependencies>
 			</plugin>
-			
+			<plugin>
+				<artifactId>maven-failsafe-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>versions-maven-plugin</artifactId>
+			</plugin>
+			<!-- / -->
 		</plugins>
 	</build>
-
 	<dependencies>
+		<!-- https://mvnrepository.com/artifact/org.glassfish.jersey.core/jersey-client -->
 		<dependency>
 			<groupId>org.glassfish.jersey.core</groupId>
 			<artifactId>jersey-client</artifactId>
-			<version>2.29.1</version>
+			<version>${jersey.client.version}</version>
 		</dependency>
-
 		<!-- Jersey 2 comes with a JSR330 (dependency injection) implementation baked in, named HK2 -->
 		<!-- https://mvnrepository.com/artifact/org.glassfish.jersey.inject/jersey-hk2 -->
 		<dependency>
 			<groupId>org.glassfish.jersey.inject</groupId>
 			<artifactId>jersey-hk2</artifactId>
-			<version>2.29.1</version>
+			<version>${jersey.client.version}</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
-			<version>2.10.1</version>
+			<version>${jackson.version}</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.module/jackson-module-jaxb-annotations -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.module</groupId>
 			<artifactId>jackson-module-jaxb-annotations</artifactId>
-			<version>2.10.1</version>
+			<version>${jackson.version}</version>
 		</dependency>
-
 		<!-- https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api -->
 		<!-- required by Java >= 1.9 -->
 		<!-- see https://stackoverflow.com/questions/43574426/how-to-resolve-java-lang-noclassdeffounderror-javax-xml-bind-jaxbexception-in-j -->
@@ -104,59 +91,37 @@
 			<artifactId>jaxb-api</artifactId>
 			<version>2.3.1</version>
 		</dependency>
-
+		<!-- Dependencies managed by the parent pom -->
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-api</artifactId>
-			<version>5.3.1</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-engine</artifactId>
-			<version>5.3.1</version>
 			<scope>test</scope>
 		</dependency>
-   <dependency>
-		<!-- 
-		Public API for configuring and launching test plans — typically used by IDEs and build tools 
-		(see https://junit.org/junit5/docs/current/user-guide/#launcher-api)
-		-->   
-        <groupId>org.junit.platform</groupId>
-        <artifactId>junit-platform-launcher</artifactId>
-        <version>1.3.1</version>
-        <scope>test</scope>
-    </dependency>
-    
+		<!-- / -->
 		<!-- https://mvnrepository.com/artifact/org.json/json -->
 		<dependency>
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
-			<version>20180813</version>
+			<version>20200518</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
 		<dependency>
 			<groupId>commons-codec</groupId>
 			<artifactId>commons-codec</artifactId>
-			<version>1.10</version>
+			<version>1.14</version>
 		</dependency>
-
-
-		<!-- https://mvnrepository.com/artifact/com.auth0/java-jwt -->
 		<!-- https://github.com/auth0/java-jwt -->
+		<!-- https://mvnrepository.com/artifact/com.auth0/java-jwt -->
 		<dependency>
 			<groupId>com.auth0</groupId>
 			<artifactId>java-jwt</artifactId>
-			<version>3.8.3</version>
+			<version>3.10.3</version>
 		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/com.google.firebase/firebase-admin -->
-		<!-- <dependency> -->
-		<!-- <groupId>com.google.firebase</groupId> -->
-		<!-- <artifactId>firebase-admin</artifactId> -->
-		<!-- <version>6.5.0</version> -->
-		<!-- </dependency> -->
-
-
 	</dependencies>
 	<scm>
 		<tag>${project.version}</tag>
