@@ -8,7 +8,7 @@
 	<description>Send data to the Crm Api</description>
 	<properties>
 		<junit.jupiter.version>5.7.0-M1</junit.jupiter.version>
-		<jersey.client.version>3.0.0-M1</jersey.client.version>
+		<jersey.client.version>2.31</jersey.client.version>
 		<jackson.version>2.11.0</jackson.version>
 		<surefire.plugin.version>3.0.0-M4</surefire.plugin.version>
 		<jdk.source.version>1.7</jdk.source.version>
