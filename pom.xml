@@ -19,7 +19,6 @@
 	</properties>
 	<build>
 		<resources>
-			<!-- regular resource processing for everything except config.ini.example -->
 			<resource>
 				<directory>src/test/resources</directory>
 				<includes>
@@ -29,9 +28,6 @@
 		</resources>
 		<plugins>
 			<!-- Plugins managed by the parent pom -->
-			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-			</plugin>
 			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<!-- LEGGERE: https://stackoverflow.com/questions/36970384/surefire-is-not-picking-up-junit-5-tests?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa -->
@@ -46,13 +42,6 @@
 						<exclude>HttpMethods.java</exclude>
 					</excludes>
 				</configuration>
-			</plugin>
-			<plugin>
-				<artifactId>maven-failsafe-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>versions-maven-plugin</artifactId>
 			</plugin>
 			<!-- / -->
 		</plugins>

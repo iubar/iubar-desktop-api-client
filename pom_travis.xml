@@ -7,31 +7,23 @@
 	<name>Iubar Test Crm Client</name>
 	<description>Send data to the Crm Api</description>
 	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<jdk.source.version>1.8</jdk.source.version>
+		<jdk.target.version>${jdk.source.version}</jdk.target.version>
 		<junit.jupiter.version>5.7.0-M1</junit.jupiter.version>
+		<surefire.plugin.version>3.0.0-M4</surefire.plugin.version>		
 		<jersey.client.version>2.31</jersey.client.version>
 		<jackson.version>2.11.0</jackson.version>
-		<surefire.plugin.version>3.0.0-M4</surefire.plugin.version>
-		<jdk.source.version>1.7</jdk.source.version>
-		<jdk.target.version>${jdk.source.version}</jdk.target.version>
 	</properties>
 	<build>
 		<resources>
-			<!-- regular resource processsing for everything except config.ini.example -->
 			<resource>
 				<directory>src/main/resources</directory>
 				<includes>
 					<include>secret.properties.dist</include>
 				</includes>
 			</resource>
-			<!-- resource processsing with a different output directory for config.ini -->
-			<!-- <resource> -->
-			<!-- <directory>src/main/resources</directory> -->
-			<!-- <includes> -->
-			<!-- <include>config.ini</include> -->
-			<!-- </includes> -->
-			<!-- relative to target/classe i.e. ${project.build.outputDirectory} -->
-			<!-- <targetPath>..</targetPath> -->
-			<!-- </resource> -->
 		</resources>
 		<plugins>
 			<plugin>
@@ -66,21 +58,23 @@
 						<artifactId>surefire-api</artifactId>
 						<version>${surefire.plugin.version}</version>
 					</dependency>
-					<!-- 					<dependency> -->
-					<!-- 						<groupId>org.junit.platform</groupId> -->
-					<!-- 						<artifactId>junit-platform-surefire-provider</artifactId> -->
-					<!-- 						<version>1.3.2</version> -->
-					<!-- 					</dependency> -->
-					<!-- 					<dependency> -->
-					<!-- 						<groupId>org.junit.jupiter</groupId> -->
-					<!-- 						<artifactId>junit-jupiter-engine</artifactId> -->
-					<!-- 						<version>5.5.2</version> -->
-					<!-- 					</dependency> -->
 				</dependencies>
 			</plugin>
 		</plugins>
 	</build>
 	<dependencies>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
+			<version>${junit.jupiter.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
+			<version>${junit.jupiter.version}</version>
+			<scope>test</scope>
+		</dependency>	
 		<!-- https://mvnrepository.com/artifact/javax.activation/activation -->
 		<!-- https://stackoverflow.com/questions/49436818/rest-client-hk2-failure-detected -->
 		<dependency>
@@ -120,18 +114,6 @@
 			<groupId>javax.xml.bind</groupId>
 			<artifactId>jaxb-api</artifactId>
 			<version>2.3.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter-api</artifactId>
-			<version>${junit.jupiter.version}</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter-engine</artifactId>
-			<version>${junit.jupiter.version}</version>
-			<scope>test</scope>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.json/json -->
 		<dependency>
