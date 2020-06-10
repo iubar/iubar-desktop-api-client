@@ -24,6 +24,9 @@
 				<includes>
 					<include>secret.properties.dist</include>
 				</includes>
+				<excludes>
+					<exclude>secret.properties</exclude>
+				</excludes>				
 			</resource>
 		</resources>
 		<plugins>
