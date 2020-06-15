@@ -13,8 +13,8 @@ import org.json.JSONObject;
 public abstract class HttpClient {
 
 	private static final Logger LOGGER = Logger.getLogger(HttpClient.class.getName());
-	private static final int DEF_CONNECT_TIMEOUT = 1500;
-	private static final int DEF_READ_TIMEOUT = 3000;
+	private static final int DEF_CONNECT_TIMEOUT = 15000;
+	private static final int DEF_READ_TIMEOUT = 15000;
 	
 	public static Client newClient() {
 		ClientConfig configuration = new ClientConfig();
