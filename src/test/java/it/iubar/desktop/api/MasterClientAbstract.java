@@ -26,7 +26,6 @@ import it.iubar.desktop.api.models.DatoreModel;
 import it.iubar.desktop.api.models.DatoreModelTest;
 import it.iubar.desktop.api.models.DocModel;
 import it.iubar.desktop.api.models.DocModelTest;
-import it.iubar.desktop.api.models.MacUtils;
 import it.iubar.desktop.api.models.ModelsList;
 import it.iubar.desktop.api.models.TitolareModel;
 import it.iubar.desktop.api.models.TitolareModelTest;
@@ -119,7 +118,6 @@ public abstract class MasterClientAbstract {
     
 	private boolean checkMacBlacklist(String mac){
 		boolean b = false;
-		if (MacUtils.isMacValid(mac)) {
     	IHttpClient masterClient = clientFactory();
 		try {
 			JSONObject jsonObject = masterClient.responseManager(masterClient.get(APP_FAMILY_PAGHE + "/blacklist/mac/" + mac));
@@ -131,7 +129,6 @@ public abstract class MasterClientAbstract {
 			}			
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
 		}
 		return b;
 	}
