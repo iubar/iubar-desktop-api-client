@@ -238,17 +238,17 @@ public class RootModel {
 		return null;
 	}
 
-	public static Date toDate(String str) {
-		Date d = null;
-		if (str != null) {
-			try {
-				d = FORMAT1.parse(str);
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-		}
-		return d;
-	}
+//	public static Date toDate(String str) {
+//		Date d = null;
+//		if (str != null) {
+//			try {
+//				d = FORMAT1.parse(str);
+//			} catch (ParseException e) {
+//				e.printStackTrace();
+//			}
+//		}
+//		return d;
+//	}
 
 	protected static Date toDate(GregorianCalendar cal) {
 		Date d = null;
