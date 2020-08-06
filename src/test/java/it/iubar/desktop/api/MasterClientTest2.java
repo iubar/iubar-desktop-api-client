@@ -280,18 +280,6 @@ public class MasterClientTest2 {
 			fail();
 		}
 	}
-/*
-	@Test
-	public void receivePreventivi() {
-		String path = "stats/preventivi/" + "2016-05-06/" + "2017-05-06";
-
-		try {
-			HttpMethods.receive(path);
-		} catch (Exception e) {
-			fail();
-		}
-	}
-	*/
 
 	@Test
 	public void receiveStatisticheGenerali() {
