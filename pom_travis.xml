@@ -9,12 +9,12 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<jdk.source.version>1.8</jdk.source.version>
+		<jdk.source.version>1.7</jdk.source.version>
 		<jdk.target.version>${jdk.source.version}</jdk.target.version>
 		<junit.jupiter.version>5.7.0-M1</junit.jupiter.version>
 		<surefire.plugin.version>3.0.0-M4</surefire.plugin.version>		
 		<jersey.client.version>2.31</jersey.client.version>
-		<jackson.version>2.11.0</jackson.version>
+		<jackson.version>2.11.2</jackson.version>
 	</properties>
 	<build>
 		<resources>
