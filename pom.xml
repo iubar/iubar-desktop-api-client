@@ -12,8 +12,8 @@
 		<version>0.0.1</version>
 	</parent>
 	<properties>
-		<jersey.client.version>2.31</jersey.client.version>
-		<jackson.version>2.11.2</jackson.version>
+		<jersey.client.version>2.32</jersey.client.version>
+		<jackson.version>2.11.3</jackson.version>
 		<jdk.source.version>1.7</jdk.source.version>
 		<jdk.target.version>${jdk.source.version}</jdk.target.version>		
 	</properties>
@@ -112,7 +112,7 @@
 		<dependency>
 			<groupId>com.auth0</groupId>
 			<artifactId>java-jwt</artifactId>
-			<version>3.10.3</version>
+			<version>3.11.0</version>
 		</dependency>
 	</dependencies>
 	<scm>
