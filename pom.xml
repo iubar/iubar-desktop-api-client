@@ -13,9 +13,7 @@
 	</parent>
 	<properties>
 		<jersey.client.version>2.32</jersey.client.version>
-		<jackson.version>2.11.3</jackson.version>
-		<jdk.source.version>1.7</jdk.source.version>
-		<jdk.target.version>${jdk.source.version}</jdk.target.version>		
+		<jackson.version>2.11.3</jackson.version>	
 	</properties>
 	<build>
 		<resources>
