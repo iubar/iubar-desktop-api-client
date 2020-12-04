@@ -198,8 +198,8 @@ public abstract class AuthHttpClient extends HttpClient {
 			int status = response.getStatus();
 			String output = response.readEntity(String.class);
 			answer = new JSONObject(output);
-			System.out.println("Response status: " + status);
-			System.out.println("Response data: " + output);
+			LOGGER.log(Level.INFO, "Response status: " + status);
+			LOGGER.log(Level.INFO, "Response data: " + output);
 
 			if (status == 201 || status == 200) {
 
