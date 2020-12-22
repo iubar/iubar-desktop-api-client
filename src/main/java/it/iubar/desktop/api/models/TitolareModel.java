@@ -35,8 +35,7 @@ public class TitolareModel extends RootModel implements IJsonModel {
     }
 
     public void setPiva(String piva) {
-    	if(piva !=null && piva.equals(""))
-    	{
+    	if(piva !=null && piva.equals("")) {
     		// Evito che la Rest Api inserisca la stringa vuota nel DB
     		piva = null;
     	}
