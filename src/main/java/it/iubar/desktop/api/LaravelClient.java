@@ -60,7 +60,7 @@ public class LaravelClient extends AuthHttpClient  {
 		authData.put("grant_type", "password");
 		authData.put("client_id", this.clientId);
 		authData.put("client_secret", this.clientSecret);
-		// [previous exception] [object] (League\\OAuth2\\Server\\Exception\\OAuthServerException(code: 4): Client authentication failed at C:\\Users\\Daniele\\workspace_php\\hr-laravel\\vendor\\league\\oauth2-server\\src\\Exception\\OAuthServerException.php:154)
+		// [previous exception] [object] (League\\OAuth2\\Server\\Exception\\OAuthServerException(code: 4): Client authentication failed at " + System.getProperty("user.home") + "\\workspace_php\\hr-laravel\\vendor\\league\\oauth2-server\\src\\Exception\\OAuthServerException.php:154)
 		// authData.put("client_id", 2);
 		// authData.put("client_secret", this.clientSecret);
 		authData.put("username", this.username);
