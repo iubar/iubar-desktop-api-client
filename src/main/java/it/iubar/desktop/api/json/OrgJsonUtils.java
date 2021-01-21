@@ -1,4 +1,4 @@
-package it.iubar.desktop.api;
+package it.iubar.desktop.api.json;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,7 +10,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class JsonUtils {
+public class OrgJsonUtils {
 
 	public static Map<String, Object> jsonToMap(JSONObject json) throws JSONException {
 	    Map<String, Object> retMap = new HashMap<String, Object>();
