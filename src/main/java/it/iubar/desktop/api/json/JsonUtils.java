@@ -1,11 +1,16 @@
 package it.iubar.desktop.api.json;
 
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStreamWriter;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -175,5 +180,34 @@ public static void main(String[] args) throws Exception {
 	JsonObject jsonObject = builder.build();
 	System.out.println(jsonObject.toString());		
 }
+
+/**
+ * FileWriter is meant for writing streams of characters. For writing streams of raw bytes, consider using a FileOutputStream.
+ * @see https://docs.oracle.com/javase/8/docs/api/java/io/FileWriter.html 
+ */
+public static void saveToFile2(JsonObjectBuilder objectBuilder, String fileName) throws IOException {
+	FileWriter fileWriter = new FileWriter(fileName);
+	String json = prettyPrint(objectBuilder.build());
+	fileWriter.write(json);
+	// fileWriter.flush(); // To flush a stream manually, invoke its flush method. The flush method is valid on any output stream, but has no effect unless the stream is buffered.
+	fileWriter.close(); 
+}
+
+/**
+ * FileWriter is meant for writing streams of characters. For writing streams of raw bytes, consider using a FileOutputStream.
+ * @see https://docs.oracle.com/javase/8/docs/api/java/io/FileWriter.html 
+ */
+public static void saveToFile(JsonObjectBuilder objectBuilder, String fileName) throws IOException {
+	Writer fstream = null;
+	BufferedWriter out = null;
+	FileOutputStream fos = new FileOutputStream(fileName);
+    fstream = new OutputStreamWriter(fos, StandardCharsets.UTF_8);
+    out = new BufferedWriter(fstream);
+    String json = prettyPrint(objectBuilder.build());
+    out.write(json);
+    out.flush();
+    out.close();
+}
+
 
 }
