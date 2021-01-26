@@ -92,9 +92,7 @@ public class JsonUtils {
  
 		return jsonPrettyString;
 	}
-	
-
-
+ 
 public static String jsonFormat(JsonStructure json, String... options) {
     StringWriter stringWriter = new StringWriter();
     Map<String, Boolean> config = buildConfig(options);
