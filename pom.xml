@@ -93,6 +93,7 @@
 			<scope>test</scope>
 		</dependency>
 		<!-- / -->
+		<!-- JSON-P Default Provider (JSR-353) -->		
 		<!-- https://mvnrepository.com/artifact/org.glassfish/jakarta.json -->
 		<dependency>
 		    <groupId>org.glassfish</groupId>
