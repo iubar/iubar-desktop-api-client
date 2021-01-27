@@ -125,6 +125,7 @@
 			<groupId>com.auth0</groupId>
 			<artifactId>java-jwt</artifactId>
 			<!-- ATTENZIONE: la versione 3.11 è l'ultima a supportare Java 1.7 -->
+			<!-- see https://github.com/auth0/java-jwt/blob/master/CHANGELOG.md -->
 			<version>3.11.0</version> 
 					<exclusions>
 						<exclusion>
