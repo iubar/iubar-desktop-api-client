@@ -12,7 +12,7 @@
 		<version>0.0.1</version>
 	</parent>
 	<properties>
-		<jersey.client.version>2.33</jersey.client.version>
+		<jersey.client.version>2.25.1</jersey.client.version> <!-- 2.25.1 is the last version for Java 1.7 see https://eclipse-ee4j.github.io/jersey.github.io/documentation/latest/modules-and-dependencies.html#:~:text=x%20almost%20all%20Jersey%20components,runnable%20with%20Java%20SE%206. -->		
 		<jackson.version>2.11.3</jackson.version>	
 	</properties>
 	<build>
@@ -54,13 +54,7 @@
 			<artifactId>jersey-client</artifactId>
 			<version>${jersey.client.version}</version>
 		</dependency>
-		<!-- Jersey 2 comes with a JSR330 (dependency injection) implementation baked in, named HK2 -->
-		<!-- https://mvnrepository.com/artifact/org.glassfish.jersey.inject/jersey-hk2 -->
-		<dependency>
-			<groupId>org.glassfish.jersey.inject</groupId>
-			<artifactId>jersey-hk2</artifactId>
-			<version>${jersey.client.version}</version>
-		</dependency>
+ 
 		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.module/jackson-module-jaxb-annotations -->
 		<dependency>				
 			<groupId>com.fasterxml.jackson.module</groupId>
