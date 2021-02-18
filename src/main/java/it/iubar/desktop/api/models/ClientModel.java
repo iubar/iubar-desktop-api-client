@@ -13,6 +13,7 @@ public class ClientModel extends RootModel implements IJsonModel {
     private int titolari;
     private int datori;
     private int lavoratori;
+    private int cedolini_ultimi_12_mesi;
     private String ip_local;
     private String host_name;
     private String user_name;
@@ -68,6 +69,10 @@ public class ClientModel extends RootModel implements IJsonModel {
 
     public void setLavoratori(int lavoratori) {
         this.lavoratori = lavoratori;
+    }
+    
+    public void setCedoliniUltimi12Mesi(int cedolini_ultimi_12_mesi) {
+        this.cedolini_ultimi_12_mesi = cedolini_ultimi_12_mesi;
     }
 
     public void setIp_local(String ip_local) {
@@ -141,6 +146,10 @@ public class ClientModel extends RootModel implements IJsonModel {
 
     public int getLavoratori() {
         return this.lavoratori;
+    }
+    
+    public int getCedoliniUltimi12Mesi() {
+        return this.cedolini_ultimi_12_mesi;
     }
 
     public String getIp_local() {
