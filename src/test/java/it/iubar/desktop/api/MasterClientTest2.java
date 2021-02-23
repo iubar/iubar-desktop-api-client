@@ -5,14 +5,10 @@ import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import it.iubar.desktop.api.models.CcnlModel;
-import it.iubar.desktop.api.models.CcnlModelTest;
 import it.iubar.desktop.api.models.ClientModel;
 import it.iubar.desktop.api.models.ClientModelTest;
 import it.iubar.desktop.api.models.DatoreModel;
 import it.iubar.desktop.api.models.DatoreModelTest;
-import it.iubar.desktop.api.models.DocModel;
-import it.iubar.desktop.api.models.DocModelTest;
 import it.iubar.desktop.api.models.ModelsList;
 import it.iubar.desktop.api.models.TitolareModel;
 import it.iubar.desktop.api.models.TitolareModelTest;
@@ -43,20 +39,6 @@ public class MasterClientTest2 {
 	}
 
 	@Test
-	public void sendContatto() {
-		CcnlModel contratto = CcnlModelTest.factory();
-		ModelsList<CcnlModel> contratti = new ModelsList<CcnlModel>(ClientModelTest.MAC,
-				MasterClientAbstract.ID_APP_PAGHEOPEN, "contratti");
-		contratti.add(contratto);
-
-		try {
-			HttpMethods.modlesSend(contratti);
-		} catch (Exception e) {
-			fail();
-		}
-	}
-
-	@Test
 	public void sendDatore() {
 		DatoreModel datore = DatoreModelTest.factory();
 		ModelsList<DatoreModel> datori = new ModelsList<DatoreModel>(ClientModelTest.MAC,
@@ -65,17 +47,6 @@ public class MasterClientTest2 {
 
 		try {
 			HttpMethods.modlesSend(datori);
-		} catch (Exception e) {
-			fail();
-		}
-	}
-
-	@Test
-	public void sendDoc() {
-		DocModel doc = DocModelTest.factory();
-
-		try {
-			HttpMethods.modelSend(null, doc);
 		} catch (Exception e) {
 			fail();
 		}
@@ -183,29 +154,6 @@ public class MasterClientTest2 {
 	@Test
 	public void receiveCountDocumentiMese() {
 		String path = "count-documenti/" + "1/" + "2017-08-19/" + "2017-09-19";
-
-		try {
-			HttpMethods.receive(path);
-		} catch (Exception e) {
-			fail();
-		}
-	}
-
-	@Test
-	public void receiveDocumenti() {
-		String path = "stats/doc/" + "2016-05-06/" + "2017-05-06";
-
-		try {
-			HttpMethods.receive(path);
-		} catch (Exception e) {
-			fail();
-		}
-	}
-
-	@Test
-	public void receiveGreylist() {
-		String path = Integer.toString(MasterClientAbstract.ID_FAMILY_PAGHE) + "/greylist/mac/"
-				+ ClientModelTest.MAC;
 
 		try {
 			HttpMethods.receive(path);

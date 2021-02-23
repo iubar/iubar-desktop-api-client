@@ -16,7 +16,6 @@ import javax.ws.rs.core.Response;
 
 import org.glassfish.jersey.client.ClientProperties;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import it.iubar.desktop.api.models.CcnlModel;
@@ -29,16 +28,11 @@ import it.iubar.desktop.api.models.TitolareModel;
 public abstract class AuthHttpClient extends HttpClient {
 
 	private static final Logger LOGGER = Logger.getLogger(AuthHttpClient.class.getName());
-	
+
 	private String user = null;
 	private String apiKey = null;
+
 	private boolean isAuth = false;
-
-
-	//	private final String IS_AUTH_VALUE = "is_auth";
-	//	private final String HOST_VALUE = "host";
-	//	private final String USER_VALUE = "user";
-	//	private final String API_KEY_VALUE = "api_key";
 
 	public final static String INSERT_CLIENT = "client";
 	public final static String INSERT_TITOLARI = "titolari";
@@ -50,65 +44,6 @@ public abstract class AuthHttpClient extends HttpClient {
 	abstract protected JSONObject genAuth2(String destUrl);
 
 	abstract public Response get(String restUrl);
-
-	//	public void loadConfigFromFile(String cfgFile) throws IOException {
-	//		File file = new File(cfgFile);
-	//		InputStream is = new FileInputStream(file);
-	//		this.setUpIni(is);
-	//	}
-
-	//	public void loadConfigFromJar() {
-	//		// Soluzione 1
-	//		ClassLoader classLoader = getClass().getClassLoader();
-	//		File file = new File(classLoader.getResource("config.ini").getFile());
-	//		// Soluzione 2
-	//		// NO: File file = new File("src/main/resources/config.ini");
-	//		// Soluzione 3
-	//		InputStream is = getClass().getResourceAsStream("/config.ini");
-	//		// eg: BufferedReader reader = new BufferedReader(new
-	//		// InputStreamReader(in));
-	//
-	//		this.setUpIni(is);
-	//	}
-
-	// Sets all the variables looking at the ".ini" file.
-	//	private void setUpIni(InputStream inputStream) {
-	//		Properties properties = new Properties();
-	//		try {
-	//			properties.load(inputStream);
-	//		} catch (FileNotFoundException e1) {
-	//			e1.printStackTrace();
-	//		} catch (IOException e) {
-	//			e.printStackTrace();
-	//		}
-	//
-	//		String host = properties.getProperty(HOST_VALUE);
-	//		String auth = properties.getProperty(IS_AUTH_VALUE, "false");
-	//		this.setAuth(fromStringToBool(auth));
-	//		this.setBaseUrl(host);
-	//
-	//		if (isAuth()) {
-	//			String apiKey = properties.getProperty(API_KEY_VALUE);
-	//			String user = properties.getProperty(USER_VALUE);
-	//			this.setUser(user);
-	//			this.setApiKey(apiKey);
-	//		}
-	//		LOGGER.log(Level.FINE, "Config file parsed succesfully");
-	//
-	//	}
-
-	private boolean fromStringToBool(String s) {
-		return s.equalsIgnoreCase("true");
-	}
-
-	private String normalizePath(String path) {
-		String finalPath = path;
-		if (!finalPath.equalsIgnoreCase("") && !finalPath.substring(0, 1).equalsIgnoreCase("/")) {
-			finalPath = "/" + finalPath;
-		}
-
-		return finalPath;
-	}
 
 	public <T> JSONObject send(IJsonModel obj) throws Exception {
 		return send(getRoute(obj), obj);
@@ -129,6 +64,7 @@ public abstract class AuthHttpClient extends HttpClient {
 		LOGGER.log(Level.INFO, dataToSend.toString());
 		Response response = post(destUrl, dataToSend);
 		JSONObject jsonObj = responseManager(response);
+
 		return jsonObj;
 	}
 
@@ -140,6 +76,7 @@ public abstract class AuthHttpClient extends HttpClient {
 		LOGGER.log(Level.INFO, dataToSend.toString());
 		Response response = post(destUrl, dataToSend);
 		JSONObject jsonObj = responseManager(response);
+
 		return jsonObj;
 	}
 
@@ -202,16 +139,13 @@ public abstract class AuthHttpClient extends HttpClient {
 			LOGGER.log(Level.INFO, "Response data: " + output);
 
 			if (status == 201 || status == 200) {
-
 				String resp = "";
 				if (answer.has("response")) {
 					resp = answer.getString("response");
 				}
 
-			 
-					String msg = "Query ok, code: " + status + ", rows affected: " + resp;
-					LOGGER.log(Level.FINE, msg);
-		 
+				String msg = "Query ok, code: " + status + ", rows affected: " + resp;
+				LOGGER.log(Level.FINE, msg);
 
 			} else if (status == 400) {
 				String msg = "Bad request, code: " + status + ", output: " + output;
@@ -289,11 +223,11 @@ public abstract class AuthHttpClient extends HttpClient {
 		}
 		return authData;
 	}
-	
+
 	protected JSONObject genAuth(String destUrl) {
 		JSONObject authData = genAuth2(destUrl);
 		return authData;
-	}	
+	}
 
 	/**
 	 * Il metodo implementa la funzione PHP rawurlencode()
@@ -302,13 +236,17 @@ public abstract class AuthHttpClient extends HttpClient {
 	 * @param string
 	 * @return string
 	 */
-	protected String rawUrlEncode(String string) { // All non-ascii characters in URL has to be 'x-url-encoding' encoded.
-		//String encoded = string.replaceAll("\\+", "%2B"); // analogo a rawurlencode di Php
-		//encoded = encoded.replaceAll(":", "%3A"); // analogo a rawurlencode di Php
+	protected String rawUrlEncode(String string) { // All non-ascii characters in URL has to be 'x-url-encoding'
+													// encoded.
+		// String encoded = string.replaceAll("\\+", "%2B"); // analogo a rawurlencode
+		// di Php
+		// encoded = encoded.replaceAll(":", "%3A"); // analogo a rawurlencode di Php
 		String encoded = null;
 		try {
-			encoded = URLEncoder.encode(string, "UTF-8"); // converts a String to the application/x-www-form-urlencoded MIME format.
-			encoded = encoded.replace("+", "%20"); // converts all space chars (the plus char in a mime encoded string) to "%20" like the rawurlencode() function in Php
+			encoded = URLEncoder.encode(string, "UTF-8"); // converts a String to the application/x-www-form-urlencoded
+															// MIME format.
+			encoded = encoded.replace("+", "%20"); // converts all space chars (the plus char in a mime encoded string)
+													// to "%20" like the rawurlencode() function in Php
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
@@ -335,11 +273,12 @@ public abstract class AuthHttpClient extends HttpClient {
 		}
 		Entity<String> d1 = Entity.text(data.toString());
 		Entity<String> d2 = Entity.entity(data.toString(), MediaType.APPLICATION_JSON);
-		Entity<String> d3 = Entity.json(data.toString()); // See: https://jersey.java.net/documentation/latest/client.html#d0e4692		
-		// Se volessi utilizzare il post di tipo "application/x-www-form-urlencoded"	
-		//		Form form = new Form();
-		//	    form.param("user", "XXX");
-		//	    Entity d4 = Entity.entity(form,MediaType.APPLICATION_FORM_URLENCODED);
+		Entity<String> d3 = Entity.json(data.toString()); // See:
+															// https://jersey.java.net/documentation/latest/client.html#d0e4692
+		// Se volessi utilizzare il post di tipo "application/x-www-form-urlencoded"
+		// Form form = new Form();
+		// form.param("user", "XXX");
+		// Entity d4 = Entity.entity(form,MediaType.APPLICATION_FORM_URLENCODED);
 
 		return post(restUrl, d3);
 	}
@@ -352,11 +291,11 @@ public abstract class AuthHttpClient extends HttpClient {
 		Response response = null;
 		try {
 			response = target.request(MediaType.APPLICATION_JSON).accept("application/json")
-				.header("X-Requested-With", "XMLHttpRequest").post(d3);
-		}catch (javax.ws.rs.ProcessingException e) {
+					.header("X-Requested-With", "XMLHttpRequest").post(d3);
+		} catch (javax.ws.rs.ProcessingException e) {
 			String msg = e.getMessage();
 			LOGGER.log(Level.SEVERE, msg, e);
-			if(msg.indexOf("connect timed out")>-1) {
+			if (msg.indexOf("connect timed out") > -1) {
 				Configuration config = client.getConfiguration();
 				Object connTimeout = config.getProperty(ClientProperties.CONNECT_TIMEOUT);
 				Object readTimeout = config.getProperty(ClientProperties.READ_TIMEOUT);
@@ -367,11 +306,10 @@ public abstract class AuthHttpClient extends HttpClient {
 		return response;
 	}
 
-
 	/*
-	 * Il seguente metodo implementa la logica di risoluzione delle rotte
-	 * dettata dall'RFC3986, ovvero la stessa utilizzata da Guzzle e descritta
-	 * nel manuale dello stesso progetto
+	 * Il seguente metodo implementa la logica di risoluzione delle rotte dettata
+	 * dall'RFC3986, ovvero la stessa utilizzata da Guzzle e descritta nel manuale
+	 * dello stesso progetto
 	 * 
 	 * @see: http://docs.guzzlephp.org/en/5.3/clients.html
 	 */
@@ -412,18 +350,7 @@ public abstract class AuthHttpClient extends HttpClient {
 			e.printStackTrace();
 		}
 
-//		if (url != null) {
-//			String host = url.getHost();
-//			String protocol = url.getProtocol();
-//			baseUrl = protocol + "://" + host;
-//			int port = url.getPort();
-//			if(port>-1) {
-//				baseUrl = baseUrl + ":" + port;
-//			}
-//		}
 		return baseUrl;
 	}
 
-
-	
 }

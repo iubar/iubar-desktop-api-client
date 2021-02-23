@@ -6,9 +6,10 @@ public class ClientStatus {
 	
 	public static String getString() {
 		String status = ClientStatus.app_status.toString();
-		if(ClientStatus.app_status == AppStatus.UNKNWON) {
+		if (ClientStatus.app_status == AppStatus.UNKNWON) {
 			status = "<sconosciuto>";
 		}
+		
 		return status;
 	}
 
