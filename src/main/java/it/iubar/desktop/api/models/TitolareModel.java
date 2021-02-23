@@ -2,8 +2,6 @@ package it.iubar.desktop.api.models;
 
 public class TitolareModel extends RootModel implements IJsonModel {
     
-//	private int idapp = 0;
-	private int idtipo;
     private String cf;
     private String piva;
     private String denom;
@@ -13,22 +11,11 @@ public class TitolareModel extends RootModel implements IJsonModel {
     private String tel;
     private int datori;
     private int lavoratori;
-    private String idcomune;
-    private String chiave_pubblica;
 
     
     public TitolareModel() {
     	super();
     }
-
-    public int getIdtipo() {
-        return this.idtipo;
-    }
-
-    public void setIdtipo(int idtipo) {
-        this.idtipo = idtipo;
-    }
-
 
     public String getPiva() {
         return this.piva;
@@ -120,32 +107,6 @@ public class TitolareModel extends RootModel implements IJsonModel {
 
     public void setLavoratori(int lavoratori) {
         this.lavoratori = lavoratori;
-    }
-
-    public String getIdcomune() {
-        return this.idcomune;
-    }
-
-    public void setIdcomune(String idcomune) {
-    	if(idcomune !=null && idcomune.equals(""))
-    	{
-    		// Evito che la Rest Api inserisca la stringa vuota nel DB
-    		idcomune = null;
-    	}
-        this.idcomune = idcomune;
-    }
-
-    public String getChiave_pubblica() {
-        return this.chiave_pubblica;
-    }
-
-    public void setChiave_pubblica(String chiave_pubblica) {
-    	if(chiave_pubblica !=null && chiave_pubblica.equals(""))
-    	{ 
-    		// Evito che la Rest Api inserisca la stringa vuota nel DB
-    		chiave_pubblica = null;
-    	}
-        this.chiave_pubblica = chiave_pubblica;
     }
 
 	public String getCf() {
