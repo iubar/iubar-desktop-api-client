@@ -71,7 +71,7 @@ public class ClientModel extends RootModel implements IJsonModel {
         this.lavoratori = lavoratori;
     }
     
-    public void setCedoliniUltimi12Mesi(int cedolini_ultimi_12_mesi) {
+    public void setCedolini_ultimi_12_mesi(int cedolini_ultimi_12_mesi) {
         this.cedolini_ultimi_12_mesi = cedolini_ultimi_12_mesi;
     }
 
@@ -148,7 +148,7 @@ public class ClientModel extends RootModel implements IJsonModel {
         return this.lavoratori;
     }
     
-    public int getCedoliniUltimi12Mesi() {
+    public int getCedolini_ultimi_12_mesi() {
         return this.cedolini_ultimi_12_mesi;
     }
 

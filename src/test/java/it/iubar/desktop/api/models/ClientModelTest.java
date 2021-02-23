@@ -18,7 +18,7 @@ public class ClientModelTest {
         client.setCf(ClientModelTest.CF);
         client.setDatori(0);
         client.setLavoratori(0);
-        client.setCedoliniUltimi12Mesi(0);
+        client.setCedolini_ultimi_12_mesi(0);
         client.setIp_local("192.168.32.2");
         client.setHost_name("JUNIT");
         client.setUser_name("JUNIT");
