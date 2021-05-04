@@ -13,15 +13,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.logging.Logger;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.Source;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamSource;
+ 
 
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
@@ -36,78 +28,78 @@ public class RootModel {
 	private final static DateFormat FORMAT2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	private final static DateFormat FORMAT3 = new SimpleDateFormat("yyyy-MM-dd HH:mm a z");
 
-	public String asXml() throws JAXBException {
-		Class c = this.getClass();
-		JAXBContext jContext = JAXBContext.newInstance(c);
-		java.io.StringWriter sw = new StringWriter();
-		Marshaller marshaller = jContext.createMarshaller();
-		marshaller.setProperty(Marshaller.JAXB_ENCODING, "UTF-8");
-		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-		marshaller.marshal(this, sw);
-		return sw.toString();
-	}
+//	public String asXml() throws JAXBException {
+//		Class c = this.getClass();
+//		JAXBContext jContext = JAXBContext.newInstance(c);
+//		java.io.StringWriter sw = new StringWriter();
+//		Marshaller marshaller = jContext.createMarshaller();
+//		marshaller.setProperty(Marshaller.JAXB_ENCODING, "UTF-8");
+//		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+//		marshaller.marshal(this, sw);
+//		return sw.toString();
+//	}
 
-	public static <T> T fromXml(Source xmlSource, Class<T> c) {
-		T t = null;
-		try {
-			JAXBContext jc = JAXBContext.newInstance(c);
-			Unmarshaller unmarshaller = jc.createUnmarshaller();
-			t = (T) unmarshaller.unmarshal(xmlSource);
-		} catch (JAXBException e) {
-			e.printStackTrace();
-		}
-		return t;
-	}
+//	public static <T> T fromXml(Source xmlSource, Class<T> c) {
+//		T t = null;
+//		try {
+//			JAXBContext jc = JAXBContext.newInstance(c);
+//			Unmarshaller unmarshaller = jc.createUnmarshaller();
+//			t = (T) unmarshaller.unmarshal(xmlSource);
+//		} catch (JAXBException e) {
+//			e.printStackTrace();
+//		}
+//		return t;
+//	}
 
-	public static <T> T fromXml(Reader reader, Class<T> c) {
-		T t = null;
-		try {
-			JAXBContext jc = JAXBContext.newInstance(c);
-			Unmarshaller unmarshaller = jc.createUnmarshaller();
-			t = (T) unmarshaller.unmarshal(reader);
-		} catch (JAXBException e) {
-			e.printStackTrace();
-		}
-		return t;
-	}
+//	public static <T> T fromXml(Reader reader, Class<T> c) {
+//		T t = null;
+//		try {
+//			JAXBContext jc = JAXBContext.newInstance(c);
+//			Unmarshaller unmarshaller = jc.createUnmarshaller();
+//			t = (T) unmarshaller.unmarshal(reader);
+//		} catch (JAXBException e) {
+//			e.printStackTrace();
+//		}
+//		return t;
+//	}
+//
+//	public static <T> T fromXml(String xmlString, Class<T> c) {
+//		DOMSource xmlSource = toDOMSource(xmlString);
+//		return fromXml(xmlSource, c);
+//	}
 
-	public static <T> T fromXml(String xmlString, Class<T> c) {
-		DOMSource xmlSource = toDOMSource(xmlString);
-		return fromXml(xmlSource, c);
-	}
-
-	public static <T> T fromXml2(String xmlString, Class<T> c) {
-		Reader reader = new StringReader(xmlString);
-		return fromXml(reader, c);
-	}
+//	public static <T> T fromXml2(String xmlString, Class<T> c) {
+//		Reader reader = new StringReader(xmlString);
+//		return fromXml(reader, c);
+//	}
 
 	 
 
-	public static StreamSource toStreamSource(String str) {
-		StreamSource source = new StreamSource(new StringReader(str));
-		return source;
-	}
+//	public static StreamSource toStreamSource(String str) {
+//		StreamSource source = new StreamSource(new StringReader(str));
+//		return source;
+//	}
 
-	public static DOMSource toDOMSource(String str) {
-		DOMSource source = null;
-		Element node = null;
-		try {
-			ByteArrayInputStream is = new ByteArrayInputStream(str.getBytes(StandardCharsets.UTF_8));
-			// oppure
-			// InputSource is = new InputSource();
-			// is.setCharacterStream(new StringReader(str));
-			// is.setEncoding("UTF-8");
-			node = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(is).getDocumentElement();
-		} catch (SAXException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (ParserConfigurationException e) {
-			e.printStackTrace();
-		}
-		source = new DOMSource(node);
-		return source;
-	}
+//	public static DOMSource toDOMSource(String str) {
+//		DOMSource source = null;
+//		Element node = null;
+//		try {
+//			ByteArrayInputStream is = new ByteArrayInputStream(str.getBytes(StandardCharsets.UTF_8));
+//			// oppure
+//			// InputSource is = new InputSource();
+//			// is.setCharacterStream(new StringReader(str));
+//			// is.setEncoding("UTF-8");
+//			node = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(is).getDocumentElement();
+//		} catch (SAXException e) {
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		} catch (ParserConfigurationException e) {
+//			e.printStackTrace();
+//		}
+//		source = new DOMSource(node);
+//		return source;
+//	}
 
 	public static String toString(Date date) {
 		String formatted = null;

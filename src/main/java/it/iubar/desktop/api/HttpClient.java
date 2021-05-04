@@ -13,14 +13,17 @@ import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.core.Response;
 
-import org.glassfish.jersey.client.ClientConfig;
-import org.glassfish.jersey.client.ClientProperties;
- 
 import jakarta.json.Json;
 import jakarta.json.JsonObject;
 import jakarta.json.JsonReader;
 import jakarta.json.JsonWriterFactory;
 import jakarta.json.stream.JsonGenerator;
+
+import org.glassfish.jersey.client.ClientConfig;
+import org.glassfish.jersey.client.ClientProperties;
+
+ 
+
 
 public abstract class HttpClient {
 
@@ -29,12 +32,12 @@ public abstract class HttpClient {
 	private static final int DEF_READ_TIMEOUT = 15000;
 	
 	public static Client newClient() {
-		ClientConfig configuration = new ClientConfig();
-		configuration.property(ClientProperties.CONNECT_TIMEOUT, DEF_CONNECT_TIMEOUT);
-		configuration.property(ClientProperties.READ_TIMEOUT, DEF_READ_TIMEOUT);
-		Client client = ClientBuilder.newClient(configuration);
+		Client client = ClientBuilder.newClient();
+		client.property(ClientProperties.CONNECT_TIMEOUT, DEF_CONNECT_TIMEOUT);
+		client.property(ClientProperties.READ_TIMEOUT, DEF_READ_TIMEOUT);		
 		return client;
 	}
+	
 	protected String url = null;
 
 	public static JsonObject getAnswer(Response response) {

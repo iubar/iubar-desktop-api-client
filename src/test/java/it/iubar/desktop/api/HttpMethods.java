@@ -86,8 +86,7 @@ public class HttpMethods {
 	}
 
 	public static void send(String input, String path, boolean request) {
-		ClientConfig config = new ClientConfig();
-		Client client = ClientBuilder.newClient(config);
+		Client client = HttpClient.newClient();
 
 		URI baseUri = UriBuilder.fromUri(RestApiConsts.CRM_BASE_ROUTE).build();
 		WebTarget target = client.target(baseUri);
@@ -133,8 +132,7 @@ public class HttpMethods {
 	}
 
 	public static void receive(String path) {
-		ClientConfig config = new ClientConfig();
-		Client client = ClientBuilder.newClient(config);
+		Client client = HttpClient.newClient();
 
 		URI baseUri = UriBuilder.fromUri(RestApiConsts.CRM_BASE_ROUTE).build();
 		WebTarget target = client.target(baseUri);
