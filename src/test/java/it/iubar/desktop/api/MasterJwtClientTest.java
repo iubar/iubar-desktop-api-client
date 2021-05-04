@@ -4,16 +4,13 @@ package it.iubar.desktop.api;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.fail;
-
-import javax.ws.rs.core.Response;
-
- 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import jakarta.ws.rs.core.Response;
+
 import it.iubar.desktop.api.json.JsonUtils;
-import jakarta.json.Json;
 import jakarta.json.JsonObject;
 
 public class MasterJwtClientTest extends MasterClientAbstract {

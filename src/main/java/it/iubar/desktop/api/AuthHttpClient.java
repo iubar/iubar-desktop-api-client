@@ -7,12 +7,12 @@ import java.net.URLEncoder;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.Configuration;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import jakarta.ws.rs.ProcessingException;
+import jakarta.ws.rs.client.Entity;
+import jakarta.ws.rs.client.WebTarget;
+import jakarta.ws.rs.core.Configuration;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 import org.glassfish.jersey.client.ClientProperties;
 
@@ -294,7 +294,7 @@ public abstract class AuthHttpClient extends HttpClient {
 		try {
 			response = target.request(MediaType.APPLICATION_JSON).accept("application/json")
 					.header("X-Requested-With", "XMLHttpRequest").post(d3);
-		} catch (javax.ws.rs.ProcessingException e) {
+		} catch (ProcessingException e) {
 			String msg = e.getMessage();
 			LOGGER.log(Level.SEVERE, msg, e);
 			if (msg.indexOf("connect timed out") > -1) {

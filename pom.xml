@@ -106,6 +106,12 @@
 		</dependency>
 
 
+		<!-- https://mvnrepository.com/artifact/jakarta.ws.rs/jakarta.ws.rs-api -->        
+        <dependency>
+            <groupId>jakarta.ws.rs</groupId>
+            <artifactId>jakarta.ws.rs-api</artifactId>
+            <version>3.0.0</version>
+        </dependency>
 <!-- https://mvnrepository.com/artifact/jakarta.json.bind/jakarta.json.bind-api -->
 <dependency>
     <groupId>jakarta.json.bind</groupId>
