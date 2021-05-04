@@ -158,6 +158,10 @@ public class RootModel {
 		return str;
 	}
 	
+	/**
+	 * @see http://json-b.net/docs/user-guide.html
+	 * @return
+	 */
 	public String asJson() {	
 		  Jsonb builder = JsonbProvider.provider().create().build(); // // da Java 1.8 deve essere cambiato in : JsonbBuilder.create(); 
 		  String str = builder.toJson(this);
