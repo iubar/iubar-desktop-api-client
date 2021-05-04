@@ -70,37 +70,39 @@
       </dependency>
       <!-- Jersey 2 comes with a JSR330 (dependency injection) implementation baked in, named HK2 -->
       <!-- https://mvnrepository.com/artifact/org.glassfish.jersey.inject/jersey-hk2 -->
-     		<dependency>
-     			<groupId>org.glassfish.jersey.inject</groupId>
-     			<artifactId>jersey-hk2</artifactId>
-     			<version>${jersey.client.version}</version>
-     		</dependency> 
+      		<dependency>
+      			<groupId>org.glassfish.jersey.inject</groupId>
+      			<artifactId>jersey-hk2</artifactId>
+      			<version>${jersey.client.version}</version>
+      		</dependency> 
       <!-- JSON-P Default Provider (JSR-353) (la dipendenza già inclusa in yasson)-->
       <!-- https://mvnrepository.com/artifact/org.glassfish/jakarta.json -->
-      <dependency>
-         <groupId>org.glassfish</groupId>
-         <artifactId>jakarta.json</artifactId>
-         <version>2.0.1</version>
-      </dependency>
+<!--       <dependency> -->
+<!--          <groupId>org.glassfish</groupId> -->
+<!--          <artifactId>jakarta.json</artifactId> -->
+<!--          <version>2.0.1</version> -->
+<!--       </dependency> -->
       <!-- https://mvnrepository.com/artifact/jakarta.json.bind/jakarta.json.bind-api -->
-      <dependency>
-         <groupId>jakarta.json.bind</groupId>
-         <artifactId>jakarta.json.bind-api</artifactId>
-         <version>2.0.0</version>
-      </dependency>
+<!--       (la dipendenza già inclusa in yasson) -->
+<!--       <dependency> -->
+<!--          <groupId>jakarta.json.bind</groupId> -->
+<!--          <artifactId>jakarta.json.bind-api</artifactId> -->
+<!--          <version>2.0.0</version> -->
+<!--       </dependency> -->
       <!-- JSON-B Api (JSR-367): Yasson reference implementation -->
       <!-- https://mvnrepository.com/artifact/org.eclipse/yasson -->
-<!--       <dependency> -->
-<!--          <groupId>org.eclipse</groupId> -->
-<!--          <artifactId>yasson</artifactId> -->
-<!--          <version>2.0.2</version> -->
-<!--       </dependency> --> 
-      <!-- https://mvnrepository.com/artifact/jakarta.ws.rs/jakarta.ws.rs-api -->
       <dependency>
-         <groupId>jakarta.ws.rs</groupId>
-         <artifactId>jakarta.ws.rs-api</artifactId>
-         <version>3.0.0</version>
-      </dependency>
+         <groupId>org.eclipse</groupId>
+         <artifactId>yasson</artifactId>
+         <version>2.0.2</version>
+      </dependency>      
+<!--  https://mvnrepository.com/artifact/jakarta.ws.rs/jakarta.ws.rs-api -->
+<!-- (la dipendenza già inclusa in jersey-client -->
+<!--       <dependency> -->
+<!--          <groupId>jakarta.ws.rs</groupId> -->
+<!--          <artifactId>jakarta.ws.rs-api</artifactId> -->
+<!--          <version>3.0.0</version> -->
+<!--       </dependency> -->
       <!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
       <dependency>
          <groupId>commons-codec</groupId>
