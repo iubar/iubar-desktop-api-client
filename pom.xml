@@ -8,8 +8,8 @@
 	<description>Desktop Api Client classes</description>
 	<parent>
 		<groupId>it.iubar.pom</groupId>
-		<artifactId>iubar-pom-next</artifactId>
-		<version>0.0.1</version>
+		<artifactId>iubar-pom</artifactId>
+		<version>0.0.6</version>
 	</parent>
 	<properties>
 		<jersey.client.version>2.25.1</jersey.client.version> <!-- 2.25.1 is the last version for Java 1.7 see https://eclipse-ee4j.github.io/jersey.github.io/documentation/latest/modules-and-dependencies.html#:~:text=x%20almost%20all%20Jersey%20components,runnable%20with%20Java%20SE%206. -->		
