@@ -70,18 +70,25 @@
       </dependency>
       <!-- Jersey 2 comes with a JSR330 (dependency injection) implementation baked in, named HK2 -->
       <!-- https://mvnrepository.com/artifact/org.glassfish.jersey.inject/jersey-hk2 -->
-      		<dependency>
-      			<groupId>org.glassfish.jersey.inject</groupId>
-      			<artifactId>jersey-hk2</artifactId>
-      			<version>2.26</version>
-      		</dependency> 
+      <!-- 		<dependency> -->
+      <!-- 			<groupId>org.glassfish.jersey.inject</groupId> -->
+      <!-- 			<artifactId>jersey-hk2</artifactId> -->
+      <!-- 			<version>2.26</version> -->
+      <!-- 		</dependency>  -->
       <!-- https://mvnrepository.com/artifact/javax.activation/activation -->
       <!-- https://stackoverflow.com/questions/49436818/rest-client-hk2-failure-detected -->
-      <dependency>
-         <groupId>javax.activation</groupId>
-         <artifactId>activation</artifactId>
-         <version>1.1.1</version>
-      </dependency>
+<!--       <dependency> -->
+<!--          <groupId>javax.activation</groupId> -->
+<!--          <artifactId>activation</artifactId> -->
+<!--          <version>1.1.1</version> -->
+<!--       </dependency> -->
+
+<dependency>
+	<groupId>org.glassfish.jersey.core</groupId>
+	<artifactId>jersey-common</artifactId>
+        <version>${jersey.client.version}</version>
+</dependency>
+
       <!-- JSON-P Default Provider (JSR-353) (la dipendenza già inclusa in yasson)-->
       <!-- https://mvnrepository.com/artifact/org.glassfish/jakarta.json -->
       <dependency>
