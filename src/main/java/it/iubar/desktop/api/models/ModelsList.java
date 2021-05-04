@@ -4,11 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
+import it.iubar.desktop.api.json.JsonUtils;
+import jakarta.json.Json;
+import jakarta.json.JsonArray;
+import jakarta.json.JsonArrayBuilder;
+import jakarta.json.JsonObject;
+ 
 
 public class ModelsList<T extends IJsonModel> {
 	
@@ -47,38 +48,24 @@ public class ModelsList<T extends IJsonModel> {
 		return n;
 	};
 	
-	public JSONArray getJsonArray() throws JSONException, JsonProcessingException {
-		JSONArray jsonArray = new JSONArray();
+	public JsonArray getJsonArray()   {
+		JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
 		if(this.list!=null){
 			for (T t : this.list) {
 				String json = t.asJson();
-				JSONObject jsonObj = new JSONObject(json);
-				jsonArray.put(jsonObj);
+				JsonObject jsonObj = JsonUtils.fromString(json);
+				arrayBuilder.add(jsonObj);
 			}
 		}
-		return jsonArray;
+		return arrayBuilder.build();
 	}
  
-    
-//	public String getJson() {
-//		String str = "";
-//		try {
-//			JSONArray jsonArray = getJsonArray();
-//			str = jsonArray.toString();
-//		} catch (JSONException e) {
-//			e.printStackTrace();
-//		} catch (JsonProcessingException e) {		
-//			e.printStackTrace();
-//            LOGGER.log(Level.SEVERE, "Jackson could not convert the object correctly.", JsonProcessingException.class);		
-//		}
-//		return str;
-//	}
 
 	public String getMac() {
 		return this.mac;
 	}
 
-	public Object getIdApp() {
+	public int getIdApp() {
 		return this.idapp;
 	}
 	

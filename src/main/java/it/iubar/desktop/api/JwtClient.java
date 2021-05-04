@@ -9,12 +9,14 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.json.JSONObject;
-
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTCreator.Builder;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
+
+import jakarta.json.Json;
+import jakarta.json.JsonObject;
+import jakarta.json.JsonObjectBuilder;
 
 /**
  * 
@@ -107,12 +109,15 @@ import com.auth0.jwt.exceptions.JWTCreationException;
 //	}
 
 	@Override
- 	protected JSONObject genAuth2(String destUrl) {
+ 	protected JsonObject genAuth2(String destUrl) {
 		String secret = this.getApiKey();
-		//String tsEncoded = rawUrlEncode(ts); // inutile perchè ci pensa la libreria client 
-		JSONObject authData = new JSONObject();
-		authData.put("email", this.getUser());
-		authData.put("token", this.createToken(secret));
+		//String tsEncoded = rawUrlEncode(ts); // inutile perchè ci pensa la libreria client
+		
+		JsonObjectBuilder objectBuilder = Json.createObjectBuilder()
+				  .add("email", this.getUser())
+				  .add("token", this.createToken(secret));
+				  
+		JsonObject authData = objectBuilder.build();
 		return authData;
 	}
 	
@@ -125,7 +130,7 @@ import com.auth0.jwt.exceptions.JWTCreationException;
 			Client client = HttpClient.newClient();
 			WebTarget target = client.target(restUrl); // il metodo codifica il parametro (la stringa che rappresenta l'url) in modo analogo alla funzione PHP rawurlencode()
 			if (this.isAuth()) {
-				JSONObject dataToSend = genAuth(restUrl);
+				JsonObject dataToSend = genAuth(restUrl);
 				target = target.queryParam("email", dataToSend.get("email")).queryParam("token", dataToSend.get("token"));
 			}
 			response = target.request(MediaType.APPLICATION_JSON).accept("application/json").header("X-Requested-With", "XMLHttpRequest").get();

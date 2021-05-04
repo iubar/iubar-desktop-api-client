@@ -15,15 +15,18 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.glassfish.jersey.client.ClientProperties;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
+import it.iubar.desktop.api.json.JsonUtils;
 import it.iubar.desktop.api.models.CcnlModel;
 import it.iubar.desktop.api.models.DatoreModel;
 import it.iubar.desktop.api.models.DocModel;
 import it.iubar.desktop.api.models.IJsonModel;
 import it.iubar.desktop.api.models.ModelsList;
 import it.iubar.desktop.api.models.TitolareModel;
+import jakarta.json.Json;
+import jakarta.json.JsonArray;
+import jakarta.json.JsonObject;
+import jakarta.json.JsonObjectBuilder;
 
 public abstract class AuthHttpClient extends HttpClient {
 
@@ -41,41 +44,39 @@ public abstract class AuthHttpClient extends HttpClient {
 	public final static String INSERT_DOCUMENTI = "documenti-mese";
 	public final static String INSERT_MAC = "list/mac";
 
-	abstract protected JSONObject genAuth2(String destUrl);
+	abstract protected JsonObject genAuth2(String destUrl);
 
 	abstract public Response get(String restUrl);
 
-	public <T> JSONObject send(IJsonModel obj) throws Exception {
+	public <T> JsonObject send(IJsonModel obj) throws Exception {
 		return send(getRoute(obj), obj);
 	}
 
-	public <T> JSONObject send(ModelsList<? super T> docModellist) throws Exception {
+	public <T> JsonObject send(ModelsList<? super T> docModellist) throws Exception {
 		return send(getRoute(docModellist), docModellist);
 	}
 
-	private <T> JSONObject send(String destUrl, ModelsList<? super T> docModellist) throws Exception {
-		JSONObject dataToSend = new JSONObject();
-		dataToSend.putOnce("mac", docModellist.getMac());
-		Object idApp = docModellist.getIdApp();
-		if (idApp != null) {
-			dataToSend.putOnce("idapp", idApp);
-		}
-		dataToSend.putOnce(docModellist.getJsonName(), docModellist.getJsonArray());
+	private <T> JsonObject send(String destUrl, ModelsList<? super T> docModellist) throws Exception {	
+		JsonObjectBuilder objectBuilder = Json.createObjectBuilder();		
+		objectBuilder.add("mac", docModellist.getMac());
+		objectBuilder.add("idapp", docModellist.getIdApp());
+		objectBuilder.add(docModellist.getJsonName(), docModellist.getJsonArray());		  
+		JsonObject dataToSend = objectBuilder.build();
 		LOGGER.log(Level.INFO, dataToSend.toString());
 		Response response = post(destUrl, dataToSend);
-		JSONObject jsonObj = responseManager(response);
+		JsonObject jsonObj = responseManager(response);
 
 		return jsonObj;
 	}
 
-	public JSONObject send(String destUrl, IJsonModel obj) throws Exception {
+	public JsonObject send(String destUrl, IJsonModel obj) throws Exception {
 		cantBeNull(obj);
-		JSONObject dataToSend = null;
+		JsonObject dataToSend = null;
 		String json = obj.asJson();
-		dataToSend = new JSONObject(json);
+		dataToSend = JsonUtils.fromString(json);
 		LOGGER.log(Level.INFO, dataToSend.toString());
 		Response response = post(destUrl, dataToSend);
-		JSONObject jsonObj = responseManager(response);
+		JsonObject jsonObj = responseManager(response);
 
 		return jsonObj;
 	}
@@ -129,18 +130,19 @@ public abstract class AuthHttpClient extends HttpClient {
 	@Deprecated
 	// Spaghetti code
 	// forse c'è anche codice duplicato dal metodo HttpClient.getAnswer()
-	public JSONObject responseManager(Response response) throws Exception {
-		JSONObject answer = null;
+	public JsonObject responseManager(Response response) throws Exception {
+		JsonObject answer = null;
 		if (response != null) {
 			int status = response.getStatus();
 			String output = response.readEntity(String.class);
-			answer = new JSONObject(output);
+			answer = JsonUtils.parseJsonString(output);
+
 			LOGGER.log(Level.INFO, "Response status: " + status);
 			LOGGER.log(Level.INFO, "Response data: " + output);
 
 			if (status == 201 || status == 200) {
 				String resp = "";
-				if (answer.has("response")) {
+				if (answer.get("response")!=null) {
 					resp = answer.getString("response");
 				}
 
@@ -208,24 +210,24 @@ public abstract class AuthHttpClient extends HttpClient {
 		this.url = url;
 	}
 
-	private JSONObject genAuth(String destUrl, JSONObject jsonObj) {
-		JSONObject authData = genAuth2(destUrl);
+	private JsonObject genAuth(String destUrl, JsonObject jsonObj) {
+		JsonObject authData = genAuth2(destUrl);
 		if (jsonObj != null) {
 			authData.put("data", jsonObj);
 		}
 		return authData;
 	}
 
-	private JSONObject genAuth(String destUrl, JSONArray jsonArray) {
-		JSONObject authData = genAuth2(destUrl);
+	private JsonObject genAuth(String destUrl, JsonArray jsonArray) {
+		JsonObject authData = genAuth2(destUrl);
 		if (jsonArray != null) {
 			authData.put("data", jsonArray);
 		}
 		return authData;
 	}
 
-	protected JSONObject genAuth(String destUrl) {
-		JSONObject authData = genAuth2(destUrl);
+	protected JsonObject genAuth(String destUrl) {
+		JsonObject authData = genAuth2(destUrl);
 		return authData;
 	}
 
@@ -253,11 +255,11 @@ public abstract class AuthHttpClient extends HttpClient {
 		return encoded;
 	}
 
-	public Response post(String restUrl, final JSONArray data) {
+	public Response post(String restUrl, final JsonArray data) {
 		Entity<String> d3 = null;
 		restUrl = resolveUrl(restUrl);
 		if (this.isAuth()) {
-			JSONObject data2 = genAuth(restUrl, data);
+			JsonObject data2 = genAuth(restUrl, data);
 			String str = data2.toString();
 			d3 = Entity.json(str);
 		} else {
@@ -266,7 +268,7 @@ public abstract class AuthHttpClient extends HttpClient {
 		return post(restUrl, d3);
 	}
 
-	public Response post(String restUrl, JSONObject data) {
+	public Response post(String restUrl, JsonObject data) {
 		restUrl = resolveUrl(restUrl);
 		if (this.isAuth()) {
 			data = genAuth(restUrl, data);

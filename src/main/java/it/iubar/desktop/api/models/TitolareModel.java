@@ -117,5 +117,12 @@ public class TitolareModel extends RootModel implements IJsonModel {
 		this.cf = cf;
 	}
  
-    
+    public static void main(String[] args) {
+		TitolareModel model = new TitolareModel();
+		model.cf="AAAA";
+		model.cognome="Borgo";
+		String json = model.asJson();
+		System.out.println(json);		
+	}
+	
 }

@@ -9,7 +9,10 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-import org.json.JSONObject;
+import jakarta.json.Json;
+import jakarta.json.JsonObject;
+import jakarta.json.JsonObjectBuilder;
+ 
 
 public class LaravelClient extends AuthHttpClient  {
 
@@ -50,23 +53,23 @@ public class LaravelClient extends AuthHttpClient  {
 
 	/**
 	 * Autenticazione Oauth2 con password grant
-	 * 
+	 * @todo: Daniele scrivere test
 	 * @param email
 	 * @param password
 	 * @return
 	 */
-	protected JSONObject getAuthParams() {
-		JSONObject authData = new JSONObject();
-		authData.put("grant_type", "password");
-		authData.put("client_id", this.clientId);
-		authData.put("client_secret", this.clientSecret);
+	protected JsonObject getAuthParams() {		
+		JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
+		objectBuilder.add("grant_type", "password");
+		objectBuilder.add("client_id", this.clientId);
+		objectBuilder.add("client_secret", this.clientSecret);
 		// [previous exception] [object] (League\\OAuth2\\Server\\Exception\\OAuthServerException(code: 4): Client authentication failed at " + System.getProperty("user.home") + "\\workspace_php\\hr-laravel\\vendor\\league\\oauth2-server\\src\\Exception\\OAuthServerException.php:154)
-		// authData.put("client_id", 2);
-		// authData.put("client_secret", this.clientSecret);
-		authData.put("username", this.username);
-		authData.put("password", this.password);
-		authData.put("scope", ""); // oppure  'scope' => '*',
-		
+		// objectBuilder.add("client_id", 2);
+		// objectBuilder.add("client_secret", this.clientSecret);
+		objectBuilder.add("username", this.username);
+		objectBuilder.add("password", this.password);
+		objectBuilder.add("scope", ""); // oppure  'scope' => '*',						
+		JsonObject authData = objectBuilder.build();		
 		return authData;
 	}
 
@@ -87,7 +90,7 @@ public class LaravelClient extends AuthHttpClient  {
 
 
 	@Override
-	protected JSONObject genAuth2(String destUrl) {
+	protected JsonObject genAuth2(String destUrl) {
 		// TODO Auto-generated method stub
 		return null;
 	}

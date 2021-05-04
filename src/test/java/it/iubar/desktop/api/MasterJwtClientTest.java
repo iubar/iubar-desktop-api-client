@@ -7,10 +7,14 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 import javax.ws.rs.core.Response;
 
-import org.json.JSONObject;
+ 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
+import it.iubar.desktop.api.json.JsonUtils;
+import jakarta.json.Json;
+import jakarta.json.JsonObject;
 
 public class MasterJwtClientTest extends MasterClientAbstract {
         
@@ -28,7 +32,7 @@ public class MasterJwtClientTest extends MasterClientAbstract {
         	masterClient.setAuth(true);
         	masterClient.setUser(MasterClientAbstract.user);			
         	masterClient.setApiKey(MasterClientAbstract.apiKey);         	
-        	JSONObject jsonObj = masterClient.send(url1, MasterClientAbstract.client);
+        	JsonObject jsonObj = masterClient.send(url1, MasterClientAbstract.client);
         	assertNotNull(jsonObj);
         } catch (Exception e) {
         	e.printStackTrace();
@@ -50,7 +54,9 @@ public class MasterJwtClientTest extends MasterClientAbstract {
     	        	
 		int status = response.getStatus();
 		String output = response.readEntity(String.class);
-		JSONObject answer = new JSONObject(output);
+		
+		JsonObject answer = JsonUtils.parseJsonString(output);
+ 
 		System.out.println("Response status: " + status);
 		System.out.println("Response data: " + output);
 		System.out.println("Answer: " + answer);

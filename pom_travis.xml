@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>it.iubar.desktop.api</groupId>
 	<artifactId>iubar-desktop-api</artifactId>
-	<version>1.0</version>
+	<version>1.1</version>
 	<name>Iubar Test Crm Client</name>
 	<description>Send data to the Crm Api</description>
 	<properties>
@@ -75,13 +75,7 @@
 			<version>${junit.jupiter.version}</version>
 			<scope>test</scope>
 		</dependency>	
-		<!-- https://mvnrepository.com/artifact/javax.activation/activation -->
-		<!-- https://stackoverflow.com/questions/49436818/rest-client-hk2-failure-detected -->
-		<dependency>
-			<groupId>javax.activation</groupId>
-			<artifactId>activation</artifactId>
-			<version>1.1.1</version>
-		</dependency>
+
 		<!-- https://mvnrepository.com/artifact/org.glassfish.jersey.core/jersey-client -->
 		<dependency>
 			<groupId>org.glassfish.jersey.core</groupId>
@@ -95,38 +89,26 @@
 			<artifactId>jersey-hk2</artifactId>
 			<version>${jersey.client.version}</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+ 		<!-- https://mvnrepository.com/artifact/javax.activation/activation -->
+		<!-- https://stackoverflow.com/questions/49436818/rest-client-hk2-failure-detected -->
 		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-			<version>${jackson.version}</version>
+			<groupId>javax.activation</groupId>
+			<artifactId>activation</artifactId>
+			<version>1.1.1</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.module/jackson-module-jaxb-annotations -->
-		<dependency>
-			<groupId>com.fasterxml.jackson.module</groupId>
-			<artifactId>jackson-module-jaxb-annotations</artifactId>
-			<version>${jackson.version}</version>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api -->
-		<!-- required by Java >= 1.9 -->
-		<!-- see https://stackoverflow.com/questions/43574426/how-to-resolve-java-lang-noclassdeffounderror-javax-xml-bind-jaxbexception-in-j -->
-		<dependency>
-			<groupId>javax.xml.bind</groupId>
-			<artifactId>jaxb-api</artifactId>
-			<version>2.3.1</version>
-		</dependency>
+		 
 		<!-- https://mvnrepository.com/artifact/org.glassfish/jakarta.json -->
 		<dependency>
 		    <groupId>org.glassfish</groupId>
 		    <artifactId>jakarta.json</artifactId>
 		    <version>2.0.0</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.json/json -->
-		<dependency>
-			<groupId>org.json</groupId>
-			<artifactId>json</artifactId>
-			<version>20200518</version>
-		</dependency>		
+<!-- https://mvnrepository.com/artifact/jakarta.json.bind/jakarta.json.bind-api -->
+<dependency>
+    <groupId>jakarta.json.bind</groupId>
+    <artifactId>jakarta.json.bind-api</artifactId>
+    <version>2.0.0</version>
+</dependency> 		
 		<!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
 		<dependency>
 			<groupId>commons-codec</groupId>
@@ -144,7 +126,13 @@
 		<dependency>
 			<groupId>com.auth0</groupId>
 			<artifactId>java-jwt</artifactId>
-			<version>3.12.0</version>
-		</dependency>
+			<version>3.11.0</version>
+					<exclusions>
+						<exclusion>
+							<groupId>com.fasterxml.jackson.core</groupId>
+							<artifactId>jackson-databind</artifactId>
+						</exclusion>						
+					</exclusions> 
+									</dependency>
 	</dependencies>
 </project>

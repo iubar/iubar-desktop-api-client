@@ -1,6 +1,6 @@
 package it.iubar.desktop.api.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+ 
 
 public class DocModel extends RootModel implements IJsonModel, Cloneable {
     
@@ -28,7 +28,6 @@ public class DocModel extends RootModel implements IJsonModel, Cloneable {
         return iddoctype;
     }
 
-	@JsonIgnore
 	public DocType getDoctype() {
         return this.doctype;
     }

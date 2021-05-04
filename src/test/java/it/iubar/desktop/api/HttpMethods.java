@@ -18,15 +18,17 @@ import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriBuilder;
 
 import org.glassfish.jersey.client.ClientConfig;
-import org.json.JSONObject;
+ 
 import org.junit.jupiter.api.BeforeAll;
 
+import it.iubar.desktop.api.json.JsonUtils;
 import it.iubar.desktop.api.models.IJsonModel;
 import it.iubar.desktop.api.models.ModelsList;
+import jakarta.json.JsonObject;
 
 public class HttpMethods {
 	
-	private static JSONObject jsonObject = null;
+	private static JsonObject jsonObject = null;
 
 	private static final Logger LOGGER = Logger.getLogger(HttpMethods.class.getName());
 	
@@ -48,8 +50,7 @@ public class HttpMethods {
 	public static void modelSend(String url, IJsonModel model) {
 		HmacClient masterClient = (HmacClient) clientFactory();
 		masterClient.setAuth(false);
-
-		JSONObject jsonObjModel = null;
+		JsonObject jsonObjModel = null;
 		try {
 			if (url != null) {
 				jsonObjModel = masterClient.send(url, model);
@@ -72,7 +73,7 @@ public class HttpMethods {
 	public static void modlesSend(ModelsList models) {
 		HmacClient masterClient = (HmacClient) clientFactory();
 		masterClient.setAuth(false);
-		JSONObject jsonObjModel = null;
+		JsonObject jsonObjModel = null;
 		try {
 			jsonObjModel = masterClient.send(models);
 			boolean data = jsonObjModel.getBoolean("data");
@@ -95,7 +96,7 @@ public class HttpMethods {
 		Response response = target.path(path).request().accept(MediaType.APPLICATION_JSON).post(Entity.json(input));
 		int statusCode = response.getStatus();
 		String json = response.readEntity(String.class);
-		HttpMethods.jsonObject = new JSONObject(json);
+		HttpMethods.jsonObject = JsonUtils.fromString(json);
 		LOGGER.info("...request: " + input + " | response: " + HttpMethods.jsonObject.toString() + "\n");
 
 		String message = HttpMethods.jsonObject.getString("response");
@@ -145,7 +146,7 @@ public class HttpMethods {
 		int statusCode = response.getStatus();
 
 		String json = response.readEntity(String.class);
-		HttpMethods.jsonObject = new JSONObject(json);
+		HttpMethods.jsonObject = JsonUtils.fromString(json);
 
 		LOGGER.info("...response: " + HttpMethods.jsonObject.toString() + "\n");
 

@@ -4,9 +4,11 @@ package it.iubar.desktop.api;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.fail;
 
-import org.json.JSONObject;
+ 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
+import jakarta.json.JsonObject;
 
 public class MasterClientTest extends MasterClientAbstract {
 
@@ -41,7 +43,7 @@ public class MasterClientTest extends MasterClientAbstract {
         	// sia per autenticazione HMAC che per JWT
         	masterClient.setUser(MasterClientAbstract.user);			
         	masterClient.setApiKey(MasterClientAbstract.apiKey);        	
-        	JSONObject jsonObj = masterClient.send(url1, MasterClientAbstract.client);  
+        	JsonObject jsonObj = masterClient.send(url1, MasterClientAbstract.client);  
         	assertNotNull(jsonObj);
         } catch (Exception e) {
         	e.printStackTrace();

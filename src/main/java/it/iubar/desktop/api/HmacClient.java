@@ -1,7 +1,10 @@
 package it.iubar.desktop.api;
 
 import org.apache.commons.codec.binary.Base64;
-import org.json.JSONObject;
+
+import jakarta.json.Json;
+import jakarta.json.JsonObject;
+import jakarta.json.JsonObjectBuilder;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
@@ -24,17 +27,19 @@ public class HmacClient extends AuthHttpClient implements IHttpClient {
 	}
 	
 	@Override
- 	protected JSONObject genAuth2(String destUrl) {
+ 	protected JsonObject genAuth2(String destUrl) {
 		String ts = this.getTimeStamp();
 		String hash_argument = destUrl + this.getUser() + ts + this.getApiKey();
 		String secret = this.getApiKey();
 		String hash = encryptData(hash_argument, secret);
 		//String tsEncoded = rawUrlEncode(ts); // inutile perchè ci pensa la libreria client 
-		JSONObject authData = new JSONObject();
-		authData.put("user", this.getUser());
-		authData.put("ts", ts);
-		authData.put("hash", hash);
-
+		
+		JsonObjectBuilder objectBuilder = Json.createObjectBuilder()
+				.add("user", this.getUser())
+				.add("ts", ts)
+				.add("hash", hash);
+ 
+		JsonObject  authData = objectBuilder.build();
 		return authData;
 	}
 
@@ -76,7 +81,7 @@ public class HmacClient extends AuthHttpClient implements IHttpClient {
 		Client client = HttpClient.newClient();
 		WebTarget target = client.target(restUrl); // il metodo codifica il parametro (la stringa che rappresenta l'url) in modo analogo alla funzione PHP rawurlencode()
 		if (this.isAuth()) {
-			JSONObject dataToSend = genAuth(restUrl);
+			JsonObject dataToSend = genAuth(restUrl);
 //			String ts = String.valueOf(dataToSend.get("ts"));
 //			String hash = String.valueOf(dataToSend.get("hash"));
 			target = target.queryParam("user", dataToSend.get("user")).queryParam("ts", dataToSend.get("ts")).queryParam("hash", dataToSend.get("hash"));

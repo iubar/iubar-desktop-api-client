@@ -1,6 +1,7 @@
 package it.iubar.desktop.api;
 
-import org.json.JSONObject;
+import it.iubar.desktop.api.json.JsonUtils;
+import jakarta.json.JsonObject;
 
 public class LaravelOauthToken {
 	
@@ -8,13 +9,11 @@ public class LaravelOauthToken {
 	private String accessToken = null;
 	private String refreshToken = null;
 	
-	public LaravelOauthToken(String data) {
-		JSONObject jsonData = new JSONObject(data);
-		
+	public LaravelOauthToken(String data) {	 
+		JsonObject jsonData = JsonUtils.parseJsonString(data);		
 		this.type = jsonData.getString("token_type");
 		this.accessToken = jsonData.getString("access_token");
-		this.refreshToken = jsonData.getString("refresh_token");
-		
+		this.refreshToken = jsonData.getString("refresh_token");		
 		// TODO
 		// The expires_in attribute contains the number of seconds until the access token expires.
 	}

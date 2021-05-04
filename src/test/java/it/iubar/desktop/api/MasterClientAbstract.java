@@ -13,7 +13,6 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.json.JSONObject;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -27,6 +26,7 @@ import it.iubar.desktop.api.models.DocModel;
 import it.iubar.desktop.api.models.ModelsList;
 import it.iubar.desktop.api.models.TitolareModel;
 import it.iubar.desktop.api.models.TitolareModelTest;
+import jakarta.json.JsonObject;
  
 public abstract class MasterClientAbstract {
 
@@ -110,7 +110,7 @@ public abstract class MasterClientAbstract {
 		boolean b = false;
     	IHttpClient masterClient = clientFactory();
 		try {
-			JSONObject jsonObject = masterClient.responseManager(masterClient.get(APP_FAMILY_PAGHE + "/blacklist/mac/" + mac));
+			 JsonObject jsonObject = masterClient.responseManager(masterClient.get(APP_FAMILY_PAGHE + "/blacklist/mac/" + mac));
 			b = jsonObject.getBoolean("data");
 			if (b) {
 				LOGGER.log(Level.WARNING, "The mac address is black-listed");
@@ -130,12 +130,12 @@ public abstract class MasterClientAbstract {
         	
         	// Test on Production 
         	
-            JSONObject jsonObj1 = masterClient.send(MasterClientAbstract.client);
+        	  JsonObject jsonObj1 = masterClient.send(MasterClientAbstract.client);
             assertNotNull(jsonObj1);
-            assertTrue(jsonObj1.has("response"));
-            JSONObject jsonObj2 = masterClient.send(MasterClientAbstract.titolari);
+            assertTrue(jsonObj1.get("response")!=null);
+              JsonObject jsonObj2 = masterClient.send(MasterClientAbstract.titolari);
             assertNotNull(jsonObj2);
-            assertTrue(jsonObj2.has("response"));
+            assertTrue(jsonObj2.get("response")!=null);
         } catch (Exception e) {
             e.printStackTrace();
             fail();
@@ -164,7 +164,7 @@ public abstract class MasterClientAbstract {
            try {
            	// Test on Echo server        
            	String url1 = HttpClientTest.ECHO_API;
-           	JSONObject jsonObj = masterClient.send(url1, MasterClientAbstract.client);
+           	  JsonObject jsonObj = masterClient.send(url1, MasterClientAbstract.client);
            	assertNotNull(jsonObj);
            } catch (Exception e) {
            	e.printStackTrace();

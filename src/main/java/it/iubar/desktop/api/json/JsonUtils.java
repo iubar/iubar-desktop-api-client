@@ -1,7 +1,9 @@
 package it.iubar.desktop.api.json;
 
 import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,24 +19,32 @@ import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
  
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 
 import org.apache.commons.io.IOUtils;
  
 import jakarta.json.Json;
+import jakarta.json.JsonArray;
 import jakarta.json.JsonObject;
 import jakarta.json.JsonObjectBuilder;
+import jakarta.json.JsonPointer;
 import jakarta.json.JsonReader;
 import jakarta.json.JsonStructure;
 import jakarta.json.JsonValue;
 import jakarta.json.JsonWriter;
 import jakarta.json.JsonWriterFactory;
 import jakarta.json.stream.JsonGenerator;
+import jakarta.json.stream.JsonParser;
+import jakarta.json.stream.JsonParserFactory;
 
+
+/**
+ * @see https://www.baeldung.com/jee7-json
+ * @see https://readlearncode.com/java-ee/java-ee-8-json-processing-1-1-json-pointer-overview/
+ * 
+ * 
+ * @author Borgo
+ *
+ */
 public class JsonUtils {
 
 	private static final Logger LOGGER = Logger.getLogger(JsonUtils.class.getName());
@@ -44,6 +54,21 @@ public class JsonUtils {
 		JsonObject jsonObject = reader.readObject();
 		return jsonObject;
 	}
+	
+	/**
+	 * 
+	 * Using Streaming API
+	 * 
+	 * @todo Daniele scrivere test
+	 * @param string
+	 * @return
+	 */
+	public static JsonObject parseJsonString2(String string) {
+		 JsonParserFactory factory = Json.createParserFactory(null);
+		 JsonParser parser = factory.createParser(new StringReader(string));	 
+		JsonObject jsonObject = parser.getObject();
+		return jsonObject;
+	}	
 
 	public static String toString(JsonObject jsonObject) throws IOException {
 		String jsonString = null;
@@ -65,33 +90,7 @@ public class JsonUtils {
 		}
 		return jsonString;
 	}
-	
-	public static String prettyPrintFormatOld(JsonObject jsonObj) {
  
-		String jsonPrettyString = null;
-		 ObjectMapper mapper = new ObjectMapper();
-		 // mapper.enable(SerializationFeature.INDENT_OUTPUT);
- 		mapper.configure(SerializationFeature.INDENT_OUTPUT, true);
- 		mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
- 		
- 		JsonParser jsonParser;
-		try {
-			jsonParser = new JsonFactory().createParser(jsonObj.toString());
-			  Object jsonParsedFromString = mapper.readValue(jsonParser, Object.class);
-			jsonPrettyString = mapper.writeValueAsString(jsonParsedFromString);
-			System.out.println(jsonPrettyString); 
-			System.out.println("-----------------------------------------"); 
-			jsonPrettyString = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(jsonParsedFromString);
-			System.out.println(jsonPrettyString); 
-			System.out.println("-----------------------------------------"); 
-		} catch (JsonParseException e2) {
-			LOGGER.log(Level.SEVERE, e2.getMessage());
-		} catch (IOException e2) {
-			LOGGER.log(Level.SEVERE, e2.getMessage());
-		}
- 
-		return jsonPrettyString;
-	}
  
 public static String jsonFormat(JsonStructure json, String... options) {
     StringWriter stringWriter = new StringWriter();
@@ -207,5 +206,49 @@ public static void saveToFile(JsonObjectBuilder objectBuilder, String fileName) 
     out.close();
 }
 
+public static boolean checkIfKeyExists2(String string, String key) {
+	 JsonParserFactory factory = Json.createParserFactory(null);
+	 JsonParser parser = factory.createParser(new StringReader(string));	 
+	JsonObject jsonObject = parser.getObject();
+	JsonValue value = jsonObject.get(key);
+	return value != null;
+}
+
+/**
+ * 
+ * @todo Daniele scrivere test
+ * 
+ * @see https://www.baeldung.com/json-pointer
+ */
+public static boolean checkIfKeyExists(JsonObject jsonObject, String key) {
+	//JsonPointer jsonPointer = Json.createPointer("/" + key);
+	JsonPointer jsonPointer = Json.createPointer(key);
+	boolean found = jsonPointer.containsValue(jsonObject);
+	return found;
+}
+
+/**
+ * @deprecated è solo un esempio
+ */
+@Deprecated
+private void readFromFile() {
+    JsonReader jsonReader = Json.createReader(this.getClass().getClassLoader()
+        .getResourceAsStream("books.json"));
+    JsonArray jsonArray = jsonReader.readArray();
+    jsonReader.close();
+    System.out.println(jsonArray);
+}
+
+/**
+ * @throws FileNotFoundException 
+ * @deprecated è solo un esempio
+ */
+@Deprecated
+private void readFromFile1() throws FileNotFoundException {
+	JsonReader reader = Json.createReader(new FileReader("books.json"));
+	JsonStructure jsonStructure = reader.read();
+	reader.close();
+	System.out.println(jsonStructure);
+}
 
 }

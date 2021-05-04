@@ -2,22 +2,21 @@ package it.iubar.desktop.api;
 
 import javax.ws.rs.core.Response;
 
-import org.json.JSONObject;
-
 import it.iubar.desktop.api.models.IJsonModel;
 import it.iubar.desktop.api.models.ModelsList;
+import jakarta.json.JsonObject;
 
 public interface IHttpClient {
 
-	<T> JSONObject send(ModelsList<? super T> modelList)  throws Exception;
+	<T> JsonObject send(ModelsList<? super T> modelList)  throws Exception;
 
-	<T> JSONObject send(IJsonModel client) throws Exception;
+	<T> JsonObject send(IJsonModel client) throws Exception;
 
 	Response get(String string);
 
-	JSONObject send(String url1, IJsonModel model) throws Exception;
+	JsonObject  send(String url1, IJsonModel model) throws Exception;
 
-	JSONObject responseManager(Response response) throws Exception;
+	JsonObject  responseManager(Response response) throws Exception;
  
 	
 }
