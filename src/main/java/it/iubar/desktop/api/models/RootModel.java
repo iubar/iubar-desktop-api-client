@@ -1,22 +1,11 @@
 package it.iubar.desktop.api.models;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.Reader;
-import java.io.StringReader;
-import java.io.StringWriter;
 import java.math.BigDecimal;
-import java.nio.charset.StandardCharsets;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.logging.Logger;
-
- 
-
-import org.w3c.dom.Element;
-import org.xml.sax.SAXException;
 
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.spi.JsonbProvider;
