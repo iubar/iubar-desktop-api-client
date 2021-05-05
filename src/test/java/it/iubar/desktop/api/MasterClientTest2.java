@@ -7,8 +7,6 @@ import org.junit.jupiter.api.Test;
 
 import it.iubar.desktop.api.models.ClientModel;
 import it.iubar.desktop.api.models.ClientModelTest;
-import it.iubar.desktop.api.models.DatoreModel;
-import it.iubar.desktop.api.models.DatoreModelTest;
 import it.iubar.desktop.api.models.ModelsList;
 import it.iubar.desktop.api.models.TitolareModel;
 import it.iubar.desktop.api.models.TitolareModelTest;
@@ -33,20 +31,6 @@ public class MasterClientTest2 {
 		String url = AuthHttpClient.INSERT_CLIENT; // questo è solo un test, potrei tranquillamente invocare  HttpMethods.modelSend(null, client); senza specificare la rotta
 		try {
 			HttpMethods.modelSend(url, client);
-		} catch (Exception e) {
-			fail();
-		}
-	}
-
-	@Test
-	public void sendDatore() {
-		DatoreModel datore = DatoreModelTest.factory();
-		ModelsList<DatoreModel> datori = new ModelsList<DatoreModel>(ClientModelTest.MAC,
-				MasterClientAbstract.ID_APP_PAGHEOPEN, "datori");
-		datori.add(datore);
-
-		try {
-			HttpMethods.modlesSend(datori);
 		} catch (Exception e) {
 			fail();
 		}

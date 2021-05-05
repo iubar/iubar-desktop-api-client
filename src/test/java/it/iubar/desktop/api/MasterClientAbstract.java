@@ -1,7 +1,6 @@
 package it.iubar.desktop.api;
 
  
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -17,12 +16,8 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import it.iubar.desktop.api.models.CcnlModel;
 import it.iubar.desktop.api.models.ClientModel;
 import it.iubar.desktop.api.models.ClientModelTest;
-import it.iubar.desktop.api.models.DatoreModel;
-import it.iubar.desktop.api.models.DatoreModelTest;
-import it.iubar.desktop.api.models.DocModel;
 import it.iubar.desktop.api.models.ModelsList;
 import it.iubar.desktop.api.models.TitolareModel;
 import it.iubar.desktop.api.models.TitolareModelTest;
@@ -43,10 +38,7 @@ public abstract class MasterClientAbstract {
 	public static String apiKey = null;
 	  
 	protected static ClientModel client = null;
-    private static ModelsList<DatoreModel> datori = null;
     private static ModelsList<TitolareModel> titolari = null;
-    private static ModelsList<CcnlModel> contratti = null;
-    private static ModelsList<DocModel> documenti = null;
 
     public static void loadConfig() {
     	String jwtUser = System.getenv("JWT_USER");
@@ -93,10 +85,6 @@ public abstract class MasterClientAbstract {
     public static void initData() throws IOException {
     	int idApp = MasterClientAbstract.ID_APP_PAGHEOPEN;
     	MasterClientAbstract.client = ClientModelTest.factory();
- 
-    	MasterClientAbstract.datori = new ModelsList<DatoreModel>(MAC_1, idApp, "datori");
-        DatoreModel datore = DatoreModelTest.factory();
-        MasterClientAbstract.datori.add(datore);
         
         MasterClientAbstract.titolari= new ModelsList<TitolareModel>(MAC_1, idApp, "titolari");
         TitolareModel titolare = TitolareModelTest.factory();
