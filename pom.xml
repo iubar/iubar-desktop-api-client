@@ -75,7 +75,7 @@
       			<artifactId>jersey-hk2</artifactId>
       			<version>${jersey.client.version}</version>
       		</dependency> 
-      <!-- JSON-P Default Provider (JSR-353) (la dipendenza già inclusa in yasson)-->
+      <!-- JSON-P Default Provider (JSR-353) (la dipendenza è già inclusa in yasson)-->
       <!-- https://mvnrepository.com/artifact/org.glassfish/jakarta.json -->
 <!--       <dependency> -->
 <!--          <groupId>org.glassfish</groupId> -->
@@ -83,7 +83,7 @@
 <!--          <version>2.0.1</version> -->
 <!--       </dependency> -->
       <!-- https://mvnrepository.com/artifact/jakarta.json.bind/jakarta.json.bind-api -->
-<!--       (la dipendenza già inclusa in yasson) -->
+<!--       (la dipendenza è già inclusa in yasson) -->
 <!--       <dependency> -->
 <!--          <groupId>jakarta.json.bind</groupId> -->
 <!--          <artifactId>jakarta.json.bind-api</artifactId> -->
