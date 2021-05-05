@@ -13,7 +13,9 @@
 		<jdk.target.version>${jdk.source.version}</jdk.target.version>
 		<junit.jupiter.version>5.7.0-M1</junit.jupiter.version>
 		<surefire.plugin.version>3.0.0-M4</surefire.plugin.version>		
-		<jersey.client.version>2.25.1</jersey.client.version> <!-- 2.25.1 is the last version for Java 1.7 see https://eclipse-ee4j.github.io/jersey.github.io/documentation/latest/modules-and-dependencies.html#:~:text=x%20almost%20all%20Jersey%20components,runnable%20with%20Java%20SE%206. -->		
+		<jersey.client.version>2.25.1</jersey.client.version> <!-- 2.25.1 is the last version for Java 1.7 see https://eclipse-ee4j.github.io/jersey.github.io/documentation/latest/modules-and-dependencies.html#:~:text=x%20almost%20all%20Jersey%20components,runnable%20with%20Java%20SE%206. -->
+		<jsonp.version>2.0.0</jsonp.version>
+		<jsonb.version>2.0.0</jsonb.version>
  	</properties>
 	<build>
 		<resources>
@@ -90,24 +92,30 @@
 		</dependency>
  		<!-- https://mvnrepository.com/artifact/javax.activation/activation -->
 		<!-- https://stackoverflow.com/questions/49436818/rest-client-hk2-failure-detected -->
+		<!--
 		<dependency>
 			<groupId>javax.activation</groupId>
 			<artifactId>activation</artifactId>
 			<version>1.1.1</version>
 		</dependency>
-		 
-		<!-- https://mvnrepository.com/artifact/org.glassfish/jakarta.json -->
-		<dependency>
-		    <groupId>org.glassfish</groupId>
-		    <artifactId>jakarta.json</artifactId>
-		    <version>2.0.0</version>
-		</dependency>
-<!-- https://mvnrepository.com/artifact/jakarta.json.bind/jakarta.json.bind-api -->
-<dependency>
-    <groupId>jakarta.json.bind</groupId>
-    <artifactId>jakarta.json.bind-api</artifactId>
-    <version>2.0.0</version>
-</dependency> 		
+		-->
+
+
+      <!-- JSON-P Default Provider (JSR-353) (la dipendenza è già inclusa in yasson)-->
+      <!-- https://mvnrepository.com/artifact/org.glassfish/jakarta.json -->
+       <dependency>
+          <groupId>org.glassfish</groupId>
+        <artifactId>jakarta.json</artifactId>
+         <version>${jsonp.version}</version> 
+       </dependency>  
+      <!-- https://mvnrepository.com/artifact/jakarta.json.bind/jakarta.json.bind-api -->
+       <dependency> 
+         <groupId>jakarta.json.bind</groupId>
+         <artifactId>jakarta.json.bind-api</artifactId>
+         <version>${jsonb.version}</version>
+       </dependency> 
+
+
 		<!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
 		<dependency>
 			<groupId>commons-codec</groupId>
