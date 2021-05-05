@@ -7,19 +7,9 @@ import java.net.URLEncoder;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import jakarta.ws.rs.ProcessingException;
-import jakarta.ws.rs.client.Client;
-import jakarta.ws.rs.client.Entity;
-import jakarta.ws.rs.client.WebTarget;
-import jakarta.ws.rs.core.Configuration;
-import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Response;
-
 import org.glassfish.jersey.client.ClientProperties;
 
 import it.iubar.desktop.api.json.JsonUtils;
-import it.iubar.desktop.api.models.CcnlModel;
-import it.iubar.desktop.api.models.DatoreModel;
 import it.iubar.desktop.api.models.DocModel;
 import it.iubar.desktop.api.models.IJsonModel;
 import it.iubar.desktop.api.models.ModelsList;
@@ -28,6 +18,13 @@ import jakarta.json.Json;
 import jakarta.json.JsonArray;
 import jakarta.json.JsonObject;
 import jakarta.json.JsonObjectBuilder;
+import jakarta.ws.rs.ProcessingException;
+import jakarta.ws.rs.client.Client;
+import jakarta.ws.rs.client.Entity;
+import jakarta.ws.rs.client.WebTarget;
+import jakarta.ws.rs.core.Configuration;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 public abstract class AuthHttpClient extends HttpClient {
 
@@ -40,8 +37,6 @@ public abstract class AuthHttpClient extends HttpClient {
 
 	public final static String INSERT_CLIENT = "client";
 	public final static String INSERT_TITOLARI = "titolari";
-	public final static String INSERT_DATORI = "datori";
-	public final static String INSERT_CONTRATTI = "contratti";
 	public final static String INSERT_DOCUMENTI = "documenti-mese";
 	public final static String INSERT_MAC = "list/mac";
 
@@ -107,12 +102,8 @@ public abstract class AuthHttpClient extends HttpClient {
 			ModelsList ml = ((ModelsList) obj);
 			if (ml.getSize() > 0) {
 				Class c = ml.getElemClass();
-				if (c.equals(DatoreModel.class)) {
-					urlToSend += INSERT_DATORI;
-				} else if (c.equals(TitolareModel.class)) {
+				if (c.equals(TitolareModel.class)) {
 					urlToSend += INSERT_TITOLARI;
-				} else if (c.equals(CcnlModel.class)) {
-					urlToSend += INSERT_CONTRATTI;
 				} else if (c.equals(DocModel.class)) {
 					urlToSend += INSERT_DOCUMENTI;
 				} else {
@@ -212,19 +203,23 @@ public abstract class AuthHttpClient extends HttpClient {
 	}
 
 	private JsonObject genAuth(String destUrl, JsonObject jsonObj) {
-		JsonObject authData = genAuth2(destUrl);
+		JsonObject authData = genAuth2(destUrl);		
+		JsonObjectBuilder objectBuilder = Json.createObjectBuilder(authData);
 		if (jsonObj != null) {
-			authData.put("data", jsonObj);
+			objectBuilder.add("data", jsonObj);
 		}
-		return authData;
+		
+		return objectBuilder.build();
 	}
 
 	private JsonObject genAuth(String destUrl, JsonArray jsonArray) {
-		JsonObject authData = genAuth2(destUrl);
+		JsonObject authData = genAuth2(destUrl);		
+		JsonObjectBuilder objectBuilder = Json.createObjectBuilder(authData);
 		if (jsonArray != null) {
-			authData.put("data", jsonArray);
+			objectBuilder.add("data", jsonArray);
 		}
-		return authData;
+		
+		return objectBuilder.build();
 	}
 
 	protected JsonObject genAuth(String destUrl) {
