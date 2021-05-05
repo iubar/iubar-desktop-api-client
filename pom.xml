@@ -6,15 +6,13 @@
    <version>1.1</version>
    <name>Iubar Desktop Api Client</name>
    <description>Desktop Api Client classes</description>
-   <parent>
-      <groupId>it.iubar.pom</groupId>
-      <artifactId>iubar-pom</artifactId>
-      <version>0.0.6</version>
-   </parent>
+	<parent>
+		<groupId>it.iubar.pom</groupId>
+		<artifactId>iubar-pom-next</artifactId>
+		<version>0.0.1</version>
+	</parent> 
    <properties>
       <jersey.client.version>3.0.0</jersey.client.version> <!-- 2.25.1 is the last version for Java 1.7 see https://eclipse-ee4j.github.io/jersey.github.io/documentation/latest/modules-and-dependencies.html#:~:text=x%20almost%20all%20Jersey%20components,runnable%20with%20Java%20SE%206. -->
-      <junit.jupiter.version>5.7.1</junit.jupiter.version>
-      <surefire.plugin.version>3.0.0-M5</surefire.plugin.version>
    </properties>
    <build>
       <resources>
@@ -32,8 +30,6 @@
          <!-- Plugins managed by the parent pom -->
          <plugin>
             <artifactId>maven-surefire-plugin</artifactId>
-            <!-- LEGGERE: https://stackoverflow.com/questions/36970384/surefire-is-not-picking-up-junit-5-tests?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa -->
-            <version>${surefire.plugin.version}</version>
             <configuration>
                <includes>
                   <include>MasterClientTest.java</include>
@@ -50,18 +46,16 @@
       </plugins>
    </build>
    <dependencies>
-      <dependency>
-         <groupId>org.junit.jupiter</groupId>
-         <artifactId>junit-jupiter-api</artifactId>
-         <version>${junit.jupiter.version}</version>
-         <scope>test</scope>
-      </dependency>
-      <dependency>
-         <groupId>org.junit.jupiter</groupId>
-         <artifactId>junit-jupiter-engine</artifactId>
-         <version>${junit.jupiter.version}</version>
-         <scope>test</scope>
-      </dependency>
+		<!-- Dependencies managed by the parent -->
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
+		</dependency>
+		<!-- / -->	
       <!-- https://mvnrepository.com/artifact/org.glassfish.jersey.core/jersey-client -->
       <dependency>
          <groupId>org.glassfish.jersey.core</groupId>
@@ -132,10 +126,5 @@
 <!--          </exclusions> -->
       </dependency>
    </dependencies>
-   <scm>
-      <tag>${project.version}</tag>
-      <connection>scm:git:git://github.com/iubar/${project.artifactId}-client.git</connection>
-      <developerConnection>scm:git:git://github.com/iubar/${project.artifactId}-client.git</developerConnection>
-      <url>https://github.com/iubar/${project.artifactId}-client</url>
-   </scm>
+
 </project>
