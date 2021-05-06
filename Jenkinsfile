@@ -51,12 +51,7 @@ pipeline {
                     fi				    
 				'''
             }
-        }
-		stage ('Deploy') {
-            steps {
-                sh 'mvn --batch-mode -DskipTests=true deploy'
-            }
-        }		
+        }	
     }
 	post {
         changed {
