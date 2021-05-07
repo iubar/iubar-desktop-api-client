@@ -70,7 +70,7 @@
       			<artifactId>jersey-hk2</artifactId>
       			<version>${jersey.client.version}</version>
       		</dependency> 
-      <!-- JSON-B Api (JSR-367): Yasson reference implementation -->
+      <!-- Yasson is an official reference implementation of JSON Binding (JSR-367). -->
       <!-- https://mvnrepository.com/artifact/org.eclipse/yasson -->
       <dependency>
          <groupId>org.eclipse</groupId>
