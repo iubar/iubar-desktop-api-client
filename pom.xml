@@ -3,7 +3,7 @@
    <modelVersion>4.0.0</modelVersion>
    <groupId>it.iubar.desktop.api</groupId>
    <artifactId>iubar-desktop-api</artifactId>
-   <version>1.1</version>
+   <version>1.2</version>
    <name>Iubar Desktop Api Client</name>
    <description>Desktop Api Client classes</description>
 	<parent>
@@ -12,7 +12,7 @@
 		<version>0.0.1</version>
 	</parent> 
    <properties>
-      <jersey.client.version>3.0.0</jersey.client.version> <!-- 2.25.1 is the last version for Java 1.7 see https://eclipse-ee4j.github.io/jersey.github.io/documentation/latest/modules-and-dependencies.html#:~:text=x%20almost%20all%20Jersey%20components,runnable%20with%20Java%20SE%206. -->
+      <jersey.client.version>3.0.2</jersey.client.version> <!-- 2.25.1 is the last version for Java 1.7 see https://eclipse-ee4j.github.io/jersey.github.io/documentation/latest/modules-and-dependencies.html#:~:text=x%20almost%20all%20Jersey%20components,runnable%20with%20Java%20SE%206. -->
       <yasson.version>2.0.2</yasson.version>
    </properties>
    <build>
@@ -70,7 +70,7 @@
       			<artifactId>jersey-hk2</artifactId>
       			<version>${jersey.client.version}</version>
       		</dependency> 
-      <!-- JSON-B Api (JSR-367): Yasson reference implementation -->
+      <!-- Yasson is an official reference implementation of JSON Binding (JSR-367). -->
       <!-- https://mvnrepository.com/artifact/org.eclipse/yasson -->
       <dependency>
          <groupId>org.eclipse</groupId>
