@@ -3,6 +3,7 @@ package it.iubar.desktop.api.models;
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.logging.Logger;
@@ -98,26 +99,14 @@ public class RootModel {
 		return formatted;
 	}
 
-	public static String toString(GregorianCalendar cal) {
+	public static String toString(Calendar cal) {
 		if (cal != null) {
 			return toString(cal.getTime());
 		}
 		return null;
 	}
-
-//	public static Date toDate(String str) {
-//		Date d = null;
-//		if (str != null) {
-//			try {
-//				d = FORMAT1.parse(str);
-//			} catch (ParseException e) {
-//				e.printStackTrace();
-//			}
-//		}
-//		return d;
-//	}
-
-	protected static Date toDate(GregorianCalendar cal) {
+ 
+	protected static Date toDate(Calendar cal) {
 		Date d = null;
 		if (cal != null) {
 			d = cal.getTime();
