@@ -69,7 +69,14 @@
       			<groupId>org.glassfish.jersey.inject</groupId>
       			<artifactId>jersey-hk2</artifactId>
       			<version>${jersey.client.version}</version>
-      		</dependency> 
+      		</dependency>
+		<!-- Fix for "jakarta.activation.DataSource was not found" -->
+		<!-- https://mvnrepository.com/artifact/jakarta.activation/jakarta.activation-api -->
+		<dependency>
+		    <groupId>jakarta.activation</groupId>
+		    <artifactId>jakarta.activation-api</artifactId>
+		    <version>2.0.1</version>
+		</dependency> 		
       <!-- Yasson is an official reference implementation of JSON Binding (JSR-367). -->
       <!-- https://mvnrepository.com/artifact/org.eclipse/yasson -->
       <dependency>
