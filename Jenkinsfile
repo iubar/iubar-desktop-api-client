@@ -9,6 +9,10 @@ pipeline {
     stages {
         stage ('Build') {
             steps {
+		sh 'whoami'
+		sh 'echo HOME is $HOME'
+		sh 'ls -la /usr/share/sonar-scanner'
+		sh 'mvn --version'
                 sh 'mvn --batch-mode clean compile'
             }
         }
