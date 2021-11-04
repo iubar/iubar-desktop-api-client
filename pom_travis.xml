@@ -9,13 +9,13 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<jdk.source.version>1.7</jdk.source.version>
+		<jdk.source.version>1.8</jdk.source.version>
 		<jdk.target.version>${jdk.source.version}</jdk.target.version>
-		<junit.jupiter.version>5.7.0-M1</junit.jupiter.version>
-		<surefire.plugin.version>3.0.0-M4</surefire.plugin.version>		
-		<jersey.client.version>3.0.2</jersey.client.version> <!-- 2.25.1 is the last version for Java 1.7 see https://eclipse-ee4j.github.io/jersey.github.io/documentation/latest/modules-and-dependencies.html#:~:text=x%20almost%20all%20Jersey%20components,runnable%20with%20Java%20SE%206. -->
+		<junit.jupiter.version>5.8.1</junit.jupiter.version>
+		<surefire.plugin.version>3.0.0-M5</surefire.plugin.version>		
+		<jersey.client.version>3.0.3</jersey.client.version> <!-- 2.25.1 is the last version for Java 1.7 see https://eclipse-ee4j.github.io/jersey.github.io/documentation/latest/modules-and-dependencies.html#:~:text=x%20almost%20all%20Jersey%20components,runnable%20with%20Java%20SE%206. -->
 		<yasson.version>2.0.2</yasson.version>
-		<jsonp.version>2.0.0</jsonp.version>
+		<jsonp.version>2.0.1</jsonp.version>
 		<jsonb.version>2.0.0</jsonb.version>
  	</properties>
 	<build>
@@ -126,20 +126,18 @@
          <groupId>org.eclipse</groupId>
          <artifactId>yasson</artifactId>
          <version>${yasson.version}</version>
-      </dependency> 
-      
-
+      </dependency>       
 		<!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
 		<dependency>
 			<groupId>commons-codec</groupId>
 			<artifactId>commons-codec</artifactId>
-			<version>1.14</version>
+			<version>1.15</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
 		<dependency>
 		    <groupId>commons-io</groupId>
 		    <artifactId>commons-io</artifactId>
-		    <version>2.8.0</version>
+		    <version>2.11.0</version>
 		</dependency>		
 		<!-- https://github.com/auth0/java-jwt -->
 		<!-- https://mvnrepository.com/artifact/com.auth0/java-jwt -->
