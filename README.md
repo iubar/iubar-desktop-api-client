@@ -1,8 +1,7 @@
 # iubar-desktop-api-client
 Iubar desktop application api java client<br>
 [![Build Status](https://app.travis-ci.com/iubar/iubar-desktop-api-client.svg?branch=master)](https://app.travis-ci.com/github/iubar/iubar-desktop-api-client)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/6cfdbf2ea9144417839948336aabddde?branch=master)](https://app.codacy.com/manual/Iubar/iubar-desktop-api-client/dashboard)
-
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/283e549e48ff4d26a53f95aae112388e)](https://www.codacy.com/gh/iubar/iubar-desktop-api-client/dashboard)
 
 ## Jersey
 
