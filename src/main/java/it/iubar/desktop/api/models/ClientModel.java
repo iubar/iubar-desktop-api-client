@@ -3,6 +3,7 @@ package it.iubar.desktop.api.models;
 public class ClientModel extends RootModel implements IJsonModel {
 
     private String mac;
+    private String ip;
     private int idapp;
     private int titolari;
     private int datori;
@@ -21,6 +22,10 @@ public class ClientModel extends RootModel implements IJsonModel {
 
     public void setMac(String mac) {
         this.mac = mac;
+    }
+    
+    public void setIp(String ip) {
+        this.ip = ip;
     }
 
     public void setIdapp(int idapp) {
@@ -45,6 +50,10 @@ public class ClientModel extends RootModel implements IJsonModel {
 
     public String getMac() {
         return this.mac;
+    }
+    
+    public String getIp() {
+        return this.ip;
     }
 
     public int getIdapp() {

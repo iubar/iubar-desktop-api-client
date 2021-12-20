@@ -10,6 +10,7 @@ public class ClientModelTest {
 	
     public static ClientModel factory() {
     	ClientModel client = new ClientModel(ClientModelTest.MAC, MasterClientAbstract.ID_APP_PAGHEOPEN);
+    	client.setIp("111.111.111.111");
         client.setTitolari(0);
         client.setCf(ClientModelTest.CF);
         client.setDatori(0);
