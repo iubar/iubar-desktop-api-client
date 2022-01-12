@@ -11,7 +11,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<jdk.source.version>1.8</jdk.source.version>
 		<jdk.target.version>${jdk.source.version}</jdk.target.version>
-		<junit.jupiter.version>5.8.1</junit.jupiter.version>
+		<junit.jupiter.version>5.8.2</junit.jupiter.version>
 		<surefire.plugin.version>3.0.0-M5</surefire.plugin.version>		
 		<jersey.client.version>3.0.3</jersey.client.version> <!-- 2.25.1 is the last version for Java 1.7 see https://eclipse-ee4j.github.io/jersey.github.io/documentation/latest/modules-and-dependencies.html#:~:text=x%20almost%20all%20Jersey%20components,runnable%20with%20Java%20SE%206. -->
 		<yasson.version>2.0.2</yasson.version>
