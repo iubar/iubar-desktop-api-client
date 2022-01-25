@@ -13,7 +13,7 @@
 	</parent> 
    <properties>
       <jersey.client.version>3.0.3</jersey.client.version> <!-- 2.25.1 is the last version for Java 1.7 see https://eclipse-ee4j.github.io/jersey.github.io/documentation/latest/modules-and-dependencies.html#:~:text=x%20almost%20all%20Jersey%20components,runnable%20with%20Java%20SE%206. -->
-      <yasson.version>2.0.2</yasson.version>
+      <yasson.version>2.0.4</yasson.version>
    </properties>
    <build>
       <resources>
@@ -95,7 +95,7 @@
       <dependency>
          <groupId>commons-codec</groupId>
          <artifactId>commons-codec</artifactId>
-         <version>1.14</version>
+         <version>1.15</version>
       </dependency>
       <!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
       <dependency>
@@ -111,7 +111,7 @@
          <artifactId>java-jwt</artifactId>
          <!-- ATTENZIONE: la versione 3.11.0 è l'ultima a supportare Java 1.7 -->
          <!-- see https://github.com/auth0/java-jwt/blob/master/CHANGELOG.md -->
-         <version>3.18.2</version>
+         <version>3.18.3</version>
 <!--          <exclusions> -->
 <!--             <exclusion> -->
 <!--                <groupId>com.fasterxml.jackson.core</groupId> -->
