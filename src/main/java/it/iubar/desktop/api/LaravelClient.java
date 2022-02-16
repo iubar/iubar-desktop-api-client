@@ -132,7 +132,7 @@ public class LaravelClient extends AuthHttpClient  {
 						
 			response = target.request(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
-				//.header("X-Requested-With", "XMLHttpRequest")
+				// NECESSARIO ? .header("X-Requested-With", "XMLHttpRequest")
 				.header("Authorization", "Bearer " + token.getAccessToken())
 				.post(data);
 		} catch (Exception e) {
