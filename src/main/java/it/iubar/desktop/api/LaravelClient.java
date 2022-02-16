@@ -109,7 +109,7 @@ public class LaravelClient extends AuthHttpClient  {
 			LaravelOauthToken token = getToken();
 						
 			response = target.request(MediaType.APPLICATION_JSON)
-				.accept("application/json")
+				.accept(MediaType.APPLICATION_JSON)
 				.header("Authorization", "Bearer " + token.getAccessToken())
 				.get();
 		} catch (Exception e) {
@@ -131,8 +131,8 @@ public class LaravelClient extends AuthHttpClient  {
 			LaravelOauthToken token = getToken();
 						
 			response = target.request(MediaType.APPLICATION_JSON)
-				.accept("application/json")
-				.header("X-Requested-With", "XMLHttpRequest")
+				.accept(MediaType.APPLICATION_JSON)
+				//.header("X-Requested-With", "XMLHttpRequest")
 				.header("Authorization", "Bearer " + token.getAccessToken())
 				.post(data);
 		} catch (Exception e) {

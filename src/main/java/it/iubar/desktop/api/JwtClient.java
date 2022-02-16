@@ -134,7 +134,9 @@ import jakarta.ws.rs.core.Response;
 				String token = dataToSend.getString("token");
 				target = target.queryParam("email", email).queryParam("token", token);
 			}
-			response = target.request(MediaType.APPLICATION_JSON).accept("application/json").header("X-Requested-With", "XMLHttpRequest").get();
+			response = target.request(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
+					//.header("X-Requested-With", "XMLHttpRequest")
+					.get();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

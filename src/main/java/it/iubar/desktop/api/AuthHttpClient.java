@@ -288,8 +288,9 @@ public abstract class AuthHttpClient extends HttpClient {
 		// Accetto risposte di tipo Json
 		Response response = null;
 		try {
-			response = target.request(MediaType.APPLICATION_JSON).accept("application/json")
-					.header("X-Requested-With", "XMLHttpRequest").post(d3);
+			response = target.request(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
+					//.header("X-Requested-With", "XMLHttpRequest")
+					.post(d3);
 		} catch (ProcessingException e) {
 			String msg = e.getMessage();
 			LOGGER.log(Level.SEVERE, msg, e);

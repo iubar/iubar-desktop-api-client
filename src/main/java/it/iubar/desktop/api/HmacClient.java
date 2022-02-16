@@ -88,7 +88,9 @@ public class HmacClient extends AuthHttpClient implements IHttpClient {
 //			String hash = String.valueOf(dataToSend.get("hash"));
 			target = target.queryParam("user", dataToSend.getString("user")).queryParam("ts", dataToSend.getString("ts")).queryParam("hash", dataToSend.getString("hash"));
 		}
-		Response response = target.request(MediaType.APPLICATION_JSON).accept("application/json").header("X-Requested-With", "XMLHttpRequest").get();
+		Response response = target.request(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
+				//.header("X-Requested-With", "XMLHttpRequest")
+				.get();
 		return response;
 	}
 	
