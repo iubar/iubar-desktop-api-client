@@ -71,16 +71,7 @@ pipeline {
 	post {
         changed {
         	echo "CURRENT STATUS: ${currentBuild.currentResult}"
-			agent {    
-				docker {   	
-					image 'iubar-maven-alpine'
-					label 'docker'
-					args '-v ${HOME}/.m2:/home/jenkins/.m2:rw,z -v ${HOME}/.sonar:/home/jenkins/.sonar:rw,z'
-				} 
-			}
-			steps {
-				sh "curl -H 'JENKINS: Pipeline Hook Iubar' -i -X GET -G ${env.IUBAR_WEBHOOK_URL} -d status=${currentBuild.currentResult} -d project_name='${JOB_NAME}'"
-			}
+			// sh "curl -H 'JENKINS: Pipeline Hook Iubar' -i -X GET -G ${env.IUBAR_WEBHOOK_URL} -d status=${currentBuild.currentResult} -d project_name='${JOB_NAME}'"
         }
 		cleanup {
 			cleanWs()
