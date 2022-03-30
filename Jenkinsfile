@@ -66,18 +66,18 @@ pipeline {
             steps {
                 sh 'mvn --batch-mode -DskipTests=true deploy'
             }
-        }		
-    }
-	post {
-        changed {
-        	echo "CURRENT STATUS: ${currentBuild.currentResult}"
-			// sh "curl -H 'JENKINS: Pipeline Hook Iubar' -i -X GET -G ${env.IUBAR_WEBHOOK_URL} -d status=${currentBuild.currentResult} -d project_name='${JOB_NAME}'"
-        }
-		cleanup {
-			cleanWs()
-			dir("${env.WORKSPACE}@tmp") {				
-				deleteDir()
+			post {
+				changed {
+					echo "CURRENT STATUS: ${currentBuild.currentResult}"
+					sh "curl -H 'JENKINS: Pipeline Hook Iubar' -i -X GET -G ${env.IUBAR_WEBHOOK_URL} -d status=${currentBuild.currentResult} -d project_name='${JOB_NAME}'"
+				}
+				cleanup {
+					cleanWs()
+					dir("${env.WORKSPACE}@tmp") {				
+						deleteDir()
+					}
+				}
 			}
-        }
-    }    
+        }		
+    }   
 }
