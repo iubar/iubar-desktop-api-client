@@ -1,13 +1,14 @@
 pipeline {
-    agent {    
-    	docker {   	
-    		image 'iubar-maven-alpine'
-    		label 'docker'
-    		args '-v ${HOME}/.m2:/home/jenkins/.m2:rw,z -v ${HOME}/.sonar:/home/jenkins/.sonar:rw,z'
-    	} 
-    }
+	agent none
     stages {
         stage ('Build') {
+		    agent {    
+				docker {   	
+					image 'iubar-maven-alpine'
+					label 'docker'
+					args '-v ${HOME}/.m2:/home/jenkins/.m2:rw,z -v ${HOME}/.sonar:/home/jenkins/.sonar:rw,z'
+				} 
+			}
             steps {
 				sh 'whoami'
 				sh 'echo HOME is $HOME'
@@ -16,6 +17,13 @@ pipeline {
             }
         }
 		stage('Test') {
+		    agent {    
+				docker {   	
+					image 'iubar-maven-alpine'
+					label 'docker'
+					args '-v ${HOME}/.m2:/home/jenkins/.m2:rw,z -v ${HOME}/.sonar:/home/jenkins/.sonar:rw,z'
+				} 
+			}
             steps {
                 sh 'mvn --batch-mode -Djava.io.tmpdir=${WORKSPACE}@tmp -Djava.awt.headless=true test'
             }
@@ -48,6 +56,13 @@ pipeline {
             }
         }
 		stage ('Deploy') {
+			agent {    
+				docker {   	
+					image 'iubar-maven-alpine'
+					label 'docker'
+					args '-v ${HOME}/.m2:/home/jenkins/.m2:rw,z -v ${HOME}/.sonar:/home/jenkins/.sonar:rw,z'
+				} 
+			}
             steps {
                 sh 'mvn --batch-mode -DskipTests=true deploy'
             }
