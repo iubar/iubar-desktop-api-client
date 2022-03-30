@@ -34,6 +34,7 @@ pipeline {
 			}				
             steps {
 				sh '''
+					cat /etc/os*
 					echo "SKIP_SONARQUBE: ${SKIP_SONARQUBE}"
 					if [ $SKIP_SONARQUBE = true ]; then												
 						echo "Skipping sonar-scanner analysis"
