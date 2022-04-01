@@ -36,12 +36,12 @@ pipeline {
 			  }  
             }				
             steps {
-				sh '''
-               		sonar-scanner
-					wget --user=${ARTIFACTORY_USER} --password=${ARTIFACTORY_PASS} http://192.168.0.119:8082/artifactory/iubar-repo-local/jenkins/jenkins-sonar-quality-gate-check.sh --no-check-certificate
-					chmod +x ./jenkins-sonar-quality-gate-check.sh
-					./jenkins-sonar-quality-gate-check.sh false # true / false = Ignore or not the quality gate score
-				'''
+			sh '''
+               			sonar-scanner
+				wget --user=${ARTIFACTORY_USER} --password=${ARTIFACTORY_PASS} http://192.168.0.119:8082/artifactory/iubar-repo-local/jenkins/jenkins-sonar-quality-gate-check.sh --no-check-certificate
+				chmod +x ./jenkins-sonar-quality-gate-check.sh
+				./jenkins-sonar-quality-gate-check.sh false # true / false = Ignore or not the quality gate score
+			'''
             }
         }		
 		stage ('Deploy') {
@@ -52,7 +52,7 @@ pipeline {
     }
 	post {
         changed {
-            sh "curl -H 'JENKINS: Pipeline Hook Iubar' -i -X GET -G ${env.IUBAR_WEBHOOK_URL} -d status=${currentBuild.currentResult} -d project_name='${JOB_NAME}'"
+            sh "curl -H 'JENKINS: Pipeline Hook Iubar' -i -X GET -G ${env.IUBAR_WEBHOOK_URL} --data-urlencode status=${currentBuild.currentResult} --data-urlencode project_name='${JOB_NAME}'"
         }
 		cleanup {
 			cleanWs()
