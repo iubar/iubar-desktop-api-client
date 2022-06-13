@@ -3,6 +3,7 @@ package it.iubar.desktop.api;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import it.iubar.desktop.api.models.ClientModel;
@@ -89,6 +90,7 @@ public class MasterClientTest2 {
 	}
 
 	@Test
+	@Disabled("Passare credenziali api al client")
 	public void receiveAggiornamentiMese() {
 		String path = Integer.toString(MasterClientAbstract.ID_FAMILY_PAGHE) + "/stats/updated/" + "2017-01-01/"
 				+ "2017-05-26";
@@ -101,6 +103,7 @@ public class MasterClientTest2 {
 	}
 
 	@Test
+	@Disabled("Passare credenziali api al client")
 	public void receiveAnalisi() {
 		String path = Integer.toString(MasterClientAbstract.ID_FAMILY_PAGHE) + "/analytics";
 
@@ -125,6 +128,7 @@ public class MasterClientTest2 {
 	}
 
 	@Test
+	@Disabled("Passare credenziali api al client")
 	public void receiveCedolino() {
 		String path = "stats/cedolini/" + "2016-05-06/" + "2017-05-06";
 
@@ -136,6 +140,7 @@ public class MasterClientTest2 {
 	}
 
 	@Test
+	@Disabled("Passare credenziali api al client")
 	public void receiveCountDocumentiMese() {
 		String path = "count-documenti/" + "1/" + "2017-08-19/" + "2017-09-19";
 
@@ -158,6 +163,7 @@ public class MasterClientTest2 {
 	}
 
 	@Test
+	@Disabled("Passare credenziali api al client")
 	public void receiveInfoTitolare() {
 		String path = "info/" + "cognome/" + "prova";
 
@@ -169,6 +175,7 @@ public class MasterClientTest2 {
 	}
 
 	@Test
+	@Disabled("Passare credenziali api al client")
 	public void receiveInstallazioniMese() {
 		String path = Integer.toString(MasterClientAbstract.ID_FAMILY_PAGHE) + "/stats/installed/" + "2017-01-01/"
 				+ "2017-05-26";
@@ -181,6 +188,7 @@ public class MasterClientTest2 {
 	}
 
 	@Test
+	@Disabled("Passare credenziali api al client")
 	public void receiveInstallazioni() {
 		String path = Integer.toString(MasterClientAbstract.ID_FAMILY_PAGHE) + "/stats/installed";
 
@@ -203,6 +211,7 @@ public class MasterClientTest2 {
 	}
 
 	@Test
+	@Disabled("Passare credenziali api al client")
 	public void receiveStatisticheGenerali() {
 		String path = Integer.toString(MasterClientAbstract.ID_FAMILY_PAGHE) + "/stats/" + "2016-05-06/" + "2017-05-06";
 
@@ -214,6 +223,7 @@ public class MasterClientTest2 {
 	}
 
 	@Test
+	@Disabled("Passare credenziali api al client")
 	public void receiveTopUsers() {
 		String path = "top-users/limit/" + "10";
 
@@ -225,6 +235,7 @@ public class MasterClientTest2 {
 	}
 
 	@Test
+	@Disabled("Passare credenziali api al client")
 	public void receiveUltimiUtenti() {
 		String path = "last-users/limit/" + "10";
 
