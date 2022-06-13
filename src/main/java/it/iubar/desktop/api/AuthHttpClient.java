@@ -132,7 +132,7 @@ public abstract class AuthHttpClient extends HttpClient {
 			LOGGER.log(Level.INFO, "Response status: " + status);
 			LOGGER.log(Level.INFO, "Response data: " + output);
 
-			if (status == 201 || status == 200) {
+			if (status == 201 || status == 200) { // TODO: usare costanti HttpURLConnection.HTTP_XX
 				String resp = "";
 				if (answer.get("response")!=null) {
 					resp = answer.getString("response");
