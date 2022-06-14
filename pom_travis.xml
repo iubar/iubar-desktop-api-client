@@ -147,7 +147,7 @@
          <artifactId>java-jwt</artifactId>
          <!-- ATTENZIONE: la versione 3.11.0 è l'ultima a supportare Java 1.7 -->
          <!-- see https://github.com/auth0/java-jwt/blob/master/CHANGELOG.md -->
-         <version>3.18.3</version>
+         <version>3.19.2</version>
 <!--          <exclusions> -->
 <!--             <exclusion> -->
 <!--                <groupId>com.fasterxml.jackson.core</groupId> -->
