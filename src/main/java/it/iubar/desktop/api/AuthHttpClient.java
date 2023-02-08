@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 import org.glassfish.jersey.client.ClientProperties;
 
 import it.iubar.desktop.api.json.JsonUtils;
+import it.iubar.desktop.api.models.ClientModel;
 import it.iubar.desktop.api.models.DocModel;
 import it.iubar.desktop.api.models.IJsonModel;
 import it.iubar.desktop.api.models.ModelsList;
@@ -94,9 +95,9 @@ public abstract class AuthHttpClient extends HttpClient {
 		if (!lastChar.equals("/")) {
 			urlToSend = urlToSend + "/";
 		}
-		if (obj instanceof it.iubar.desktop.api.models.ClientModel) {
+		if (obj instanceof ClientModel) {
 			urlToSend += INSERT_CLIENT;
-		} else if (obj instanceof it.iubar.desktop.api.models.DocModel) {
+		} else if (obj instanceof DocModel) {
 			urlToSend += INSERT_DOCUMENTI;
 		} else if (obj instanceof ModelsList) {
 			ModelsList ml = ((ModelsList) obj);
