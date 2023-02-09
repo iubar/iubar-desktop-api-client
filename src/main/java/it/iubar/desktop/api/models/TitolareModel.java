@@ -1,5 +1,8 @@
 package it.iubar.desktop.api.models;
 
+import java.util.List;
+import java.util.Set;
+
 public class TitolareModel extends RootModel implements IJsonModel {
     
     private String cf;
@@ -11,7 +14,8 @@ public class TitolareModel extends RootModel implements IJsonModel {
     private String tel;
     private int datori;
     private int lavoratori;
-
+    public Set<Integer> contratti_dettaglio;
+    public Set<String> contratti_cnel;
     
     public TitolareModel() {
     	super();
@@ -115,6 +119,14 @@ public class TitolareModel extends RootModel implements IJsonModel {
 
 	public void setCf(String cf) {
 		this.cf = cf;
+	}
+	
+	public void setContrattiDettaglio(Set<Integer> contratti_dettaglio) {
+		this.contratti_dettaglio = contratti_dettaglio;
+	}
+	
+	public void setContrattiCnel(Set<String> contratti_cnel) {
+		this.contratti_cnel = contratti_cnel;
 	}
  
     public static void main(String[] args) {
