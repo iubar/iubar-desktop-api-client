@@ -137,6 +137,7 @@ public class LaravelClient extends AuthHttpClient  {
 				.post(data);
 		} catch (Exception e) {
 			e.printStackTrace();
+			System.out.println(response);
 		}
 		
 		return response;
