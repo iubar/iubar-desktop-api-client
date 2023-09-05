@@ -12,7 +12,7 @@
 		<version>0.0.1</version>
 	</parent> 
    <properties>
-      <jersey.client.version>3.1.3</jersey.client.version> <!-- 2.25.1 is the last version for Java 1.7 see https://eclipse-ee4j.github.io/jersey.github.io/documentation/latest/modules-and-dependencies.html#:~:text=x%20almost%20all%20Jersey%20components,runnable%20with%20Java%20SE%206. -->
+      <jersey.client.version>3.0.11</jersey.client.version> <!-- 3.0.x is the latest version that supports java8 -->
       <yasson.version>3.0.3</yasson.version> <!-- https://mvnrepository.com/artifact/org.eclipse/yasson -->
    </properties>
    <build>
@@ -84,13 +84,6 @@
          <artifactId>yasson</artifactId>
          <version>${yasson.version}</version>
       </dependency>      
-<!--  https://mvnrepository.com/artifact/jakarta.ws.rs/jakarta.ws.rs-api -->
-<!-- (la dipendenza già inclusa in jersey-client -->
-<!--       <dependency> -->
-<!--          <groupId>jakarta.ws.rs</groupId> -->
-<!--          <artifactId>jakarta.ws.rs-api</artifactId> -->
-<!--          <version>3.0.0</version> -->
-<!--       </dependency> -->
       <!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
       <dependency>
          <groupId>commons-codec</groupId>
