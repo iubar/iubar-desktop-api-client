@@ -105,6 +105,7 @@
          <!-- ATTENZIONE: la versione 3.11.0 è l'ultima a supportare Java 1.7 -->
          <!-- see https://github.com/auth0/java-jwt/blob/master/CHANGELOG.md -->
          <!-- see https://github.com/auth0/java-jwt/blob/master/MIGRATION_GUIDE.md -->
+         <!-- ISSUE : https://github.com/auth0/java-jwt/issues/671 -->
          <version>3.19.4</version>
 <!--          <exclusions> -->
 <!--             <exclusion> -->
