@@ -106,7 +106,7 @@
          <!-- see https://github.com/auth0/java-jwt/blob/master/CHANGELOG.md -->
          <!-- see https://github.com/auth0/java-jwt/blob/master/MIGRATION_GUIDE.md -->
          <!-- ISSUE : https://github.com/auth0/java-jwt/issues/671 -->
-         <version>3.19.4</version>
+         <version>4.4.0</version>
 <!--          <exclusions> -->
 <!--             <exclusion> -->
 <!--                <groupId>com.fasterxml.jackson.core</groupId> -->
