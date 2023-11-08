@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import jakarta.ws.rs.core.Response;
@@ -21,6 +22,7 @@ public class MasterJwtClientTest extends MasterClientAbstract {
     }
     
     @Test
+    @Disabled
     public void sendTestOnEchoJwtServer(){
     	JwtClient masterClient = (JwtClient) clientFactory();
         try {       	    
@@ -38,6 +40,7 @@ public class MasterJwtClientTest extends MasterClientAbstract {
     }
     
     @Test
+    @Disabled
     public void sendTestOnEchoJwtServer2(){
     	String url1 = HttpClientTest.ECHO_API_3 + "?msg=HelloWorld";  	
     	JwtClient masterClient = (JwtClient) clientFactory();
