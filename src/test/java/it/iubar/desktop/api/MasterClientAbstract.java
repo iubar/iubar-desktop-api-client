@@ -120,10 +120,10 @@ public abstract class MasterClientAbstract {
         	
         	  JsonObject jsonObj1 = masterClient.send(MasterClientAbstract.client);
             assertNotNull(jsonObj1);
-            assertTrue(jsonObj1.get("response")!=null);
+            assertTrue(jsonObj1.getInt("data")>=0);
               JsonObject jsonObj2 = masterClient.send(MasterClientAbstract.titolari);
             assertNotNull(jsonObj2);
-            assertTrue(jsonObj2.get("response")!=null);
+            assertTrue(jsonObj2.getInt("data")>=0);
         } catch (Exception e) {
             e.printStackTrace();
             fail();

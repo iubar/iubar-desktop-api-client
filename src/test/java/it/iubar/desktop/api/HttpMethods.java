@@ -57,12 +57,12 @@ public class HttpMethods {
 			e.printStackTrace();
 			LOGGER.severe(e.getMessage());
 		}
-		boolean data = false;
+		int count = 0;
 		assertNotNull(jsonObjModel);		
 		if(jsonObjModel!=null) {
-			data = jsonObjModel.getBoolean("data");
+			count = jsonObjModel.getInt("data");
 		}
-		assertTrue(data);
+		assertTrue(count >= 0);
 
 	}
 
@@ -72,9 +72,9 @@ public class HttpMethods {
 		JsonObject jsonObjModel = null;
 		try {
 			jsonObjModel = masterClient.send(models);
-			boolean data = jsonObjModel.getBoolean("data");
+			int count = jsonObjModel.getInt("data");
 			assertNotNull(jsonObjModel);
-			assertTrue(data);
+			assertTrue(count >= 0);
 		} catch (Exception e) {
 			e.printStackTrace();
 			LOGGER.severe(e.getMessage());
@@ -94,14 +94,14 @@ public class HttpMethods {
 		HttpMethods.jsonObject = JsonUtils.fromString(json);
 		LOGGER.info("...request: " + input + " | response: " + HttpMethods.jsonObject.toString() + "\n");
 
-		String message = HttpMethods.jsonObject.getString("response");
-		boolean data;
+		int count = 0;
 
 		if (request) {
-			data = HttpMethods.jsonObject.getBoolean("data");
-			isOk(message, statusCode, data);
+			count = HttpMethods.jsonObject.getInt("data");
+			isOk(statusCode, count);
 		} else {
-			isBadRequest(message, statusCode);
+			JsonObject error = HttpMethods.jsonObject.getJsonObject("error");
+			isBadRequest(error.getString("description"), statusCode);
 		}
 	}
 
@@ -114,10 +114,9 @@ public class HttpMethods {
 		assertEquals(Status.BAD_REQUEST.getStatusCode(), HttpMethods.jsonObject.getInt("code"));
 	}
 
-	public static void isOk(String message, int statusCode, boolean data) {
-		assertNotNull(message);
+	public static void isOk(int statusCode, int count) {
 		assertEquals(Status.OK.getStatusCode(), statusCode);
-		assertTrue(data);
+		assertTrue(count >= 0);
 		assertEquals(Status.OK.getStatusCode(), HttpMethods.jsonObject.getInt("code"));
 	}
 
@@ -143,10 +142,6 @@ public class HttpMethods {
 		HttpMethods.jsonObject = JsonUtils.fromString(json);
 
 		LOGGER.info("...response: " + HttpMethods.jsonObject.toString() + "\n");
-
-		String message = HttpMethods.jsonObject.getString("response");
-
-		assertNotNull(message);
 		assertEquals(Status.OK.getStatusCode(), statusCode);
 		assertEquals(Status.OK.getStatusCode(), HttpMethods.jsonObject.getInt("code"));
 	}

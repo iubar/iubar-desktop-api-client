@@ -36,9 +36,8 @@ public abstract class AuthHttpClient extends HttpClient {
 
 	private boolean isAuth = false;
 
-	public final static String INSERT_CLIENT = "client";
-	public final static String INSERT_TITOLARI = "titolari";
-	public final static String INSERT_DOCUMENTI = "documenti-mese";
+	public final static String INSERT_CLIENT = "/public/client";
+	public final static String INSERT_TITOLARI = "/public/titolari";
 	public final static String INSERT_MAC = "list/mac";
 
 	abstract protected JsonObject genAuth2(String destUrl);
@@ -91,22 +90,14 @@ public abstract class AuthHttpClient extends HttpClient {
 
 	private <T> String getRoute(T obj) throws Exception {
 		String urlToSend = this.getBaseUrl();
-		String lastChar = urlToSend.substring(urlToSend.length() - 1);
-		if (!lastChar.equals("/")) {
-			urlToSend = urlToSend + "/";
-		}
 		if (obj instanceof ClientModel) {
 			urlToSend += INSERT_CLIENT;
-		} else if (obj instanceof DocModel) {
-			urlToSend += INSERT_DOCUMENTI;
 		} else if (obj instanceof ModelsList) {
 			ModelsList ml = ((ModelsList) obj);
 			if (ml.getSize() > 0) {
 				Class c = ml.getElemClass();
 				if (c.equals(TitolareModel.class)) {
 					urlToSend += INSERT_TITOLARI;
-				} else if (c.equals(DocModel.class)) {
-					urlToSend += INSERT_DOCUMENTI;
 				} else {
 					throw new RuntimeException("Situazione imprevista");
 				}
@@ -134,12 +125,7 @@ public abstract class AuthHttpClient extends HttpClient {
 			LOGGER.log(Level.INFO, "Response data: " + output);
 
 			if (status == 201 || status == 200) { // TODO: usare costanti HttpURLConnection.HTTP_XX
-				String resp = "";
-				if (answer.get("response")!=null) {
-					resp = answer.getString("response");
-				}
-
-				String msg = "Query ok, code: " + status + ", rows affected: " + resp;
+				String msg = "Query ok, code: " + status;
 				LOGGER.log(Level.FINE, msg);
 
 			} else if (status == 400) {

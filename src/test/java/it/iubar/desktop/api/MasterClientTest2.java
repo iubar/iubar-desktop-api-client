@@ -40,7 +40,7 @@ public class MasterClientTest2 {
 	@Test
 	public void sendIncrementDocumento() {
 		String input = "{" + "\"iddoctype\": \"1\", " + "\"qnt\": \"0\"" + "}";
-		String path = "increment-documento";
+		String path = "/public/increment-documento";
 
 		try {
 			HttpMethods.send(input, path, true);
@@ -54,7 +54,7 @@ public class MasterClientTest2 {
 
 		String input = "{" + "\"mac\": \"B8-CA-3A-96-BD-03\", " + "\"cf\": \"DMNLSN95P14D969J\", "
 				+ "\"nome\": \"ALESSANDRO\", " + "\"cognome\": \"DAMONTE\"" + "}";
-		String path = "register-client/" + Integer.toString(MasterClientAbstract.ID_FAMILY_PAGHE);
+		String path = "/public/register-client/" + Integer.toString(MasterClientAbstract.ID_FAMILY_PAGHE);
 
 		try {
 			HttpMethods.send(input, path, false);
@@ -67,7 +67,7 @@ public class MasterClientTest2 {
 	public void sendRegisterClient() {
 		String input = "{" + "\"mac\": \"" + ClientModelTest.MAC + "\", " + "\"cf\": \"" + ClientModelTest.CF + "\", "
 				+ "\"nome\": \"ALESSANDRO\", " + "\"cognome\": \"DAMONTE\"" + "}";
-		String path = "register-client/" + Integer.toString(MasterClientAbstract.ID_FAMILY_PAGHE);
+		String path = "/public/register-client/" + Integer.toString(MasterClientAbstract.ID_FAMILY_PAGHE);
 
 		try {
 			HttpMethods.send(input, path, true);
@@ -116,7 +116,7 @@ public class MasterClientTest2 {
 
 	@Test
 	public void receiveBlacklist() {
-		String path = Integer.toString(MasterClientAbstract.ID_FAMILY_PAGHE) + "/blacklist/" + "mac/"
+		String path = "/public/" + Integer.toString(MasterClientAbstract.ID_FAMILY_PAGHE) + "/blacklist/" + "mac/"
 				+ ClientModelTest.MAC;
 
 		try {
@@ -153,7 +153,7 @@ public class MasterClientTest2 {
 
 	@Test
 	public void receiveInfoMac() {
-		String path = "info/" + ClientModelTest.MAC;
+		String path = "/public/paghe/info/mac/" + ClientModelTest.MAC;
 
 		try {
 			HttpMethods.receive(path);
@@ -201,7 +201,7 @@ public class MasterClientTest2 {
 
 	@Test
 	public void receiveNow() {
-		String path = "now/" + "europe/" + "rome";
+		String path = "/public/now/europe/rome";
 
 		try {
 			HttpMethods.receive(path);
