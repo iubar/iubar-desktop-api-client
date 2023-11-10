@@ -238,26 +238,13 @@ public abstract class AuthHttpClient extends HttpClient {
 		return encoded;
 	}
 
-	public Response post(String restUrl, final JsonArray data) {
-		Entity<String> d3 = null;
-		restUrl = resolveUrl(restUrl);
-		if (this.isAuth()) {
-			JsonObject data2 = genAuth(restUrl, data);
-			String str = data2.toString();
-			d3 = Entity.json(str);
-		} else {
-			d3 = Entity.json(data.toString());
-		}
-		return post(restUrl, d3);
-	}
-
 	public Response post(String restUrl, JsonObject data) {
 		restUrl = resolveUrl(restUrl);
 		if (this.isAuth()) {
 			data = genAuth(restUrl, data);
 		}
-		Entity<String> d1 = Entity.text(data.toString());
-		Entity<String> d2 = Entity.entity(data.toString(), MediaType.APPLICATION_JSON);
+//		Entity<String> d1 = Entity.text(data.toString());
+//		Entity<String> d2 = Entity.entity(data.toString(), MediaType.APPLICATION_JSON);
 		Entity<String> d3 = Entity.json(data.toString()); // See:
 															// https://jersey.java.net/documentation/latest/client.html#d0e4692
 		// Se volessi utilizzare il post di tipo "application/x-www-form-urlencoded"
