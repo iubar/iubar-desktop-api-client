@@ -94,20 +94,18 @@ public abstract class MasterClientAbstract {
 
     abstract protected IHttpClient clientFactory();
     
-	private boolean checkMacBlacklist(String mac){
+	private boolean checkMacBlacklist(String mac) throws Exception{
 		boolean b = false;
     	IHttpClient masterClient = clientFactory();
-		try {
-			 JsonObject jsonObject = masterClient.responseManager(masterClient.get(APP_FAMILY_PAGHE + "/blacklist/mac/" + mac));
-			b = jsonObject.getBoolean("data");
-			if (b) {
-				LOGGER.log(Level.WARNING, "The mac address is black-listed");
-			} else {
-				LOGGER.log(Level.INFO, "The mac address is NOT black-listed");
-			}			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+
+		JsonObject jsonObject = masterClient.responseManager(masterClient.get("/public/" + APP_FAMILY_PAGHE + "/blacklist/mac/" + mac));
+		b = jsonObject.getBoolean("data");
+		if (b) {
+			LOGGER.log(Level.WARNING, "The mac address is black-listed");
+		} else {
+			LOGGER.log(Level.INFO, "The mac address is NOT black-listed");
+		}			
+
 		return b;
 	}
 	
@@ -160,13 +158,13 @@ public abstract class MasterClientAbstract {
            }
        }
        @Test
-   	public void testMacBlacklist_1(){ 	
+   	public void testMacBlacklist_1() throws Exception{ 	
        	boolean b = checkMacBlacklist(MAC_1);
        	assertFalse(b);
        }
        
        @Test
-   	public void testMacBlacklist_2(){ 	
+   	public void testMacBlacklist_2() throws Exception{ 	
        	boolean b = checkMacBlacklist(MAC_2);
        	assertFalse(b);
        }    
