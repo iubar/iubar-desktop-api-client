@@ -30,7 +30,6 @@ public abstract class MasterClientAbstract {
     private static final String MAC_1 = "B8-CA-3A-96-BD-03";
     private static final String MAC_2 = MAC_1;
  
-
 	private static final String APP_FAMILY_PAGHE = "paghe";
 	public static final int ID_APP_PAGHEOPEN = 11;
 	public static final int ID_FAMILY_PAGHE = 1;
@@ -58,8 +57,9 @@ public abstract class MasterClientAbstract {
     			MasterClientAbstract.apiKey = prop.getProperty("JWT_APIKEY");
     		} catch (IOException ex) {
     			LOGGER.log(Level.WARNING, "Impossibile leggere la configurazione dal file " + config);
-    			LOGGER.log(Level.WARNING, ex.getMessage());
+    			LOGGER.log(Level.SEVERE, ex.getMessage());
     			// ex.printStackTrace();
+    			fail();
     		} finally {
     			if (is != null) {
     				try {
@@ -106,7 +106,9 @@ public abstract class MasterClientAbstract {
 				LOGGER.log(Level.INFO, "The mac address is NOT black-listed");
 			}			
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("***************************************** " + e.getMessage());
+			LOGGER.log(Level.SEVERE,e.getMessage()); 
+			fail();
 		}
 		return b;
 	}
@@ -114,10 +116,8 @@ public abstract class MasterClientAbstract {
     @Test
     public void sendTest() {
     	IHttpClient masterClient = clientFactory();
-        try {
-        	
-        	// Test on Production 
-        	
+        try {        	
+        	// Test on Production         	
         	  JsonObject jsonObj1 = masterClient.send(MasterClientAbstract.client);
             assertNotNull(jsonObj1);
             assertTrue(jsonObj1.getInt("data")>=0);
@@ -125,7 +125,8 @@ public abstract class MasterClientAbstract {
             assertNotNull(jsonObj2);
             assertTrue(jsonObj2.getInt("data")>=0);
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            LOGGER.log(Level.SEVERE,e.getMessage());
             fail();
 		}
     }
@@ -155,18 +156,20 @@ public abstract class MasterClientAbstract {
            	  JsonObject jsonObj = masterClient.send(url1, MasterClientAbstract.client);
            	assertNotNull(jsonObj);
            } catch (Exception e) {
-           	e.printStackTrace();
+           //	e.printStackTrace();
+           	LOGGER.log(Level.SEVERE,e.getMessage());
            	fail();
            }
        }
+       
        @Test
-   	public void testMacBlacklist_1(){ 	
+       public void testMacBlacklist_1(){ 	
        	boolean b = checkMacBlacklist(MAC_1);
        	assertFalse(b);
        }
        
        @Test
-   	public void testMacBlacklist_2(){ 	
+   		public void testMacBlacklist_2(){ 	
        	boolean b = checkMacBlacklist(MAC_2);
        	assertFalse(b);
        }    
