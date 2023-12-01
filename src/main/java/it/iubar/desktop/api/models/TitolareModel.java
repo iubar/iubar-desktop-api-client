@@ -28,9 +28,10 @@ public class TitolareModel extends RootModel implements IJsonModel {
     public void setPiva(String piva) {
     	if(piva !=null && piva.equals("")) {
     		// Evito che la Rest Api inserisca la stringa vuota nel DB
-    		piva = null;
+    		this.piva = null;
+    	}else {
+    		this.piva = piva;
     	}
-        this.piva = piva;
     }
 
     public String getDenom() {
@@ -41,9 +42,10 @@ public class TitolareModel extends RootModel implements IJsonModel {
     	if(denom !=null && denom.equals(""))
     	{
     		// Evito che la Rest Api inserisca la stringa vuota nel DB
-    		denom = null;
+    		this.denom = null;
+    	}else {
+    		this.denom = denom;
     	}
-        this.denom = denom;
     }
 
     public String getCognome() {
@@ -54,9 +56,10 @@ public class TitolareModel extends RootModel implements IJsonModel {
     	if(cognome !=null && cognome.equals(""))
     	{
     		// Evito che la Rest Api inserisca la stringa vuota nel DB
-    		cognome = null;
-    	}
+    		this.cognome = null;
+    	}else {
         this.cognome = cognome;
+    	}
     }
 
     public String getIndirizzo() {
@@ -67,9 +70,10 @@ public class TitolareModel extends RootModel implements IJsonModel {
     	if(indirizzo !=null && indirizzo.equals(""))
     	{
     		// Evito che la Rest Api inserisca la stringa vuota nel DB
-    		indirizzo = null;
-    	}
+    		this.indirizzo = null;
+    	}else {
         this.indirizzo = indirizzo;
+    	}
     }
 
     public String getEmail() {
@@ -80,9 +84,10 @@ public class TitolareModel extends RootModel implements IJsonModel {
     	if(email!=null && email.equals(""))
     	{
     		// Evito che la Rest Api inserisca la stringa vuota nel DB
-    		email = null;
-    	}
+    		this.email = null;
+    	}else {
         this.email = email;
+    	}
     }
 
     public String getTel() {
@@ -92,9 +97,10 @@ public class TitolareModel extends RootModel implements IJsonModel {
     public void setTel(String tel) {
     	if(tel !=null && tel.equals("")){
     		// Evito che la Rest Api inserisca la stringa vuota nel DB
-    		tel = null;
-    	}
+    		this.tel = null;
+    	}else {
         this.tel = tel;
+    	}
     }
 
     public int getDatori() {

@@ -9,6 +9,7 @@ import java.util.GregorianCalendar;
 import java.util.logging.Logger;
 
 import jakarta.json.bind.Jsonb;
+import jakarta.json.bind.JsonbBuilder;
 import jakarta.json.bind.spi.JsonbProvider;
  
 public class RootModel {
@@ -129,10 +130,10 @@ public class RootModel {
 	}
 	
 	/**
-	 * @see http://json-b.net/docs/user-guide.html
 	 * @return
 	 */
-	public String asJson() {	
+	public String asJson() {
+		  // Jsonb builder = JsonbBuilder.create();   // Non posso usare JsonbBuilder.create() perchè non compatibile con java 1.7
 		  Jsonb builder = JsonbProvider.provider().create().build(); // // da Java 1.8 deve essere cambiato in : JsonbBuilder.create(); 
 		  String str = builder.toJson(this);
 		  return str;

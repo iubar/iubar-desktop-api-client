@@ -12,6 +12,7 @@ import org.glassfish.jersey.client.ClientProperties;
 import it.iubar.desktop.api.json.JsonUtils;
 import it.iubar.desktop.api.models.ClientModel;
 import it.iubar.desktop.api.models.DocModel;
+import it.iubar.desktop.api.models.HrModel;
 import it.iubar.desktop.api.models.IJsonModel;
 import it.iubar.desktop.api.models.ModelsList;
 import it.iubar.desktop.api.models.TitolareModel;
@@ -36,6 +37,7 @@ public abstract class AuthHttpClient extends HttpClient {
 
 	private boolean isAuth = false;
 
+	public final static String INSERT_HR = "/public/hr";
 	public final static String INSERT_CLIENT = "/public/client";
 	public final static String INSERT_TITOLARI = "/public/titolari";
 	public final static String INSERT_MAC = "list/mac";
@@ -92,6 +94,8 @@ public abstract class AuthHttpClient extends HttpClient {
 		String urlToSend = this.getBaseUrl();
 		if (obj instanceof ClientModel) {
 			urlToSend += INSERT_CLIENT;
+		}else if (obj instanceof HrModel) {
+			urlToSend += INSERT_HR;
 		} else if (obj instanceof ModelsList) {
 			ModelsList ml = ((ModelsList) obj);
 			if (ml.getSize() > 0) {
