@@ -16,12 +16,12 @@ pipeline {
     stages {
         stage ('Build') {
             steps {
-                sh 'mvn clean compile'
+                sh 'mvn $MAVEN_ARGS $MAVEN_OPTS clean compile'
             }
         }
 		stage('Test') {
             steps {
-                sh 'mvn test'
+                sh 'mvn $MAVEN_ARGS $MAVEN_OPTS test'
             }
             post {
                 always {
@@ -46,7 +46,7 @@ pipeline {
         }		
 		stage ('Deploy') {
             steps {
-                sh 'mvn -DskipTests deploy'
+                sh 'mvn $MAVEN_ARGS $MAVEN_OPTS -DskipTests deploy'
             }        	  
         }		
     }
