@@ -12,8 +12,11 @@
 		<version>0.0.1</version>
 	</parent> 
    <properties>
-      <jersey.client.version>3.0.12</jersey.client.version> <!-- 3.0.x is the last version supporting jdk8 --> <!-- https://mvnrepository.com/artifact/org.glassfish.jersey.core/jersey-client-->
-      <yasson.version>2.0.4</yasson.version> <!-- ATTENZIONE dalla 3.x richiede java 11 -->  <!-- https://mvnrepository.com/artifact/org.eclipse/yasson -->
+      <jersey.client.version>3.0.12</jersey.client.version> <!-- Attention, 3.0.12 is the last version supporting java 1.8 --> <!-- https://mvnrepository.com/artifact/org.glassfish.jersey.core/jersey-client-->
+      <!--
+		Atenzione da 3.0.14 richiede java 11  
+	  -->
+      <yasson.version>2.0.4</yasson.version> <!-- ATTENZIONE dalla 3.x è richiesto java 11 -->  <!-- https://mvnrepository.com/artifact/org.eclipse/yasson -->
    </properties>
    <build>
       <resources>
@@ -75,7 +78,7 @@
 		<dependency>
 		    <groupId>jakarta.activation</groupId>
 		    <artifactId>jakarta.activation-api</artifactId>
-		    <version>2.0.1</version> <!-- latest version for java 8 -->
+		    <version>2.0.1</version> <!-- Pay attention, it's the latest version for java 8 -->
 		</dependency> 		
       <!-- Yasson is an official reference implementation of JSON Binding (JSR-367). -->
       <!-- https://mvnrepository.com/artifact/org.eclipse/yasson -->
@@ -88,7 +91,7 @@
       <dependency>
          <groupId>commons-codec</groupId>
          <artifactId>commons-codec</artifactId>
-         <version>1.16.0</version>
+         <version>1.17.1</version>
       </dependency>
       <!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
       <dependency>
