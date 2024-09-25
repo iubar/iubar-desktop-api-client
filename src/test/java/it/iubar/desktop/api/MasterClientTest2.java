@@ -33,19 +33,17 @@ public class MasterClientTest2 {
 		try {
 			HttpMethods.modelSend(url, client);
 		} catch (Exception e) {
-			fail();
+			fail(e.getMessage());
 		}
 	}
 
 	@Test
 	public void sendIncrementDocumento() {
 		String input = "{" + "\"iddoctype\": \"1\", " + "\"qnt\": \"0\"" + "}";
-		String path = "/public/increment-documento";
-
 		try {
-			HttpMethods.send(input, path, true);
+			HttpMethods.send(input, AuthHttpClient.INCREMENT_DOC, true);
 		} catch (Exception e) {
-			fail();
+			fail(e.getMessage());
 		}
 	}
 
@@ -59,7 +57,7 @@ public class MasterClientTest2 {
 		try {
 			HttpMethods.send(input, path, false);
 		} catch (Exception e) {
-			fail();
+			fail(e.getMessage());
 		}
 	}
 
@@ -72,7 +70,7 @@ public class MasterClientTest2 {
 		try {
 			HttpMethods.send(input, path, true);
 		} catch (Exception e) {
-			fail();
+			fail(e.getMessage());
 		}
 
 	}
@@ -85,32 +83,7 @@ public class MasterClientTest2 {
 		try {
 			HttpMethods.modlesSend(titolari);
 		} catch (Exception e) {
-			fail();
-		}
-	}
-
-	@Test
-	@Disabled("Passare credenziali api al client")
-	public void receiveAggiornamentiMese() {
-		String path = Integer.toString(MasterClientAbstract.ID_FAMILY_PAGHE) + "/stats/updated/" + "2017-01-01/"
-				+ "2017-05-26";
-
-		try {
-			HttpMethods.receive(path);
-		} catch (Exception e) {
-			fail();
-		}
-	}
-
-	@Test
-	@Disabled("Passare credenziali api al client")
-	public void receiveAnalisi() {
-		String path = Integer.toString(MasterClientAbstract.ID_FAMILY_PAGHE) + "/analytics";
-
-		try {
-			HttpMethods.receive(path);
-		} catch (Exception e) {
-			fail();
+			fail(e.getMessage());
 		}
 	}
 
@@ -123,33 +96,10 @@ public class MasterClientTest2 {
 			HttpMethods.receive(path);
 			HttpMethods.isDataFalse();
 		} catch (Exception e) {
-			fail();
+			fail(e.getMessage());
 		}
 	}
-
-	@Test
-	@Disabled("Passare credenziali api al client")
-	public void receiveCedolino() {
-		String path = "stats/cedolini/" + "2016-05-06/" + "2017-05-06";
-
-		try {
-			HttpMethods.receive(path);
-		} catch (Exception e) {
-			fail();
-		}
-	}
-
-	@Test
-	@Disabled("Passare credenziali api al client")
-	public void receiveCountDocumentiMese() {
-		String path = "count-documenti/" + "1/" + "2017-08-19/" + "2017-09-19";
-
-		try {
-			HttpMethods.receive(path);
-		} catch (Exception e) {
-			fail();
-		}
-	}
+	
 
 	@Test
 	public void receiveInfoMac() {
@@ -158,46 +108,10 @@ public class MasterClientTest2 {
 		try {
 			HttpMethods.receive(path);
 		} catch (Exception e) {
-			fail();
+			fail(e.getMessage());
 		}
 	}
-
-	@Test
-	@Disabled("Passare credenziali api al client")
-	public void receiveInfoTitolare() {
-		String path = "info/" + "cognome/" + "prova";
-
-		try {
-			HttpMethods.receive(path);
-		} catch (Exception e) {
-			fail();
-		}
-	}
-
-	@Test
-	@Disabled("Passare credenziali api al client")
-	public void receiveInstallazioniMese() {
-		String path = Integer.toString(MasterClientAbstract.ID_FAMILY_PAGHE) + "/stats/installed/" + "2017-01-01/"
-				+ "2017-05-26";
-
-		try {
-			HttpMethods.receive(path);
-		} catch (Exception e) {
-			fail();
-		}
-	}
-
-	@Test
-	@Disabled("Passare credenziali api al client")
-	public void receiveInstallazioni() {
-		String path = Integer.toString(MasterClientAbstract.ID_FAMILY_PAGHE) + "/stats/installed";
-
-		try {
-			HttpMethods.receive(path);
-		} catch (Exception e) {
-			fail();
-		}
-	}
+	
 
 	@Test
 	public void receiveNow() {
@@ -206,43 +120,109 @@ public class MasterClientTest2 {
 		try {
 			HttpMethods.receive(path);
 		} catch (Exception e) {
-			fail();
+			fail(e.getMessage());
+		}
+	}
+	
+	@Test
+	public void receiveAggiornamentiMese() {
+		String path = Integer.toString(MasterClientAbstract.ID_FAMILY_PAGHE) + "/stats/updated/" + "2017-01-01/"
+				+ "2017-05-26";
+		try {					
+			HttpMethods.receiveProtected(path);
+		} catch (Exception e) {
+			fail(e.getMessage());
 		}
 	}
 
 	@Test
-	@Disabled("Passare credenziali api al client")
+	public void receiveAnalisi() {
+		String path = Integer.toString(MasterClientAbstract.ID_FAMILY_PAGHE) + "/analytics";
+		try {
+			HttpMethods.receiveProtected(path);
+		} catch (Exception e) {
+			fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void receiveCedolino() {
+		String path = "stats/cedolini/" + "2016-05-06/" + "2017-05-06";
+		try {
+			HttpMethods.receiveProtected(path);
+		} catch (Exception e) {
+			fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void receiveCountDocumentiMese() {
+		String path = "count-documenti/" + "1/" + "2017-08-19/" + "2017-09-19";
+		try {
+			HttpMethods.receiveProtected(path);
+		} catch (Exception e) {
+			fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void receiveInfoTitolare() {
+		String path = "info/cognome/" + "Corsini";
+		try {
+			HttpMethods.receiveProtected(path);
+		} catch (Exception e) {
+			fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void receiveInstallazioniMese() {
+		String path = Integer.toString(MasterClientAbstract.ID_FAMILY_PAGHE) + "/stats/installed/" + "2017-01-01/"
+				+ "2017-05-26";
+		try {
+			HttpMethods.receiveProtected(path);
+		} catch (Exception e) {
+			fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void receiveInstallazioni() {
+		String path = Integer.toString(MasterClientAbstract.ID_FAMILY_PAGHE) + "/stats/installed";
+		try {
+			HttpMethods.receiveProtected(path);
+		} catch (Exception e) {
+			fail(e.getMessage());
+		}
+	}
+
+	@Test
 	public void receiveStatisticheGenerali() {
 		String path = Integer.toString(MasterClientAbstract.ID_FAMILY_PAGHE) + "/stats/" + "2016-05-06/" + "2017-05-06";
-
 		try {
-			HttpMethods.receive(path);
+			HttpMethods.receiveProtected(path);
 		} catch (Exception e) {
-			fail();
+			fail(e.getMessage());
 		}
 	}
 
 	@Test
-	@Disabled("Passare credenziali api al client")
 	public void receiveTopUsers() {
 		String path = "top-users/limit/10";
-
 		try {
-			HttpMethods.receive(path);
+			HttpMethods.receiveProtected(path);
 		} catch (Exception e) {
-			fail();
+			fail(e.getMessage());
 		}
 	}
 
 	@Test
-	@Disabled("Passare credenziali api al client")
 	public void receiveUltimiUtenti() {
 		String path = "last-users/limit/10";
-
 		try {
-			HttpMethods.receive(path);
+			HttpMethods.receiveProtected(path);
 		} catch (Exception e) {
-			fail();
+			fail(e.getMessage());
 		}
 	}
 }

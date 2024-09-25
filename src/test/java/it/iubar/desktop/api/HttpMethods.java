@@ -17,6 +17,7 @@ import jakarta.json.JsonObject;
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.client.WebTarget;
+import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
@@ -27,9 +28,11 @@ public class HttpMethods {
 	private static JsonObject jsonObject = null;
 
 	private static final Logger LOGGER = Logger.getLogger(HttpMethods.class.getName());
-	
+ 
+	private static final String USER = "iubar";
 
-		
+	private static final String PASSWORD = "servizi22";
+			
 	@BeforeAll
 	public static void setUpBeforeClass() throws Exception {
 		MasterClientAbstract.loadConfig();
@@ -128,14 +131,22 @@ public class HttpMethods {
 
 	public static void receive(String path) {
 		Client client = HttpClient.newClient();
+		dummy(client, path);
+	}
+	
+	public static void receiveProtected(String path) {
+ 		Client client = HttpClient.newClientProtected(HttpMethods.USER, HttpMethods.PASSWORD);
+		dummy(client, path);
+	}
 
+	private static void dummy(Client client, String path) {
 		URI baseUri = UriBuilder.fromUri(RestApiConsts.CRM_BASE_ROUTE).build();
 		WebTarget target = client.target(baseUri);
 
 		LOGGER.info("Testing path \"" + baseUri.toString() + "/" + path + "\" ...");
 
 		Response response = target.path(path).request().accept(MediaType.APPLICATION_JSON).get(Response.class);
-
+		
 		int statusCode = response.getStatus();
 
 		String json = response.readEntity(String.class);
@@ -145,4 +156,6 @@ public class HttpMethods {
 		assertEquals(Status.OK.getStatusCode(), statusCode);
 		assertEquals(Status.OK.getStatusCode(), HttpMethods.jsonObject.getInt("code"));
 	}
+	
+	
 }

@@ -25,16 +25,17 @@ public abstract class HttpClient {
 	private static final Logger LOGGER = Logger.getLogger(HttpClient.class.getName());
 	private static final int DEF_CONNECT_TIMEOUT = 15000;
 	private static final int DEF_READ_TIMEOUT = 15000;
-	
+	protected String url = null;
+		
 	public static Client newClient() {
 		Client client = ClientBuilder.newClient();
 		client.property(ClientProperties.CONNECT_TIMEOUT, DEF_CONNECT_TIMEOUT);
 		client.property(ClientProperties.READ_TIMEOUT, DEF_READ_TIMEOUT);		
 		return client;
 	}
-	
+ 	
 	/**
-	 * Crea il client e ignora la validità del certificato SSL
+	 * Crea il client con autenticazione user/password, e ignora la validità del certificato SSL
 	 * 
 	 */
 	public static Client newClientProtected(String user, String password)  {
@@ -68,8 +69,9 @@ public abstract class HttpClient {
 		
 		return client;
 	}
+
 	
-	protected String url = null;
+
 
 	public static JsonObject getAnswer(Response response) {
 		JsonObject answer = null;

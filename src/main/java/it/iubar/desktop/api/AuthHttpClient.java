@@ -40,8 +40,8 @@ public abstract class AuthHttpClient extends HttpClient {
 	public final static String INSERT_HR = "/public/hr";
 	public final static String INSERT_CLIENT = "/public/client";
 	public final static String INSERT_TITOLARI = "/public/titolari";
-	public final static String INSERT_MAC = "list/mac";
-
+	public static final String INCREMENT_DOC = "/public/increment-documento";
+ 
 	abstract protected JsonObject genAuth2(String destUrl);
 
 	abstract public Response get(String restUrl);
@@ -279,6 +279,8 @@ public abstract class AuthHttpClient extends HttpClient {
 				LOGGER.log(Level.CONFIG, "CONNECT_TIMEOUT: " + String.valueOf(connTimeout));
 				LOGGER.log(Level.CONFIG, "READ_TIMEOUT: " + String.valueOf(readTimeout));
 			}
+		} catch (Exception e) {
+			LOGGER.log(Level.SEVERE, e.getMessage());
 		}
 		return response;
 	}
