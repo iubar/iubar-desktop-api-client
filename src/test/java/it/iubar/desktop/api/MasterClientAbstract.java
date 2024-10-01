@@ -34,6 +34,10 @@ public abstract class MasterClientAbstract {
 	private static final String APP_FAMILY_PAGHE = "paghe";
 	public static final int ID_APP_PAGHEOPEN = 11;
 	public static final int ID_FAMILY_PAGHE = 1;
+	
+	public static final String USER = "iubar";
+	public static final String PASSWORD = "servizi22";
+		
 	public static String user = null;
 	public static String apiKey = null;
 
