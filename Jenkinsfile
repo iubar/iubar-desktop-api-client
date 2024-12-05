@@ -1,7 +1,7 @@
 pipeline {
     agent {
     	docker {   	
-    		image 'iubar-maven-alpine'
+    		image 'iubar-java-alpine'
     		label 'docker'
     		args '-v ${HOME}/.m2:/home/jenkins/.m2:rw,z -v ${HOME}/.sonar:/home/jenkins/.sonar:rw,z'
     	} 
@@ -11,7 +11,7 @@ pipeline {
 	}    
 	environment {
 		MAVEN_ARGS = '--show-version --batch-mode'
-		MAVEN_OPTS = "-Djava.awt.headless=true"
+		MAVEN_OPTS = '-Djava.awt.headless=true'
 	}    
     stages {
         stage ('Build') {
