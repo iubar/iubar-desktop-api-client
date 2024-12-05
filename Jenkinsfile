@@ -10,8 +10,8 @@ pipeline {
 		ansiColor('xterm')
 	}    
 	environment {
-		MAVEN_ARGS = '--show-version --batch-mode'
-		MAVEN_OPTS = '-Djava.awt.headless=true'
+		MAVEN_ARGS = "--show-version --batch-mode"
+		MAVEN_OPTS = "-Djava.awt.headless=true"
 	}    
     stages {
         stage ('Build') {
