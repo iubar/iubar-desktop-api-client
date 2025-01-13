@@ -135,6 +135,7 @@ public abstract class MasterClientAbstract {
 		JsonObject jsonObj = masterClient.send(url1, MasterClientAbstract.client);
 		assertNotNull(jsonObj);
 	}
+	
 	@Test
 	public void testMacBlacklist_1() throws Exception{ 	
 		boolean b = checkMacBlacklist(MAC_1);
@@ -146,8 +147,6 @@ public abstract class MasterClientAbstract {
 		boolean b = checkMacBlacklist(MAC_2);
 		assertFalse(b);
 	}    
-
-
 
 	@AfterAll
 	public static void delFiles(){
