@@ -91,7 +91,6 @@ public class MasterClientTest2 {
 	public void receiveBlacklist() {
 		String path = "/public/" + Integer.toString(MasterClientAbstract.ID_FAMILY_PAGHE) + "/blacklist/" + "mac/"
 				+ ClientModelTest.MAC;
-
 		try {
 			HttpMethods.receive(path);
 			HttpMethods.isDataFalse();
@@ -104,7 +103,6 @@ public class MasterClientTest2 {
 	@Test
 	public void receiveInfoMac() {
 		String path = "/public/paghe/info/mac/" + ClientModelTest.MAC;
-
 		try {
 			HttpMethods.receive(path);
 		} catch (Exception e) {
@@ -116,7 +114,6 @@ public class MasterClientTest2 {
 	@Test
 	public void receiveNow() {
 		String path = "/public/now/europe/rome";
-
 		try {
 			HttpMethods.receive(path);
 		} catch (Exception e) {
@@ -126,8 +123,7 @@ public class MasterClientTest2 {
 	
 	@Test
 	public void receiveAggiornamentiMese() {
-		String path = Integer.toString(MasterClientAbstract.ID_FAMILY_PAGHE) + "/stats/updated/" + "2017-01-01/"
-				+ "2017-05-26";
+		String path = Integer.toString(MasterClientAbstract.ID_FAMILY_PAGHE) + "/stats/updated/" + "2017-01-01/" + "2017-05-26";
 		try {					
 			HttpMethods.receiveProtected(path);
 		} catch (Exception e) {
@@ -177,8 +173,7 @@ public class MasterClientTest2 {
 
 	@Test
 	public void receiveInstallazioniMese() {
-		String path = Integer.toString(MasterClientAbstract.ID_FAMILY_PAGHE) + "/stats/installed/" + "2017-01-01/"
-				+ "2017-05-26";
+		String path = Integer.toString(MasterClientAbstract.ID_FAMILY_PAGHE) + "/stats/installed/" + "2017-01-01/" + "2017-05-26";
 		try {
 			HttpMethods.receiveProtected(path);
 		} catch (Exception e) {
