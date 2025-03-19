@@ -79,6 +79,7 @@
 		    <groupId>jakarta.activation</groupId>
 		    <artifactId>jakarta.activation-api</artifactId>
 		    <version>2.0.1</version> <!-- Pay attention, it's the latest version for java 8 -->
+			<!-- Jakarta EE 9.1 features can run with Java SE versions 8 and later. All Jakarta EE 10 features require Java 11 or later-->		    
 		</dependency> 		
       <!-- Yasson is an official reference implementation of JSON Binding (JSR-367). -->
       <!-- https://mvnrepository.com/artifact/org.eclipse/yasson -->
@@ -91,13 +92,13 @@
       <dependency>
          <groupId>commons-codec</groupId>
          <artifactId>commons-codec</artifactId>
-         <version>1.17.1</version>
+         <version>1.18.0</version
       </dependency>
       <!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
       <dependency>
          <groupId>commons-io</groupId>
          <artifactId>commons-io</artifactId>
-         <version>2.15.1</version>
+         <version>2.18.0</version>
          <!-- L'ultima versione che supporta Java 1.7 è la 2.6  -->
       </dependency>
       <!-- https://github.com/auth0/java-jwt -->
@@ -109,7 +110,7 @@
          <!-- see https://github.com/auth0/java-jwt/blob/master/CHANGELOG.md -->
          <!-- see https://github.com/auth0/java-jwt/blob/master/MIGRATION_GUIDE.md -->
          <!-- ISSUE : https://github.com/auth0/java-jwt/issues/671 -->
-         <version>4.4.0</version>
+         <version>4.5.0</version>
 <!--          <exclusions> -->
 <!--             <exclusion> -->
 <!--                <groupId>com.fasterxml.jackson.core</groupId> -->
