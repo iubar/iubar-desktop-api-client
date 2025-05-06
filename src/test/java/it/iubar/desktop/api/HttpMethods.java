@@ -130,7 +130,7 @@ public class HttpMethods {
 	}
 	
 	public static void receiveProtected(String path) {
- 		Client client = HttpClient.newClientProtected(MasterClientAbstract.USER, MasterClientAbstract.PASSWORD);
+ 		Client client = HttpClient.newClientProtected(MasterClientAbstract.CRM_HTTP_USER, MasterClientAbstract.CRM_HTTP_PASSWORD);
 		dummy(client, path);
 	}
 
