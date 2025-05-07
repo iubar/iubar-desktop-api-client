@@ -35,8 +35,8 @@ public abstract class MasterClientAbstract {
 	public static final int ID_APP_PAGHEOPEN = 11;
 	public static final int ID_FAMILY_PAGHE = 1;
 	
-	public static String CRM_HTTP_USER = "iubar";
-	public static String CRM_HTTP_PASSWORD = "servizi22";
+	public static String CRM_HTTP_USER = "";
+	public static String CRM_HTTP_PASSWORD = ""; // iubar/sz22
 		
 	public static String user = null;
 	public static String apiKey = null;
@@ -52,8 +52,25 @@ public abstract class MasterClientAbstract {
 			MasterClientAbstract.CRM_HTTP_USER = httpUser;
 			MasterClientAbstract.CRM_HTTP_PASSWORD = httpPassword;
 		}else {
-			throw new Exception("Env vars not configured !");			
+			String config = "secret.properties";    		
+			Properties prop = new Properties();
+			InputStream is = MasterJwtClientTest.class.getResourceAsStream(config);
+			if(is!=null) {
+				prop.load(is);
+				MasterClientAbstract.CRM_HTTP_USER = prop.getProperty("CRM_HTTP_USER");
+				MasterClientAbstract.CRM_HTTP_PASSWORD = prop.getProperty("CRM_HTTP_PASSWORD");
+				is.close();
+			}			
+						
 		}
+ 
+		if(MasterClientAbstract.CRM_HTTP_USER == null || MasterClientAbstract.CRM_HTTP_USER.length()==0) { 
+			throw new Exception("CRM_HTTP_USER var not set !");
+			 
+		}else if(MasterClientAbstract.CRM_HTTP_PASSWORD == null || MasterClientAbstract.CRM_HTTP_PASSWORD.length()==0) {
+			throw new Exception("CRM_HTTP_USER var not set !");	
+		}
+	 
 		
 		String jwtUser = System.getenv("JWT_USER");
 		String jwtApiKey = System.getenv("JWT_APIKEY");
@@ -61,21 +78,22 @@ public abstract class MasterClientAbstract {
 			MasterClientAbstract.user = jwtUser;
 			MasterClientAbstract.apiKey = jwtApiKey;
 		}else {
-			String config = "/secret.properties";    		
+			String config = "secret.properties";    		
 			Properties prop = new Properties();
 			InputStream is = MasterJwtClientTest.class.getResourceAsStream(config);
-			prop.load(is);
-			MasterClientAbstract.user = prop.getProperty("JWT_USER");
-			MasterClientAbstract.apiKey = prop.getProperty("JWT_APIKEY");
-			is.close();
+			if(is!=null) {
+				prop.load(is);
+				MasterClientAbstract.user = prop.getProperty("JWT_USER");
+				MasterClientAbstract.apiKey = prop.getProperty("JWT_APIKEY");
+				is.close();
+			}
 		}
 
 		if(MasterClientAbstract.user == null || MasterClientAbstract.user.length()==0) { 
-			LOGGER.log(Level.SEVERE,"Impossibile continuare: user non specificato");
-			System.exit(1);
+			throw new Exception("Impossibile continuare: user non specificato");
+			 
 		}else if(MasterClientAbstract.apiKey == null || MasterClientAbstract.apiKey.length()==0) {
-			LOGGER.log(Level.SEVERE, "Impossibile continuare: apiKey non specificata");
-			System.exit(1);
+			throw new Exception("Impossibile continuare: apiKey non specificata");			
 		}
 
 	}
