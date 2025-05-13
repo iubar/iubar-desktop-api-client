@@ -25,11 +25,11 @@ import jakarta.ws.rs.core.Response.Status;
 import jakarta.ws.rs.core.UriBuilder;
 
 public class HttpMethods {
-	
+
 	private JsonObject jsonObject = null;
 
 	private static final Logger LOGGER = Logger.getLogger(HttpMethods.class.getName());
-			
+
 	protected static IHttpClient clientFactory() {
 		HmacClient masterClient = null;
 		masterClient = new HmacClient();
@@ -124,19 +124,19 @@ public class HttpMethods {
 		Client client = HttpClient.newClient();
 		dummy(client, path, null);
 	}
-	
+
 	public  void receive(String path, Map<String, String> queryParams) {
 		Client client = HttpClient.newClient();
 		dummy(client, path, queryParams);
 	}
-	
+
 	public  void receiveProtected(String path) {
- 		Client client = HttpClient.newClientProtected(MasterClientAbstract.CRM_HTTP_USER, MasterClientAbstract.CRM_HTTP_PASSWORD);
+		Client client = HttpClient.newClientProtected(MasterClientAbstract.CRM_HTTP_USER, MasterClientAbstract.CRM_HTTP_PASSWORD);
 		dummy(client, path, null);
 	}
-	
+
 	public void receiveProtected(String path, Map<String, String> queryParams) {
- 		Client client = HttpClient.newClientProtected(MasterClientAbstract.CRM_HTTP_USER, MasterClientAbstract.CRM_HTTP_PASSWORD);
+		Client client = HttpClient.newClientProtected(MasterClientAbstract.CRM_HTTP_USER, MasterClientAbstract.CRM_HTTP_PASSWORD);
 		dummy(client, path, queryParams);
 	}	
 
@@ -144,66 +144,65 @@ public class HttpMethods {
 		int statusCode = 0;
 		String json = null;
 		URI baseUri = UriBuilder.fromUri(RestApiConsts.CRM_BASE_ROUTE).build();
-		WebTarget route = client.target(baseUri).path(path);
-		 
+		WebTarget target = client.target(baseUri).path(path);
+
 		if(queryParams!=null && !queryParams.isEmpty()) {
 			for (Map.Entry<String, String> entry : queryParams.entrySet()) {
-				route = route.queryParam(entry.getKey(), entry.getValue());
+				target = target.queryParam(entry.getKey(), entry.getValue());
 			}
 		}
- 
-		LOGGER.info("Testing route \"" + route.toString() +   "\" ...");
- 
-		Response response = route.request().accept(MediaType.APPLICATION_JSON).get(Response.class);		
+
+		LOGGER.info("Testing route \"" + target.toString() +   "\" ...");
+
+		Response response = target.request().accept(MediaType.APPLICATION_JSON).get(Response.class);		
 		statusCode = response.getStatus();
-  	    json = response.readEntity(String.class);				
-  	    this.jsonObject = JsonUtils.fromString(json);
+		json = response.readEntity(String.class);				
+		this.jsonObject = JsonUtils.fromString(json);
 		LOGGER.info("...response: " + this.jsonObject.toString() + "\n");
 		assertEquals(Status.OK.getStatusCode(), statusCode);
 		assertEquals(Status.OK.getStatusCode(), this.jsonObject.getInt("code"));
 	}
-	
-	
+
+
 	private void dummyTooComplicated(Client client, String path) {
 		int statusCode = 0;
 		String json = null;
 		URI baseUri = UriBuilder.fromUri(RestApiConsts.CRM_BASE_ROUTE).build();
 		WebTarget target = client.target(baseUri);
-	
-		// 1) Rimuovo la (eventuale) query string dalla rotta
+
+		// 1) Rimuovo la (eventuale) query string dal path
 		String pathCleaned = null;
 		try {
 			pathCleaned = QueryStringParser.removeQueryString(path);
 
-				
-		WebTarget route = target.path(pathCleaned);
-		
-		// 2) Aggiungo la (eventuale) query string
-		Map<String, String> queryParams;
- 
+			target = target.path(pathCleaned);
+
+			// 2) Aggiungo la (eventuale) query string all'oggetto WebTarget
+			Map<String, String> queryParams;
+
 			queryParams = QueryStringParser.getQueryParams(path);
 			for (Map.Entry<String, String> entry : queryParams.entrySet()) {
-				route = route.queryParam(entry.getKey(), entry.getValue());
+				target = target.queryParam(entry.getKey(), entry.getValue());
 			}			
- 
-		LOGGER.info("Testing route \"" + route.toString() +   "\" ...");
- 
-		Response response = route.request().accept(MediaType.APPLICATION_JSON).get(Response.class);
-		
-		statusCode = response.getStatus();
 
-		  json = response.readEntity(String.class);
-		
+			LOGGER.info("Testing route \"" + target.toString() +   "\" ...");
+
+			Response response = target.request().accept(MediaType.APPLICATION_JSON).get(Response.class);
+
+			statusCode = response.getStatus();
+
+			json = response.readEntity(String.class);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		this.jsonObject = JsonUtils.fromString(json);
 
 		LOGGER.info("...response: " + this.jsonObject.toString() + "\n");
 		assertEquals(Status.OK.getStatusCode(), statusCode);
 		assertEquals(Status.OK.getStatusCode(), this.jsonObject.getInt("code"));
 	}
-	
-	
+
+
 }
