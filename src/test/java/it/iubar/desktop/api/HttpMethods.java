@@ -138,7 +138,7 @@ public class HttpMethods {
 		URI baseUri = UriBuilder.fromUri(RestApiConsts.CRM_BASE_ROUTE).build();
 		WebTarget target = client.target(baseUri);
 
-		LOGGER.info("Testing path \"" + baseUri.toString() +  path + "\" ...");
+		LOGGER.info("Testing path \"" + baseUri.toString() + "/" +  path + "\" ...");
 
 		Response response = target.path(path).request().accept(MediaType.APPLICATION_JSON).get(Response.class);
 		
