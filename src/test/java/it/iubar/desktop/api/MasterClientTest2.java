@@ -199,7 +199,7 @@ public class MasterClientTest2 {
 		} catch (Exception e) {
 			fail(e.getMessage());
 		}
-	}
+	}	
 
 	@Test
 	public void receiveTopUsers() {

@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.net.URI;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -13,6 +14,7 @@ import org.junit.jupiter.api.BeforeAll;
 import it.iubar.desktop.api.json.JsonUtils;
 import it.iubar.desktop.api.models.IJsonModel;
 import it.iubar.desktop.api.models.ModelsList;
+import it.iubar.desktop.api.utils.QueryStringParser;
 import jakarta.json.JsonObject;
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.Entity;
@@ -135,16 +137,41 @@ public class HttpMethods {
 	}
 
 	private static void dummy(Client client, String path) {
+		int statusCode = 0;
+		String json = null;
 		URI baseUri = UriBuilder.fromUri(RestApiConsts.CRM_BASE_ROUTE).build();
 		WebTarget target = client.target(baseUri);
+	
+		// 1) Rimuovo la (eventuale) query string dalla rotta
+		String pathCleaned = null;
+		try {
+			pathCleaned = QueryStringParser.removeQueryString(path);
 
-		LOGGER.info("Testing path \"" + baseUri.toString() + "/" +  path + "\" ...");
-
-		Response response = target.path(path).request().accept(MediaType.APPLICATION_JSON).get(Response.class);
+				
+		WebTarget route = target.path(pathCleaned);
 		
-		int statusCode = response.getStatus();
+		// 2) Aggiungo la (eventuale) query string
+		Map<String, String> queryParams;
+ 
+			queryParams = QueryStringParser.getQueryParams(path);
+			for (Map.Entry<String, String> entry : queryParams.entrySet()) {
+				route = route.queryParam(entry.getKey(), entry.getValue());
+			}			
+ 
+		
+		
+		LOGGER.info("Testing route \"" + route.toString() +   "\" ...");
+ 
+		Response response = route.request().accept(MediaType.APPLICATION_JSON).get(Response.class);
+		
+		statusCode = response.getStatus();
 
-		String json = response.readEntity(String.class);
+		  json = response.readEntity(String.class);
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		HttpMethods.jsonObject = JsonUtils.fromString(json);
 
 		LOGGER.info("...response: " + HttpMethods.jsonObject.toString() + "\n");
