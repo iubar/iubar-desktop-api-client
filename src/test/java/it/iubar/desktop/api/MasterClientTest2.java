@@ -2,6 +2,9 @@ package it.iubar.desktop.api;
 
 import static org.junit.jupiter.api.Assertions.fail;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -18,6 +21,7 @@ public class MasterClientTest2 {
 		MasterClientAbstract.loadConfig();
 	}
 
+	
 	protected IHttpClient clientFactory() {
 		HmacClient masterClient = null;
 		masterClient = new HmacClient();
@@ -41,7 +45,8 @@ public class MasterClientTest2 {
 	public void sendIncrementDocumento() {
 		String input = "{" + "\"iddoctype\": \"1\", " + "\"qnt\": \"0\"" + "}";
 		try {
-			HttpMethods.send(input, AuthHttpClient.INCREMENT_DOC, true);
+			HttpMethods obj = new HttpMethods();
+			obj.send(input, AuthHttpClient.INCREMENT_DOC, true);
 		} catch (Exception e) {
 			fail(e.getMessage());
 		}
@@ -55,7 +60,8 @@ public class MasterClientTest2 {
 		String path = "/public/register-client/" + Integer.toString(MasterClientAbstract.ID_FAMILY_PAGHE);
 
 		try {
-			HttpMethods.send(input, path, false);
+			HttpMethods obj = new HttpMethods();
+			obj.send(input, path, false);
 		} catch (Exception e) {
 			fail(e.getMessage());
 		}
@@ -68,7 +74,8 @@ public class MasterClientTest2 {
 		String path = "/public/register-client/" + Integer.toString(MasterClientAbstract.ID_FAMILY_PAGHE);
 
 		try {
-			HttpMethods.send(input, path, true);
+			HttpMethods obj = new HttpMethods();
+			obj.send(input, path, true);
 		} catch (Exception e) {
 			fail(e.getMessage());
 		}
@@ -92,8 +99,9 @@ public class MasterClientTest2 {
 		String path = "/public/" + Integer.toString(MasterClientAbstract.ID_FAMILY_PAGHE) + "/blacklist/" + "mac/"
 				+ ClientModelTest.MAC;
 		try {
-			HttpMethods.receive(path);
-			HttpMethods.isDataFalse();
+			HttpMethods obj = new HttpMethods();
+			obj.receive(path);
+			obj.isDataFalse();
 		} catch (Exception e) {
 			fail(e.getMessage());
 		}
@@ -104,7 +112,8 @@ public class MasterClientTest2 {
 	public void receiveInfoMac() {
 		String path = "/public/paghe/info/mac/" + ClientModelTest.MAC;
 		try {
-			HttpMethods.receive(path);
+			HttpMethods obj = new HttpMethods();
+			obj.receive(path);
 		} catch (Exception e) {
 			fail(e.getMessage());
 		}
@@ -115,7 +124,8 @@ public class MasterClientTest2 {
 	public void receiveNow() {
 		String path = "/public/now/europe/rome";
 		try {
-			HttpMethods.receive(path);
+			HttpMethods obj = new HttpMethods();
+			obj.receive(path);
 		} catch (Exception e) {
 			fail(e.getMessage());
 		}
@@ -124,8 +134,9 @@ public class MasterClientTest2 {
 	@Test
 	public void receiveAggiornamentiMese() {
 		String path = Integer.toString(MasterClientAbstract.ID_FAMILY_PAGHE) + "/stats/updated/" + "2017-01-01/" + "2017-05-26";
-		try {					
-			HttpMethods.receiveProtected(path);
+		try {		
+			HttpMethods obj = new HttpMethods();
+			obj.receiveProtected(path);
 		} catch (Exception e) {
 			fail(e.getMessage());
 		}
@@ -135,7 +146,8 @@ public class MasterClientTest2 {
 	public void receiveAnalisi() {
 		String path = Integer.toString(MasterClientAbstract.ID_FAMILY_PAGHE) + "/analytics";
 		try {
-			HttpMethods.receiveProtected(path);
+			HttpMethods obj = new HttpMethods();
+			obj.receiveProtected(path);
 		} catch (Exception e) {
 			fail(e.getMessage());
 		}
@@ -145,7 +157,8 @@ public class MasterClientTest2 {
 	public void receiveCedolino() {
 		String path = "stats/cedolini/" + "2016-05-06/" + "2017-05-06";
 		try {
-			HttpMethods.receiveProtected(path);
+			HttpMethods obj = new HttpMethods();
+			obj.receiveProtected(path);
 		} catch (Exception e) {
 			fail(e.getMessage());
 		}
@@ -155,7 +168,8 @@ public class MasterClientTest2 {
 	public void receiveCountDocumentiMese() {
 		String path = "count-documenti/" + "1/" + "2017-08-19/" + "2017-09-19";
 		try {
-			HttpMethods.receiveProtected(path);
+			HttpMethods obj = new HttpMethods();
+			obj.receiveProtected(path);
 		} catch (Exception e) {
 			fail(e.getMessage());
 		}
@@ -165,7 +179,8 @@ public class MasterClientTest2 {
 	public void receiveInfoTitolare() {
 		String path = "info/cognome/" + "Corsini";
 		try {
-			HttpMethods.receiveProtected(path);
+			HttpMethods obj = new HttpMethods();
+			obj.receiveProtected(path);
 		} catch (Exception e) {
 			fail(e.getMessage());
 		}
@@ -175,7 +190,8 @@ public class MasterClientTest2 {
 	public void receiveInstallazioniMese() {
 		String path = Integer.toString(MasterClientAbstract.ID_FAMILY_PAGHE) + "/stats/installed/" + "2017-01-01/" + "2017-05-26";
 		try {
-			HttpMethods.receiveProtected(path);
+			HttpMethods obj = new HttpMethods();
+			obj.receiveProtected(path);
 		} catch (Exception e) {
 			fail(e.getMessage());
 		}
@@ -185,7 +201,8 @@ public class MasterClientTest2 {
 	public void receiveInstallazioni() {
 		String path = Integer.toString(MasterClientAbstract.ID_FAMILY_PAGHE) + "/stats/installed";
 		try {
-			HttpMethods.receiveProtected(path);
+			HttpMethods obj = new HttpMethods();
+			obj.receiveProtected(path);
 		} catch (Exception e) {
 			fail(e.getMessage());
 		}
@@ -195,7 +212,8 @@ public class MasterClientTest2 {
 	public void receiveStatisticheGenerali() {
 		String path = Integer.toString(MasterClientAbstract.ID_FAMILY_PAGHE) + "/stats/" + "2016-05-06/" + "2017-05-06";
 		try {
-			HttpMethods.receiveProtected(path);
+			HttpMethods obj = new HttpMethods();
+			obj.receiveProtected(path);
 		} catch (Exception e) {
 			fail(e.getMessage());
 		}
@@ -203,9 +221,13 @@ public class MasterClientTest2 {
 
 	@Test
 	public void receiveTopUsers() {
-		String path = "top-users?limit=10";
+		// String path = "top-users?limit=10"; // se volessi usare questa stringa dovrei invocare HttpMethods.dummyTooComplicated()
+		String path = "top-users";
+		Map<String, String> queryParams = new HashMap<>();
+		queryParams.put("limit", "10");
 		try {
-			HttpMethods.receiveProtected(path);
+			HttpMethods obj = new HttpMethods();
+			obj.receiveProtected(path, queryParams);
 		} catch (Exception e) {
 			fail(e.getMessage());
 		}
@@ -213,9 +235,13 @@ public class MasterClientTest2 {
 
 	@Test
 	public void receiveUltimiUtenti() {
-		String path = "last-users?limit=10";
+		// String path = "last-users?limit=10"; // se volessi usare questa stringa dovrei invocare HttpMethods.dummyTooComplicated()
+		String path = "last-users";
+		Map<String, String> queryParams = new HashMap<>();
+		queryParams.put("limit", "10");
 		try {
-			HttpMethods.receiveProtected(path);
+			HttpMethods obj = new HttpMethods();
+			obj.receiveProtected(path, queryParams );
 		} catch (Exception e) {
 			fail(e.getMessage());
 		}
