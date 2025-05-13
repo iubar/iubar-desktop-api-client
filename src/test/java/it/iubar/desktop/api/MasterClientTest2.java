@@ -203,7 +203,7 @@ public class MasterClientTest2 {
 
 	@Test
 	public void receiveTopUsers() {
-		String path = "/top-users/limit/10";
+		String path = "top-users/limit/10";
 		try {
 			HttpMethods.receiveProtected(path);
 		} catch (Exception e) {
@@ -213,7 +213,7 @@ public class MasterClientTest2 {
 
 	@Test
 	public void receiveUltimiUtenti() {
-		String path = "/last-users/limit/10";
+		String path = "last-users/limit/10";
 		try {
 			HttpMethods.receiveProtected(path);
 		} catch (Exception e) {
