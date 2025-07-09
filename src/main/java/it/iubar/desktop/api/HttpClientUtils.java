@@ -7,6 +7,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLHandshakeException;
 import javax.net.ssl.SSLParameters;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
@@ -33,9 +34,12 @@ public abstract class HttpClientUtils {
 		return client;
 	}
 
+ 
+	
 	public static Client newClient2025() {
 		Client client = null;
 
+		
 		// Crea un SSLContext con la versione desiderata (es. TLSv1.3 o TLSv1.2)
 		SSLContext sslContext = null;
 		try {
@@ -45,7 +49,7 @@ public abstract class HttpClientUtils {
 
             // Imposta i protocolli TLS supportati (forza TLSv1.3)
             SSLParameters sslParams = sslContext.getDefaultSSLParameters();
-            sslParams.setProtocols(new String[] { "TLSv1.3", "TLSv1.2" });
+            sslParams.setProtocols(new String[] { "TLSv1.2" });
             
 		} catch (NoSuchAlgorithmException e) {
 			LOGGER.severe(e.getMessage());
