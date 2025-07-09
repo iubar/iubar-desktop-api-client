@@ -39,11 +39,13 @@ public abstract class HttpClientUtils {
 		// Crea un SSLContext con la versione desiderata (es. TLSv1.3 o TLSv1.2)
 		SSLContext sslContext = null;
 		try {
-			sslContext = SSLContext.getInstance("TLSv1.3");
+			sslContext = SSLContext.getInstance("TLSv1.2");
 			sslContext.init(null, null, null); // Usa truststore/keystore di default
 		} catch (NoSuchAlgorithmException e) {
+			LOGGER.severe(e.getMessage());
 			e.printStackTrace();
 		} catch (KeyManagementException e) {
+			LOGGER.severe(e.getMessage());
 			e.printStackTrace();
 		}
 
@@ -58,7 +60,7 @@ public abstract class HttpClientUtils {
 
 			// Opzionalmente forza le versioni TLS supportate
 			SSLParameters sslParams = sslContext.getDefaultSSLParameters();
-			sslParams.setProtocols(new String[] { "TLSv1.3" });
+			sslParams.setProtocols(new String[] { "TLSv1.2" });
 
 		}
 		return client;
