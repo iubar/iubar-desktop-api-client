@@ -6,6 +6,7 @@ import java.security.cert.X509Certificate;
 import java.util.logging.Logger;
 
 import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLParameters;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
@@ -34,6 +35,37 @@ public abstract class HttpClient {
 		return client;
 	}
  	
+	
+	public static Client newClient2025(){
+		 Client client = null;
+		 
+        // Crea un SSLContext con la versione desiderata (es. TLSv1.3 o TLSv1.2)
+        SSLContext sslContext = null; 
+		try {
+			sslContext = SSLContext.getInstance("TLSv1.3");
+	        sslContext.init(null, null, null); // Usa truststore/keystore di default
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		} catch (KeyManagementException e) {
+			e.printStackTrace();
+		}
+
+if(sslContext!=null) {
+        // Costruisci il client JAX-RS con il SSLContext custom
+          client = ClientBuilder.newBuilder()
+        		// .property("jersey.config.client.followRedirects", true)
+                .sslContext(sslContext)
+                .build();
+
+        // Opzionalmente forza le versioni TLS supportate
+        SSLParameters sslParams = sslContext.getDefaultSSLParameters();
+        sslParams.setProtocols(new String[]{"TLSv1.3"});
+
+ 
+}
+        return client;
+	}
+	
 	/**
 	 * Crea il client con autenticazione user/password, e ignora la validità del certificato SSL
 	 * 
