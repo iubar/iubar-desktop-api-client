@@ -41,6 +41,12 @@ public abstract class HttpClientUtils {
 		try {
 			sslContext = SSLContext.getInstance("TLSv1.3");
 			sslContext.init(null, null, null); // Usa truststore/keystore di default
+			
+
+            // Imposta i protocolli TLS supportati (forza TLSv1.3)
+            SSLParameters sslParams = sslContext.getDefaultSSLParameters();
+            sslParams.setProtocols(new String[]{"TLSv1.3"});
+            
 		} catch (NoSuchAlgorithmException e) {
 			LOGGER.severe(e.getMessage());
 			e.printStackTrace();
@@ -54,13 +60,11 @@ public abstract class HttpClientUtils {
 			client = ClientBuilder.newBuilder()
 					// .property("jersey.config.client.followRedirects", true)
 					.sslContext(sslContext)
+					//.hostnameVerifier((hostname, session) -> true) // opzionale: ignora verifica host
 					.connectTimeout(5, TimeUnit.SECONDS) // Timeout di connessione
 					.readTimeout(10, TimeUnit.SECONDS) // Timeout di lettura
 					.build();
-
-			// Opzionalmente forza le versioni TLS supportate
-			SSLParameters sslParams = sslContext.getDefaultSSLParameters();
-			sslParams.setProtocols(new String[] { "TLSv1.3" });
+ 
 
 		}
 		return client;
