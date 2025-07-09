@@ -23,8 +23,8 @@ public class MasterClientTest2 {
 
 	
 	protected IHttpClient clientFactory() {
-		HmacClient masterClient = null;
-		masterClient = new HmacClient();
+		HttpClient2025 masterClient = null;
+		masterClient = new HttpClient2025();
 		// masterClient.loadConfig();
 		masterClient.setBaseUrl(RestApiConsts.CRM_BASE_ROUTE);
 		return masterClient;

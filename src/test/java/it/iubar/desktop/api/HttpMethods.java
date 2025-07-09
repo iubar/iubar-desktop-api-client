@@ -31,16 +31,16 @@ public class HttpMethods {
 	private static final Logger LOGGER = Logger.getLogger(HttpMethods.class.getName());
 
 	protected static IHttpClient clientFactory() {
-		HmacClient masterClient = null;
-		masterClient = new HmacClient();
+		HttpClient2025 masterClient = null;
+		masterClient = new HttpClient2025();
 		// masterClient.loadConfig();
 		masterClient.setBaseUrl(RestApiConsts.CRM_BASE_ROUTE);
 		return masterClient;
 	}
 
 	public static void modelSend(String url, IJsonModel model) {
-		HmacClient masterClient = (HmacClient) clientFactory();
-		masterClient.setAuth(false);
+		IHttpClient masterClient =  clientFactory();
+		//masterClient.setAuth(false);
 		JsonObject jsonObjModel = null;
 		try {
 			if (url != null) {
@@ -62,9 +62,8 @@ public class HttpMethods {
 	}
 
 	public static void modlesSend(ModelsList models) {
-		HmacClient masterClient = (HmacClient) clientFactory();
-		masterClient.setAuth(false);
-		JsonObject jsonObjModel = null;
+		   IHttpClient masterClient = clientFactory();
+ 		JsonObject jsonObjModel = null;
 		try {
 			jsonObjModel = masterClient.send(models);
 			int count = jsonObjModel.getInt("data");

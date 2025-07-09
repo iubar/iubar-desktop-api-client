@@ -20,6 +20,11 @@ import java.util.logging.Logger;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
+/**
+ * @deprecated uso un client con autenticazione tramite scambio di hash
+ * ma l'endpoint common.iubar.it non utlizza questo tipo di autenticazione
+ */
+@Deprecated
 public class HmacClient extends AuthHttpClient implements IHttpClient {
 
 	private final static Logger LOGGER = Logger.getLogger(HmacClient.class.getName());
