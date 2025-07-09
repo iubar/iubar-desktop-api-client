@@ -23,12 +23,11 @@ public class HttpClient2025 extends AuthHttpClient implements IHttpClient {
 		return null;
 	}
  
-	
 	@Override
 	public Response get(String restUrl) {
 		restUrl = resolveUrl(restUrl);
 		System.out.println("GET:" + restUrl);
-		Client client = HttpClientUtils.newClient2025();
+		Client client = HttpClientUtils.newClient();
 		WebTarget target = client.target(restUrl); // il metodo codifica il parametro (la stringa che rappresenta l'url) in modo analogo alla funzione PHP rawurlencode()
  
 		Response response = target.request(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
@@ -36,6 +35,5 @@ public class HttpClient2025 extends AuthHttpClient implements IHttpClient {
 				.get();
 		return response;
 	}
-	
-	
+ 
 }

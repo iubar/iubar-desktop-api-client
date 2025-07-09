@@ -27,19 +27,43 @@ public abstract class HttpClientUtils {
 	private static final int DEF_READ_TIMEOUT = 10000;
 	protected String url = null;
 
-	public static Client newClient() {
+	private static Client newOldClient() {
 		Client client = ClientBuilder.newClient();
 		client.property(ClientProperties.CONNECT_TIMEOUT, DEF_CONNECT_TIMEOUT);
 		client.property(ClientProperties.READ_TIMEOUT, DEF_READ_TIMEOUT);
 		return client;
 	}
-
  
-	
-	public static Client newClient2025() {
+	public static Client newClient() {
 		Client client = null;
+ 		SSLContext sslContext = factorySslContext();
+ 		// SSLContext sslContext = factoryFakeSslContext();
+		if (sslContext != null) {
+			// Costruisci il client JAX-RS con il SSLContext custom
+			client = ClientBuilder.newBuilder()
+					// .property("jersey.config.client.followRedirects", true)
+					.sslContext(sslContext)
+					//.hostnameVerifier((hostname, session) -> true) // opzionale: ignora verifica host
+					.connectTimeout(5, TimeUnit.SECONDS) // Timeout di connessione
+					.readTimeout(10, TimeUnit.SECONDS) // Timeout di lettura
+					.build();
+ 
 
-		
+		}
+		return client;
+	}
+
+	/**
+	 * Crea il client con autenticazione user/password 
+	 * 
+	 */
+	public static Client newClientProtected(String user, String password) {
+		Client client = newClient();
+		client.register(HttpAuthenticationFeature.basic(user, password));
+		return client;
+	}
+
+	private static SSLContext factorySslContext() {
 		// Crea un SSLContext con la versione desiderata (es. TLSv1.3 o TLSv1.2)
 		SSLContext sslContext = null;
 		try {
@@ -58,28 +82,13 @@ public abstract class HttpClientUtils {
 			LOGGER.severe(e.getMessage());
 			e.printStackTrace();
 		}
-
-		if (sslContext != null) {
-			// Costruisci il client JAX-RS con il SSLContext custom
-			client = ClientBuilder.newBuilder()
-					// .property("jersey.config.client.followRedirects", true)
-					.sslContext(sslContext)
-					//.hostnameVerifier((hostname, session) -> true) // opzionale: ignora verifica host
-					.connectTimeout(5, TimeUnit.SECONDS) // Timeout di connessione
-					.readTimeout(10, TimeUnit.SECONDS) // Timeout di lettura
-					.build();
- 
-
-		}
-		return client;
+		return sslContext;
 	}
-
+ 
 	/**
-	 * Crea il client con autenticazione user/password, e ignora la validità del
-	 * certificato SSL
-	 * 
+	 * ignora la validità del certificato SSL
 	 */
-	public static Client newClientProtected(String user, String password) {
+	private static SSLContext factoryFakeSslContext() {
 		TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
 			public java.security.cert.X509Certificate[] getAcceptedIssuers() {
 				return null;
@@ -103,12 +112,7 @@ public abstract class HttpClientUtils {
 		} catch (KeyManagementException e) {
 			LOGGER.severe("ERRORE: " + e.getMessage());
 		}
-
-		Client client = ClientBuilder.newBuilder().sslContext(sslContext).build();
-		client.property(ClientProperties.CONNECT_TIMEOUT, 2000)
-				.register(HttpAuthenticationFeature.basic(user, password));
-
-		return client;
+		return sslContext;
 	}
 
 	public static JsonObject getAnswer(Response response) {
