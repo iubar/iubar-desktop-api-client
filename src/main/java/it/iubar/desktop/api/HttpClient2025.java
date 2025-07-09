@@ -1,24 +1,12 @@
 package it.iubar.desktop.api;
 
-import org.apache.commons.codec.binary.Base64;
+import java.util.logging.Logger;
 
-import jakarta.json.Json;
 import jakarta.json.JsonObject;
-import jakarta.json.JsonObjectBuilder;
-
- 
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.WebTarget;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
 
  
 public class HttpClient2025 extends AuthHttpClient implements IHttpClient {
@@ -40,7 +28,7 @@ public class HttpClient2025 extends AuthHttpClient implements IHttpClient {
 	public Response get(String restUrl) {
 		restUrl = resolveUrl(restUrl);
 		System.out.println("GET:" + restUrl);
-		Client client = HttpClient.newClient2025();
+		Client client = HttpClientUtils.newClient2025();
 		WebTarget target = client.target(restUrl); // il metodo codifica il parametro (la stringa che rappresenta l'url) in modo analogo alla funzione PHP rawurlencode()
  
 		Response response = target.request(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)

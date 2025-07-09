@@ -19,9 +19,9 @@ import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.core.Response;
 
-public abstract class HttpClient {
+public abstract class HttpClientUtils {
 
-	private static final Logger LOGGER = Logger.getLogger(HttpClient.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(HttpClientUtils.class.getName());
 	private static final int DEF_CONNECT_TIMEOUT = 10000;
 	private static final int DEF_READ_TIMEOUT = 10000;
 	protected String url = null;

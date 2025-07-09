@@ -76,7 +76,7 @@ public class HttpMethods {
 	}
 
 	public void send(String input, String path, boolean request) {
-		Client client = HttpClient.newClient();
+		Client client = HttpClientUtils.newClient();
 
 		URI baseUri = UriBuilder.fromUri(RestApiConsts.CRM_BASE_ROUTE).build();
 		WebTarget target = client.target(baseUri);
@@ -120,22 +120,22 @@ public class HttpMethods {
 	}
 
 	public  void receive(String path) {
-		Client client = HttpClient.newClient();
+		Client client = HttpClientUtils.newClient();
 		dummy(client, path, null);
 	}
 
 	public  void receive(String path, Map<String, String> queryParams) {
-		Client client = HttpClient.newClient();
+		Client client = HttpClientUtils.newClient();
 		dummy(client, path, queryParams);
 	}
 
 	public  void receiveProtected(String path) {
-		Client client = HttpClient.newClientProtected(MasterClientAbstract.CRM_HTTP_USER, MasterClientAbstract.CRM_HTTP_PASSWORD);
+		Client client = HttpClientUtils.newClientProtected(MasterClientAbstract.CRM_HTTP_USER, MasterClientAbstract.CRM_HTTP_PASSWORD);
 		dummy(client, path, null);
 	}
 
 	public void receiveProtected(String path, Map<String, String> queryParams) {
-		Client client = HttpClient.newClientProtected(MasterClientAbstract.CRM_HTTP_USER, MasterClientAbstract.CRM_HTTP_PASSWORD);
+		Client client = HttpClientUtils.newClientProtected(MasterClientAbstract.CRM_HTTP_USER, MasterClientAbstract.CRM_HTTP_PASSWORD);
 		dummy(client, path, queryParams);
 	}	
 

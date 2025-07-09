@@ -28,7 +28,7 @@ import jakarta.ws.rs.core.Configuration;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
-public abstract class AuthHttpClient extends HttpClient {
+public abstract class AuthHttpClient extends HttpClientUtils {
 
 	private static final Logger LOGGER = Logger.getLogger(AuthHttpClient.class.getName());
 
@@ -117,7 +117,7 @@ public abstract class AuthHttpClient extends HttpClient {
 
 	@Deprecated
 	// Spaghetti code
-	// forse c'è anche codice duplicato dal metodo HttpClient.getAnswer()
+	// forse c'è anche codice duplicato dal metodo HttpClientUtils.getAnswer()
 	public JsonObject responseManager(Response response) throws Exception {
 		JsonObject answer = null;
 		if (response != null) {
@@ -261,7 +261,7 @@ public abstract class AuthHttpClient extends HttpClient {
 
 	public Response post(String restUrl, Entity<String> d3) {
 		LOGGER.log(Level.INFO, "POST: " + restUrl);
-		Client client = HttpClient.newClient();
+		Client client = HttpClientUtils.newClient();
 		WebTarget target = client.target(restUrl);
 		// Accetto risposte di tipo Json
 		Response response = null;
