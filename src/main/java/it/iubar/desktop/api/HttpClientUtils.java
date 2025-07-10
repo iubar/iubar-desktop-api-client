@@ -23,33 +23,29 @@ import jakarta.ws.rs.core.Response;
 public abstract class HttpClientUtils {
 
 	private static final Logger LOGGER = Logger.getLogger(HttpClientUtils.class.getName());
-	private static final int DEF_CONNECT_TIMEOUT = 10000;
-	private static final int DEF_READ_TIMEOUT = 10000;
-	protected String url = null;
-
-	private static Client newOldClient() {
-		Client client = ClientBuilder.newClient();
-		client.property(ClientProperties.CONNECT_TIMEOUT, DEF_CONNECT_TIMEOUT);
-		client.property(ClientProperties.READ_TIMEOUT, DEF_READ_TIMEOUT);
-		return client;
-	}
+ 	protected String url = null;
  
+ 
+	/**
+	 * JAX-RS 2.1+ (Java EE 8 / Jakarta EE 8+)
+	 */
 	public static Client newClient() {
 		Client client = null;
- 		SSLContext sslContext = factorySslContext();
+ 		//SSLContext sslContext = factorySslContext();
  		// SSLContext sslContext = factoryFakeSslContext();
-		if (sslContext != null) {
+		//if (sslContext != null) {
 			// Costruisci il client JAX-RS con il SSLContext custom
 			client = ClientBuilder.newBuilder()
 					// .property("jersey.config.client.followRedirects", true)
-					.sslContext(sslContext)
+					// Se ometti .sslContext(...), il client JAX-RS (come Jersey o RESTEasy) userà il SSLContext di default fornito dalla JVM, che di solito è più che sufficiente per la maggior parte dei casi, soprattutto con certificati validi su internet.					
+					//.sslContext(sslContext)
 					//.hostnameVerifier((hostname, session) -> true) // opzionale: ignora verifica host
 					.connectTimeout(5, TimeUnit.SECONDS) // Timeout di connessione
 					.readTimeout(10, TimeUnit.SECONDS) // Timeout di lettura
 					.build();
  
 
-		}
+		//}
 		return client;
 	}
 

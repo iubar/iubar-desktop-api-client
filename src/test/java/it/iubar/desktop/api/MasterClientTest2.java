@@ -96,7 +96,7 @@ public class MasterClientTest2 {
 
 	@Test
 	public void receiveBlacklist() {
-		String path = "/public/" + Integer.toString(MasterClientAbstract.ID_FAMILY_PAGHE) + "/blacklist/" + "mac/"
+		String path = "/public/" +  MasterClientAbstract.APP_FAMILY_PAGHE + "/blacklist/" + "mac/"
 				+ ClientModelTest.MAC;
 		try {
 			HttpMethods obj = new HttpMethods();
@@ -133,7 +133,7 @@ public class MasterClientTest2 {
 	
 	@Test
 	public void receiveAggiornamentiMese() {
-		String path = Integer.toString(MasterClientAbstract.ID_FAMILY_PAGHE) + "/stats/updated/" + "2017-01-01/" + "2017-05-26";
+		String path = MasterClientAbstract.APP_FAMILY_PAGHE  + "/stats/updated/" + "2017-01-01/" + "2017-05-26";
 		try {		
 			HttpMethods obj = new HttpMethods();
 			obj.receiveProtected(path);
@@ -144,7 +144,7 @@ public class MasterClientTest2 {
 
 	@Test
 	public void receiveAnalisi() {
-		String path = Integer.toString(MasterClientAbstract.ID_FAMILY_PAGHE) + "/analytics";
+		String path = MasterClientAbstract.APP_FAMILY_PAGHE + "/analytics";
 		try {
 			HttpMethods obj = new HttpMethods();
 			obj.receiveProtected(path);
@@ -188,7 +188,7 @@ public class MasterClientTest2 {
 
 	@Test
 	public void receiveInstallazioniMese() {
-		String path = Integer.toString(MasterClientAbstract.ID_FAMILY_PAGHE) + "/stats/installed/" + "2017-01-01/" + "2017-05-26";
+		String path = MasterClientAbstract.APP_FAMILY_PAGHE  + "/stats/installed/" + "2017-01-01/" + "2017-05-26";
 		try {
 			HttpMethods obj = new HttpMethods();
 			obj.receiveProtected(path);
@@ -199,7 +199,7 @@ public class MasterClientTest2 {
 
 	@Test
 	public void receiveInstallazioni() {
-		String path = Integer.toString(MasterClientAbstract.ID_FAMILY_PAGHE) + "/stats/installed";
+		String path = MasterClientAbstract.APP_FAMILY_PAGHE  + "/stats/installed";
 		try {
 			HttpMethods obj = new HttpMethods();
 			obj.receiveProtected(path);
@@ -210,7 +210,7 @@ public class MasterClientTest2 {
 
 	@Test
 	public void receiveStatisticheGenerali() {
-		String path = Integer.toString(MasterClientAbstract.ID_FAMILY_PAGHE) + "/stats/" + "2016-05-06/" + "2017-05-06";
+		String path =  MasterClientAbstract.APP_FAMILY_PAGHE + "/stats/" + "2016-05-06/" + "2017-05-06";
 		try {
 			HttpMethods obj = new HttpMethods();
 			obj.receiveProtected(path);

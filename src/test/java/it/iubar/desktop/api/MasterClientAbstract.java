@@ -31,7 +31,7 @@ public abstract class MasterClientAbstract {
 	private static final String MAC_2 = MAC_1;
 
 
-	private static final String APP_FAMILY_PAGHE = "paghe";
+	public static final String APP_FAMILY_PAGHE = "paghe";
 	public static final int ID_APP_PAGHEOPEN = 11;
 	public static final int ID_FAMILY_PAGHE = 1;
 	
