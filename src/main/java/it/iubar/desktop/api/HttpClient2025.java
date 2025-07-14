@@ -9,18 +9,12 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
  
-public class HttpClient2025 extends AuthHttpClient implements IHttpClient {
+public class HttpClient2025 extends HttpClientUtils implements IHttpClient {
 
 	private final static Logger LOGGER = Logger.getLogger(HttpClient2025.class.getName());
 
 	public HttpClient2025() {
 		super();
-	}
-	
-	@Override
- 	protected JsonObject genAuth2(String destUrl) {
- 
-		return null;
 	}
  
 	@Override
