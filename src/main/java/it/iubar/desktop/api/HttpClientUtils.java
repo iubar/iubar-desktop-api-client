@@ -40,8 +40,8 @@ public abstract class HttpClientUtils {
 					// Se ometti .sslContext(...), il client JAX-RS (come Jersey o RESTEasy) userà il SSLContext di default fornito dalla JVM, che di solito è più che sufficiente per la maggior parte dei casi, soprattutto con certificati validi su internet.					
 					//.sslContext(sslContext)
 					//.hostnameVerifier((hostname, session) -> true) // opzionale: ignora verifica host
-					.connectTimeout(5, TimeUnit.SECONDS) // Timeout di connessione
-					.readTimeout(10, TimeUnit.SECONDS) // Timeout di lettura
+					.connectTimeout(3, TimeUnit.SECONDS) // Timeout di connessione
+					.readTimeout(5, TimeUnit.SECONDS) // Timeout di lettura
 					.build();
  
 
