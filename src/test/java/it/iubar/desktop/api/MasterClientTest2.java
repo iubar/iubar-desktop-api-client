@@ -20,11 +20,9 @@ public class MasterClientTest2 {
 	public static void setUpBeforeClass() throws Exception {
 		MasterClientAbstract.loadConfig();
 	}
-
 	
 	protected IHttpClient clientFactory() {
-		HttpClient2025 masterClient = null;
-		masterClient = new HttpClient2025();
+		HttpClient2025 masterClient = new HttpClient2025();
 		// masterClient.loadConfig();
 		masterClient.setBaseUrl(RestApiConsts.CRM_BASE_ROUTE);
 		return masterClient;

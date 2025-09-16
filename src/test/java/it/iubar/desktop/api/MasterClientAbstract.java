@@ -48,7 +48,7 @@ public abstract class MasterClientAbstract {
 		
 		String httpUser = System.getenv("CRM_HTTP_USER");
 		String httpPassword = System.getenv("CRM_HTTP_PASSWORD");
-		if(httpUser!=null && httpPassword.length()>0) {
+		if(httpUser!=null && httpPassword!=null && httpPassword.length()>0) {
 			MasterClientAbstract.CRM_HTTP_USER = httpUser;
 			MasterClientAbstract.CRM_HTTP_PASSWORD = httpPassword;
 		}else {
@@ -68,7 +68,7 @@ public abstract class MasterClientAbstract {
 			throw new Exception("CRM_HTTP_USER var not set !");
 			 
 		}else if(MasterClientAbstract.CRM_HTTP_PASSWORD == null || MasterClientAbstract.CRM_HTTP_PASSWORD.length()==0) {
-			throw new Exception("CRM_HTTP_USER var not set !");	
+			throw new Exception("CRM_HTTP_PASSWORD var not set !");	
 		}
 	 
 		
@@ -90,7 +90,7 @@ public abstract class MasterClientAbstract {
 		}
 
 		if(MasterClientAbstract.user == null || MasterClientAbstract.user.length()==0) { 
-			throw new Exception("Impossibile continuare: user non specificato");
+			throw new Exception("Impossibile continuare: apiuser non specificato");
 			 
 		}else if(MasterClientAbstract.apiKey == null || MasterClientAbstract.apiKey.length()==0) {
 			throw new Exception("Impossibile continuare: apiKey non specificata");			
