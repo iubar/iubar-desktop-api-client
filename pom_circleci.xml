@@ -9,8 +9,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<maven.compiler.source>1.8</maven.compiler.source> 
-		<maven.compiler.target>${maven.compiler.source}</maven.compiler.target>
+		<maven.compiler.release>1.8</maven.compiler.release>
 		<junit.jupiter.version>5.11.0</junit.jupiter.version> <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-engine -->
 		<surefire.plugin.version>3.5.0</surefire.plugin.version> <!--  https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-surefire-plugin -->
 		<compiler.plugin.version>3.14.0</compiler.plugin.version> <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-compiler-plugin -->		
@@ -40,8 +39,7 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>${compiler.plugin.version}</version>
 				<configuration>
-					<source>${maven.compiler.source}</source> <!-- non è più necessria la configurazione esplicita del plugin da maven 3.6-->
-        			<target>${maven.compiler.target}</target> <!-- non è più necessria la configurazione esplicita del plugin da maven 3.6-->
+					<release>${maven.compiler.target}</release> <!-- non è più necessria la configurazione esplicita del plugin da maven 3.6--> <!-- non è più obbligatoria questa configurazione esplicita del plugin da maven 3.6 ma ne migliora la leggibilità -->
 				</configuration>
 			</plugin>
 			<plugin>
