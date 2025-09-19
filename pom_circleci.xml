@@ -9,7 +9,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<maven.compiler.release>1.8</maven.compiler.release>
+		<maven.compiler.release>8</maven.compiler.release>
 		<junit.jupiter.version>5.11.0</junit.jupiter.version> <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-engine -->
 		<surefire.plugin.version>3.5.0</surefire.plugin.version> <!--  https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-surefire-plugin -->
 		<compiler.plugin.version>3.14.0</compiler.plugin.version> <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-compiler-plugin -->		
