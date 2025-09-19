@@ -1,7 +1,7 @@
 # iubar-desktop-api-client
 Iubar desktop application api java client<br>
 [![CircleCI](https://dl.circleci.com/status-badge/img/gh/iubar/iubar-desktop-api-client/tree/master.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/iubar/iubar-desktop-api-client/tree/master)
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/283e549e48ff4d26a53f95aae112388e)](https://www.codacy.com/gh/iubar/iubar-desktop-api-client/dashboard)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/283e549e48ff4d26a53f95aae112388e)](https://app.codacy.com/gh/iubar/iubar-desktop-api-client/dashboard)
 
 ## Jersey
 
