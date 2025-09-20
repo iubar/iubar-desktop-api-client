@@ -81,6 +81,12 @@
    			<artifactId>jersey-hk2</artifactId>
    			<version>${jersey.client.version}</version>
    		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.glassfish.jersey.media/jersey-media-json-processing -->    
+		<dependency>
+		    <groupId>org.glassfish.jersey.media</groupId>
+		    <artifactId>jersey-media-json-processing</artifactId>
+		    <version>${jersey.client.version}</version>
+		</dependency>     		
 		<!-- E' un fix for "jakarta.activation.DataSource was not found" --> 
 		<!-- A cosa serve:-->
 		<!-- MIME Type handling: Gestisce i tipi MIME per determinare come trattare diversi tipi di contenuto-->

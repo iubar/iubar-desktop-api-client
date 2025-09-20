@@ -96,6 +96,12 @@
 			<artifactId>jersey-hk2</artifactId>
 			<version>${jersey.client.version}</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.glassfish.jersey.media/jersey-media-json-processing -->    
+		<dependency>
+		    <groupId>org.glassfish.jersey.media</groupId>
+		    <artifactId>jersey-media-json-processing</artifactId>
+		    <version>${jersey.client.version}</version>
+		</dependency>  		
  		<!-- https://mvnrepository.com/artifact/javax.activation/activation -->
 		<!-- https://stackoverflow.com/questions/49436818/rest-client-hk2-failure-detected -->
 		<!--
