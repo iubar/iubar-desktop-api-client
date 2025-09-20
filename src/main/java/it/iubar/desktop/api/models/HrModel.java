@@ -1,7 +1,5 @@
 package it.iubar.desktop.api.models;
 
-import java.util.Set;
-
 public class HrModel extends RootModel implements IJsonModel {
 
 	public String piva;

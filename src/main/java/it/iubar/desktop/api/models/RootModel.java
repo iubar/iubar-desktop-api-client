@@ -1,5 +1,6 @@
 package it.iubar.desktop.api.models;
 
+import java.io.StringReader;
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -8,11 +9,14 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.logging.Logger;
 
+import jakarta.json.Json;
+import jakarta.json.JsonObject;
+import jakarta.json.JsonReader;
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
 import jakarta.json.bind.spi.JsonbProvider;
  
-public class RootModel {
+public abstract class RootModel {
 
 	private final static Logger LOGGER = Logger.getLogger(RootModel.class.getName());
 	private final static DateFormat FORMAT1 = new SimpleDateFormat("yyyy-MM-dd");
@@ -128,16 +132,30 @@ public class RootModel {
 		}
 		return str;
 	}
+ 
+	public static JsonObject toJsonObject(Object obj) {
+		JsonObject jsonObject = null;
+ 
+    // 1. Serializza con JSON-B in String
+    Jsonb jsonb = JsonbBuilder.create();
+    String jsonString = jsonb.toJson(obj);
+
+    // 2. Converti la string in JsonObject
+    try (JsonReader reader = Json.createReader(new StringReader(jsonString))) {
+        jsonObject = reader.readObject();
+       // System.out.println(jsonObject);
+    }
+    return jsonObject;
+	}
 	
-	/**
-	 * @return
-	 */
+	public JsonObject asJsonObject() {
+		return toJsonObject(this);
+	}
+	
 	public String asJson() {
 		  Jsonb jsonb = JsonbBuilder.create();
 		  String jsonString = jsonb.toJson(this);
 		  return jsonString;
 	}
 	
-	
-
 }
