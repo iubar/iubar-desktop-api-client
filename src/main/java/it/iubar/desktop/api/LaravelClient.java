@@ -75,7 +75,7 @@ public class LaravelClient extends AuthHttpClient  {
 
 	public LaravelOauthToken getToken(){
 		if (this.token == null) {
-			Response response = post(this.loginUrl, getAuthParams());
+			Response response = doPost(this.loginUrl, getAuthParams());
 			if (response != null) {
 				int status = response.getStatus();
 				if (status == Status.CREATED.getStatusCode() || status == Status.OK.getStatusCode()) {

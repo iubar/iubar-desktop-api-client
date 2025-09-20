@@ -183,22 +183,17 @@ public abstract class HttpClientUtils {
 		objectBuilder.add("idapp", docModellist.getIdApp());
 		objectBuilder.add(docModellist.getJsonName(), docModellist.getJsonArray());		  
 		JsonObject dataToSend = objectBuilder.build();
-		LOGGER.log(Level.INFO, dataToSend.toString());
-		Response response = post(destUrl, dataToSend);
-		JsonObject jsonObj = responseManager(response);
-
+		Response response = doPost(destUrl, dataToSend);
+		JsonObject jsonObj = ResponseUtils.readAsStringToJson(response, true);
 		return jsonObj;
 	}
 
 	public JsonObject send(String destUrl, IJsonModel obj) throws Exception {
 		cantBeNull(obj);
-		JsonObject dataToSend = null;
 		String json = obj.asJson();
-		dataToSend = JsonUtils.fromString(json);
-		LOGGER.log(Level.INFO, dataToSend.toString());
-		Response response = post(destUrl, dataToSend);
-		JsonObject jsonObj = responseManager(response);
-
+		JsonObject dataToSend = JsonUtils.fromString(json);
+		Response response = doPost(destUrl, dataToSend);
+		JsonObject jsonObj = ResponseUtils.readAsStringToJson(response, true);
 		return jsonObj;
 	}
 
@@ -316,30 +311,30 @@ public abstract class HttpClientUtils {
 		return encoded;
 	}
 
-	public Response post(String restUrl, JsonObject data) {
-		restUrl = resolveUrl(restUrl);
-//		Entity<String> d1 = Entity.text(data.toString());
-//		Entity<String> d2 = Entity.entity(data.toString(), MediaType.APPLICATION_JSON);
-		Entity<String> d3 = Entity.json(data.toString()); // See:
-															// https://jersey.java.net/documentation/latest/client.html#d0e4692
-		// Se volessi utilizzare il post di tipo "application/x-www-form-urlencoded"
-		// Form form = new Form();
-		// form.param("user", "XXX");
-		// Entity d4 = Entity.entity(form,MediaType.APPLICATION_FORM_URLENCODED);
+ 
+	// Entity<String> d3 = Entity.json(data); // See: https://jersey.java.net/documentation/latest/client.html#d0e4692
+	// Se volessi utilizzare il post di tipo "application/x-www-form-urlencoded"
+	// Form form = new Form();
+	// form.param("user", "XXX");
+	// Entity d4 = Entity.entity(form,MediaType.APPLICATION_FORM_URLENCODED);
 
-		return post(restUrl, d3);
-	}
-
-	public Response post(String restUrl, Entity<String> d3) {
-		LOGGER.log(Level.INFO, "POST: " + restUrl);
+	public Response doPost(String restUrl, JsonObject data) {
+ 
+		LOGGER.log(Level.INFO, "ROUTE: " + restUrl);
+		String uri = resolveUrl(restUrl);
+		LOGGER.log(Level.INFO, "URI: " + restUrl);
+		
+		LOGGER.log(Level.INFO, "[POST] " + uri);
+		LOGGER.log(Level.INFO, "Request body: ");
+		JsonUtils.prettyPrint(data);
+		
 		Client client = HttpClientUtils.newClient();
-		WebTarget target = client.target(restUrl);
-		// Accetto risposte di tipo Json
+		WebTarget target = client.target(uri);
 		Response response = null;
 		try {
 			response = target.request(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
 					//.header("X-Requested-With", "XMLHttpRequest")
-					.post(d3);
+					.post(Entity.json(data));
 		} catch (ProcessingException e) {
 			String msg = e.getMessage();
 			LOGGER.log(Level.SEVERE, msg, e);

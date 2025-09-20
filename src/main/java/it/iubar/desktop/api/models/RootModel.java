@@ -133,10 +133,9 @@ public class RootModel {
 	 * @return
 	 */
 	public String asJson() {
-		  // Jsonb builder = JsonbBuilder.create();   // Non posso usare JsonbBuilder.create() perchè non compatibile con java 1.7
-		  Jsonb builder = JsonbProvider.provider().create().build(); // // da Java 1.8 deve essere cambiato in : JsonbBuilder.create(); 
-		  String str = builder.toJson(this);
-		  return str;
+		  Jsonb jsonb = JsonbBuilder.create();
+		  String jsonString = jsonb.toJson(this);
+		  return jsonString;
 	}
 	
 	

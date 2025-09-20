@@ -36,6 +36,7 @@ import jakarta.json.JsonWriterFactory;
 import jakarta.json.stream.JsonGenerator;
 import jakarta.json.stream.JsonParser;
 import jakarta.json.stream.JsonParserFactory;
+import jakarta.ws.rs.client.Entity;
 
 
 /**
@@ -56,6 +57,46 @@ public class JsonUtils {
 		return jsonObject;
 	}
 
+	public static String prettyPrintFormat(JsonObject jsonObject) {
+		String jsonString = null;
+		Map<String, Boolean> config = new HashMap<>();
+		config.put(JsonGenerator.PRETTY_PRINTING, true);
+		JsonWriterFactory writerFactory = Json.createWriterFactory(config);
+		try (Writer writer = new StringWriter()) {
+			writerFactory.createWriter(writer).write(jsonObject);
+			jsonString = writer.toString();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return jsonString;
+	} 
+
+	public static void prettyPrint(JsonArray jsonArray) {
+		if (jsonArray != null) {
+			for (JsonValue jsonValue : jsonArray) {
+				if (jsonValue instanceof JsonArray) {
+					prettyPrint(jsonValue.asJsonArray());
+				} else if (jsonValue instanceof JsonObject) {
+					prettyPrint(jsonValue.asJsonObject());
+				} else {
+					throw new RuntimeException("Error in prettyPrint()");
+				}
+			}
+		}
+	}
+
+	public static JsonObject readObject(String jsonString) {
+		JsonReader reader = Json.createReader(new StringReader(jsonString));
+		JsonObject object = reader.readObject();
+		return object;
+	}
+
+	public static JsonArray readArray(String jsonString) {
+		JsonReader reader = Json.createReader(new StringReader(jsonString));
+		JsonArray array = reader.readArray();
+		return array;
+	}
+ 
 	/**
 	 * 
 	 * Using Streaming API
@@ -79,21 +120,9 @@ public class JsonUtils {
 		}
 		return jsonString;
 	}
+ 
 
-	public static String prettyPrintFormat(JsonObject jsonObject) throws IOException {
-		String jsonString = null; 
-		Map<String, Boolean> config = new HashMap<>();
-		config.put(JsonGenerator.PRETTY_PRINTING, true);		        
-		JsonWriterFactory writerFactory = Json.createWriterFactory(config);		        	 
-		try(Writer writer = new StringWriter()) {
-			writerFactory.createWriter(writer).write(jsonObject);
-			jsonString = writer.toString();
-		}
-		return jsonString;
-	}
-
-
-	public static String jsonFormat(JsonStructure json, String... options) {
+	private static String jsonFormat(JsonStructure json, String... options) {
 		StringWriter stringWriter = new StringWriter();
 		Map<String, Boolean> config = buildConfig(options);
 		JsonWriterFactory writerFactory = Json.createWriterFactory(config);
@@ -117,15 +146,28 @@ public class JsonUtils {
 		return config;
 	}
 
-	public static String prettyPrint(JsonStructure json) {
+	public static String toPrettyString(JsonStructure json) {
 		return jsonFormat(json, JsonGenerator.PRETTY_PRINTING);
 	}
-
-	public static String prettyPrint(String str) {
+	
+	public static String toPrettyString(JsonObject jsonObject) {
+		return prettyPrintFormat(jsonObject);
+	}
+	
+	public static void prettyPrint(JsonObject jsonObject) {
+		System.out.println(prettyPrintFormat(jsonObject));
+	}
+		
+	public static void prettyPrint(String str) {
 		JsonObject json = fromString(str);
-		return prettyPrint(json);
+		prettyPrint(json);
 	}
 
+	/**
+	 * 
+	 * @deprecated spaghetti code, implementare con blocco try-with-resource
+	 */
+	@Deprecated
 	public static JsonObject fromString(String str) {
 		Charset charset = java.nio.charset.StandardCharsets.UTF_8;
 		InputStream is = IOUtils.toInputStream(str, charset);
@@ -185,7 +227,7 @@ public class JsonUtils {
 	 */
 	public static void saveToFile2(JsonObjectBuilder objectBuilder, String fileName) throws IOException {
 		FileWriter fileWriter = new FileWriter(fileName);
-		String json = prettyPrint(objectBuilder.build());
+		String json = toPrettyString(objectBuilder.build());
 		fileWriter.write(json);
 		// fileWriter.flush(); // To flush a stream manually, invoke its flush method. The flush method is valid on any output stream, but has no effect unless the stream is buffered.
 		fileWriter.close(); 
@@ -201,7 +243,7 @@ public class JsonUtils {
 		FileOutputStream fos = new FileOutputStream(fileName);
 		fstream = new OutputStreamWriter(fos, StandardCharsets.UTF_8);
 		out = new BufferedWriter(fstream);
-		String json = prettyPrint(objectBuilder.build());
+		String json = toPrettyString(objectBuilder.build());
 		out.write(json);
 		out.flush();
 		out.close();
@@ -239,19 +281,7 @@ public class JsonUtils {
 		jsonReader.close();
 		System.out.println(jsonArray);
 	}
-
-	/**
-	 * @throws FileNotFoundException 
-	 * @deprecated è solo un esempio
-	 */
-	@Deprecated
-	private void readFromFile1() throws FileNotFoundException {
-		JsonReader reader = Json.createReader(new FileReader("books.json"));
-		JsonStructure jsonStructure = reader.read();
-		reader.close();
-		System.out.println(jsonStructure);
-	}
-
+ 
 	private static boolean containsKey(String key, JsonObject json) {
 		boolean b = false;
 		if (json != null) {
@@ -313,4 +343,30 @@ public class JsonUtils {
 		JsonObject root = reader.readObject();    	
 		return root;
 	}
+	
+	/**
+	 * Entity: è l’involucro usato dal client JAX-RS per spedire quel contenuto in una richiesta HTTP, con l’informazione sul Content-Type
+	 * Entity è un wrapper per trasportare dati in una richiesta HTTP con Jersey.
+	 * 
+	 * @param entity
+	 */
+	public static void prettyPrint(Entity<?>  entity) {
+		Object data = entity.getEntity(); // il "vero" contenuto
+		if (data instanceof JsonObject) {
+			prettyPrint((JsonObject)data);
+		} else if (data instanceof JsonArray) {
+			prettyPrint((JsonArray)data);
+		} else {
+		    System.out.println("Dato non stampabile : " + data.getClass());
+		}		
+	}
+
+	public static String formatJSonString(String input) {
+		JsonObject jsonObj = JsonUtils.parseJsonString(input);
+		String strFormatted = JsonUtils.prettyPrintFormat(jsonObj);
+		return strFormatted;
+	}
+
+
+	
 }
