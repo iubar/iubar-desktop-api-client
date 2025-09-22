@@ -17,7 +17,7 @@
 	  <!-- 4.x requires Java 17 -->
 	  <!-- See https://eclipse-ee4j.github.io/jersey.github.io/documentation/latest30x/modules-and-dependencies.html#d0e560 -->
 	  <!-- https://mvnrepository.com/artifact/org.glassfish.jersey.core/jersey-client-->   
-      <jersey.client.version>3.0.13</jersey.client.version> <!-- Atenzione jersey.client da 3.0.14 richiede java 11 -->     
+      <jersey.client.version>3.0.12</jersey.client.version> <!-- Atenzione jersey.client da 3.0.13 richiede java 11 -->     
 	  <yasson.version>2.0.4</yasson.version> 	<!-- ATTENZIONE dalla 3.x richiede java 11 --> 
 	  <jsonb.version>2.0.0</jsonb.version> 	<!-- Per compatibilità con java 1.8 non uso le versioni successive (eg: 3.x) -->
    </properties>
