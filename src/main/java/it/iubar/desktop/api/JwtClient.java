@@ -102,8 +102,9 @@ import jakarta.ws.rs.core.Response;
 //			    .createCustomTokenAsync(uid, additionalClaims).get();
 //			System.out.println("JWT CUSTOM (firebase): " + customToken2);
 // 
-//		} catch (InterruptedException | ExecutionException e) {
-//			e.printStackTrace();
+//		} catch (InterruptedException  e) {
+//		        	 	e.printStackTrace();
+//	Thread.currentThread().interrupt();
 //		}
 //	}
 
