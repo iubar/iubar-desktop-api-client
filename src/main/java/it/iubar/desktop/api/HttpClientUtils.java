@@ -12,7 +12,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLHandshakeException;
 import javax.net.ssl.SSLParameters;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
@@ -27,7 +26,6 @@ import it.iubar.desktop.api.models.IJsonModel;
 import it.iubar.desktop.api.models.ModelsList;
 import it.iubar.desktop.api.models.TitolareModel;
 import jakarta.json.Json;
-import jakarta.json.JsonArray;
 import jakarta.json.JsonObject;
 import jakarta.json.JsonObjectBuilder;
 import jakarta.ws.rs.ProcessingException;
@@ -42,8 +40,15 @@ import jakarta.ws.rs.core.Response;
 public abstract class HttpClientUtils {
 
 	private static final Logger LOGGER = Logger.getLogger(HttpClientUtils.class.getName());
- 	protected String url = null;
  
+	public final static String INSERT_HR = "/public/hr";
+	public final static String INSERT_CLIENT = "/public/client";
+	public final static String INSERT_TITOLARI = "/public/titolari";
+	public static final String INCREMENT_DOC = "/public/increment-documento";
+ 
+	abstract public Response get(String restUrl);
+	
+ 	protected String url = null;
  
 	/**
 	 * JAX-RS 2.1+ (Java EE 8 / Jakarta EE 8+)
@@ -63,7 +68,6 @@ public abstract class HttpClientUtils {
 					.readTimeout(5, TimeUnit.SECONDS) // Timeout di lettura
 					.build();
  
-
 		//}
 		return client;
 	}
@@ -142,33 +146,7 @@ public abstract class HttpClientUtils {
 		}
 		return answer;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
-
-	public final static String INSERT_HR = "/public/hr";
-	public final static String INSERT_CLIENT = "/public/client";
-	public final static String INSERT_TITOLARI = "/public/titolari";
-	public static final String INCREMENT_DOC = "/public/increment-documento";
-
-
-	abstract public Response get(String restUrl);
-
+ 
 	public <T> JsonObject send(IJsonModel obj) throws Exception {
 		return send(getRoute(obj), obj);
 	}
@@ -274,9 +252,7 @@ public abstract class HttpClientUtils {
 		}
 		return answer;
 	}
-
-
-
+ 
 	public String getBaseUrl() {
 		return this.url;
 	}
@@ -284,9 +260,7 @@ public abstract class HttpClientUtils {
 	public void setBaseUrl(String url) {
 		this.url = url;
 	}
-
-
-
+ 
 	/**
 	 * Il metodo implementa la funzione PHP rawurlencode()
 	 * 
