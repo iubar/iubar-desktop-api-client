@@ -41,7 +41,7 @@ public abstract class HttpClientUtils {
 
 	private static final Logger LOGGER = Logger.getLogger(HttpClientUtils.class.getName());
  
-	public final static String INSERT_HR = "/public/hr";
+	public final static String INSERT_HR = "/public/hr"; // eg: "https://common.iubar.it/crm/v1/hr"
 	public final static String INSERT_CLIENT = "/public/client";
 	public final static String INSERT_TITOLARI = "/public/titolari";
 	public static final String INCREMENT_DOC = "/public/increment-documento";
