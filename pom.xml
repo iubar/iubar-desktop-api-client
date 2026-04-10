@@ -101,6 +101,7 @@
 		    <artifactId>jakarta.activation-api</artifactId>
 		    <version>2.0.1</version> <!-- Pay attention, it's the latest version for java 8 -->	    
 		</dependency>
+
 		
 	  <!-- API JSON-B -->
       <!-- https://mvnrepository.com/artifact/jakarta.json.bind/jakarta.json.bind-api -->      
@@ -116,7 +117,17 @@
          <artifactId>yasson</artifactId>
          <version>${yasson.version}</version>
       </dependency>
-            
+
+ 		<!-- Integrazione Jersey + JSON-B -->
+ 		<!-- La dipendenza jersey-media-json-binding serve per abilitare il supporto JSON-B (Jakarta JSON Binding) in Jersey. -->
+ 		<!-- Nota che questo package include sia Parsson che Yasson -->
+		<!-- https://mvnrepository.com/artifact/org.glassfish.jersey.media/jersey-media-json-binding -->
+		<dependency>
+		    <groupId>org.glassfish.jersey.media</groupId>
+		    <artifactId>jersey-media-json-binding</artifactId>
+		    <version>${jersey.client.version}</version>
+		</dependency>
+		            
       <!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
       <dependency>
          <groupId>commons-codec</groupId>
