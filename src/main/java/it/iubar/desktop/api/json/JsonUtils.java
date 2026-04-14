@@ -15,6 +15,9 @@ import java.io.Writer;
 import java.math.BigDecimal;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -365,6 +368,15 @@ public class JsonUtils {
 		JsonObject jsonObj = JsonUtils.parseJsonString(input);
 		String strFormatted = JsonUtils.prettyPrintFormat(jsonObj);
 		return strFormatted;
+	}
+
+	public static LocalDate convertToLocalDate(Date date, ZoneId zoneId) {
+	    if (date == null) {
+	        return null;
+	    }
+	    return date.toInstant()
+	               .atZone(zoneId)
+	               .toLocalDate();
 	}
 
 
