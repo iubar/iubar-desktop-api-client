@@ -2,6 +2,8 @@ package it.iubar.desktop.api;
 
 import org.apache.commons.codec.binary.Base64;
 
+import it.iubar.desktop.api.models.IJsonModel;
+import it.iubar.desktop.api.models.ModelsList;
 import jakarta.json.Json;
 import jakarta.json.JsonObject;
 import jakarta.json.JsonObjectBuilder;
@@ -22,7 +24,7 @@ import javax.crypto.spec.SecretKeySpec;
 
 /**
  * @deprecated uso un client con autenticazione tramite scambio di hash
- * ma l'endpoint common.iubar.it non utlizza questo tipo di autenticazione
+ * ma nessun endpoint utlizza questo tipo di autenticazione
  */
 @Deprecated
 public class HmacClient extends AuthHttpClient implements IHttpClient {
@@ -85,8 +87,8 @@ public class HmacClient extends AuthHttpClient implements IHttpClient {
 	public Response get(String restUrl) {
 		restUrl = resolveUrl(restUrl);
 		System.out.println("GET:" + restUrl);
-		Client client = HttpClientUtils.newClient();
-		WebTarget target = client.target(restUrl); // il metodo codifica il parametro (la stringa che rappresenta l'url) in modo analogo alla funzione PHP rawurlencode()
+	 
+		WebTarget target = this.client.target(restUrl); // il metodo codifica il parametro (la stringa che rappresenta l'url) in modo analogo alla funzione PHP rawurlencode()
 		if (this.isAuth()) {
 			JsonObject dataToSend = genAuth(restUrl);
 //			String ts = String.valueOf(dataToSend.get("ts"));
@@ -98,6 +100,7 @@ public class HmacClient extends AuthHttpClient implements IHttpClient {
 				.get();
 		return response;
 	}
+ 
 	
 	
 }

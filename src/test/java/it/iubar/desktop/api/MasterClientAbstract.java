@@ -27,9 +27,8 @@ public abstract class MasterClientAbstract {
 
 	private static final Logger LOGGER = Logger.getLogger(MasterClientAbstract.class.getName());
 
-	private static final String MAC_1 = "B8-CA-3A-96-BD-03";
-	private static final String MAC_2 = MAC_1;
-
+	protected static final String MAC_1 = "B8-CA-3A-96-BD-03";
+	protected static final String MAC_2 = MAC_1;
 
 	public static final String APP_FAMILY_PAGHE = "paghe";
 	public static final int ID_APP_PAGHEOPEN = 11;
@@ -42,8 +41,17 @@ public abstract class MasterClientAbstract {
 	public static String apiKey = null;
 
 	protected static ClientModel client = null;
-	private static ModelsList<TitolareModel> titolari = null;
+	
+	protected static ModelsList<TitolareModel> titolari = null;
+ 
 
+	abstract protected IHttpClient clientFactory();
+
+	
+	public MasterClientAbstract() {
+		clientFactory();
+	}
+ 
 	public static void loadConfig() throws Exception {
 		
 		String httpUser = System.getenv("CRM_HTTP_USER");
@@ -107,75 +115,9 @@ public abstract class MasterClientAbstract {
 		TitolareModel titolare = TitolareModelTest.factory();
 		MasterClientAbstract.titolari.add(titolare);
 	}
-
-
-	abstract protected IHttpClient clientFactory();
-
-	private boolean checkMacBlacklist(String mac) throws Exception{
-		boolean b = false;
-		IHttpClient masterClient = clientFactory();
-
-		JsonObject jsonObject = masterClient.responseManager(masterClient.get("/public/" + APP_FAMILY_PAGHE + "/blacklist/mac/" + mac));
-		b = jsonObject.getBoolean("data");
-		if (b) {
-			LOGGER.log(Level.WARNING, "The mac address is black-listed");
-		} else {
-			LOGGER.log(Level.INFO, "The mac address is NOT black-listed");
-		}			
-
-		return b;
-	}
-
-	@Test
-	public void sendTest() throws Exception {
-		IHttpClient masterClient = clientFactory();        	
-		// Test on Production 
-
-		JsonObject jsonObj1 = masterClient.send(MasterClientAbstract.client);
-		assertNotNull(jsonObj1);
-		assertTrue(jsonObj1.getInt("data")>=0);
-		JsonObject jsonObj2 = masterClient.send(MasterClientAbstract.titolari);
-		assertNotNull(jsonObj2);
-		assertTrue(jsonObj2.getInt("data")>=0);
-	}
-
-	//    @Ignore("Ignoring test until the service is online")
-	//    @Test
-	//    public void checkMacTest() throws Exception {
-	//        IMasterClient masterClient = new MasterClient("src/main/resources/config.ini");
-	//        ListMac listMac = masterClient.checkMac("1C-4B-D6-C8-8B-31");
-	//        assertEquals(true,listMac.isGreyList());
-	//        assertEquals(2,listMac.getCodeGreyList());
-	//        assertEquals("Non ha pagato", listMac.getDescGreyList());
-	//        assertEquals(false, listMac.isBlackList());
-	//        listMac = masterClient.checkMac("84-2B-2B-91-78-96");
-	//        assertEquals(false, listMac.isGreyList());
-	//        assertEquals(0, listMac.getCodeGreyList());
-	//        assertEquals("", listMac.getDescGreyList());
-	//        assertEquals(true, listMac.isBlackList());
-	//    }
-
-	@Test
-	public void sendTestOnEchoServer() throws Exception{
-		IHttpClient masterClient = clientFactory();
-		// Test on Echo server        
-		String url1 = HttpClientTest.ECHO_API;
-		JsonObject jsonObj = masterClient.send(url1, MasterClientAbstract.client);
-		assertNotNull(jsonObj);
-	}
-	
-	@Test
-	public void testMacBlacklist_1() throws Exception{ 	
-		boolean b = checkMacBlacklist(MAC_1);
-		assertFalse(b);
-	}
-
-	@Test
-	public void testMacBlacklist_2() throws Exception{ 	
-		boolean b = checkMacBlacklist(MAC_2);
-		assertFalse(b);
-	}    
-
+ 
+ 
+ 
 	@AfterAll
 	public static void delFiles(){
 

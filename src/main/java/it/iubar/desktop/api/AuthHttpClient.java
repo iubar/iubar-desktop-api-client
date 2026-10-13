@@ -9,7 +9,7 @@ import jakarta.json.JsonObjectBuilder;
 import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.core.Response;
 
-public abstract class AuthHttpClient extends HttpClientUtils {
+public abstract class AuthHttpClient extends HttpClientAbstract {
 
 	private static final Logger LOGGER = Logger.getLogger(AuthHttpClient.class.getName());
 

@@ -9,7 +9,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
  
-public class HttpClient2025 extends HttpClientUtils implements IHttpClient {
+public class HttpClient2025 extends HttpClientAbstract implements IHttpClient {
 
 	private final static Logger LOGGER = Logger.getLogger(HttpClient2025.class.getName());
 
@@ -21,13 +21,15 @@ public class HttpClient2025 extends HttpClientUtils implements IHttpClient {
 	public Response get(String restUrl) {
 		restUrl = resolveUrl(restUrl);
 		System.out.println("GET:" + restUrl);
-		Client client = HttpClientUtils.newClient();
-		WebTarget target = client.target(restUrl); // il metodo codifica il parametro (la stringa che rappresenta l'url) in modo analogo alla funzione PHP rawurlencode()
+ 
+		WebTarget target = this.client.target(restUrl); // il metodo codifica il parametro (la stringa che rappresenta l'url) in modo analogo alla funzione PHP rawurlencode()
  
 		Response response = target.request(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
 				//.header("X-Requested-With", "XMLHttpRequest")
 				.get();
 		return response;
 	}
+
+
  
 }

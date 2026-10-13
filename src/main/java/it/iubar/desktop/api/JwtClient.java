@@ -127,8 +127,8 @@ import jakarta.ws.rs.core.Response;
 		try {
 			restUrl = resolveUrl(restUrl);
 			System.out.println("GET:" + restUrl);
-			Client client = HttpClientUtils.newClient();
-			WebTarget target = client.target(restUrl); // il metodo codifica il parametro (la stringa che rappresenta l'url) in modo analogo alla funzione PHP rawurlencode()
+		 
+			WebTarget target = this.client.target(restUrl); // il metodo codifica il parametro (la stringa che rappresenta l'url) in modo analogo alla funzione PHP rawurlencode()
 			if (this.isAuth()) {
 				JsonObject dataToSend = genAuth(restUrl);
 				String email = dataToSend.getString("email");

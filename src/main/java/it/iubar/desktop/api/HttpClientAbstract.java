@@ -37,9 +37,9 @@ import jakarta.ws.rs.core.Configuration;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
-public abstract class HttpClientUtils {
+public abstract class HttpClientAbstract {
 
-	private static final Logger LOGGER = Logger.getLogger(HttpClientUtils.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(HttpClientAbstract.class.getName());
  
 	public final static String INSERT_HR = "/public/hr"; 
 	public final static String INSERT_CLIENT = "/public/client";
@@ -47,8 +47,25 @@ public abstract class HttpClientUtils {
 	public static final String INCREMENT_DOC = "/public/increment-documento";
  
 	abstract public Response get(String restUrl);
+ 
+	Client client = null; 
+ 
+	public HttpClientAbstract() {
+	 this.client =  newClient();
+		 
+	}
 	
- 	protected String url = null;
+	public Client getClient(){
+		return this.client;
+	}
+	
+	private String baseUrl;
+	protected void setBaseUrl(String baseUrl) {
+		this.baseUrl = baseUrl;
+	}
+	protected String getBaseUrl( ) {
+		return this.baseUrl;
+	}
  
 	/**
 	 * JAX-RS 2.1+ (Java EE 8 / Jakarta EE 8+)
@@ -77,9 +94,9 @@ public abstract class HttpClientUtils {
 	 * 
 	 */
 	public static Client newClientProtected(String user, String password) {
-		Client client = newClient();
-		client.register(HttpAuthenticationFeature.basic(user, password));
-		return client;
+		Client client =  newClient();
+		  client.register(HttpAuthenticationFeature.basic(user, password));
+		return  client;
 	}
 
 	private static SSLContext factorySslContext() {
@@ -187,11 +204,11 @@ public abstract class HttpClientUtils {
 	}
 
 	private <T> String getRoute(T obj) throws Exception {
-		String urlToSend = this.getBaseUrl();
+		String urlToSend = getBaseUrl();
 		if (obj instanceof ClientModel) {
 			urlToSend += INSERT_CLIENT;
-		}else if (obj instanceof HrModel) {
-			urlToSend += INSERT_HR;
+//		}else if (obj instanceof HrModel) {
+//			urlToSend += INSERT_HR;
 		} else if (obj instanceof ModelsList) {
 			ModelsList ml = ((ModelsList) obj);
 			if (ml.getSize() > 0) {
@@ -207,7 +224,6 @@ public abstract class HttpClientUtils {
 		} else {
 			throw new RuntimeException("Situazione imprevista per classe " + obj.getClass().getCanonicalName());
 		}
-
 		return urlToSend;
 	}
 
@@ -253,13 +269,6 @@ public abstract class HttpClientUtils {
 		return answer;
 	}
  
-	public String getBaseUrl() {
-		return this.url;
-	}
-
-	public void setBaseUrl(String url) {
-		this.url = url;
-	}
  
 	/**
 	 * Il metodo implementa la funzione PHP rawurlencode()
@@ -301,9 +310,8 @@ public abstract class HttpClientUtils {
 		LOGGER.log(Level.INFO, "[POST] " + uri);
 		LOGGER.log(Level.INFO, "Request body: ");
 		JsonUtils.prettyPrint(data);
-		
-		Client client = HttpClientUtils.newClient();
-		WebTarget target = client.target(uri);
+
+		WebTarget target = this.client.target(uri);
 		Response response = null;
 		try {
 			response = target.request(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
@@ -313,7 +321,7 @@ public abstract class HttpClientUtils {
 			String msg = e.getMessage();
 			LOGGER.log(Level.SEVERE, msg, e);
 			if (msg.indexOf("connect timed out") > -1) {
-				Configuration config = client.getConfiguration();
+				Configuration config = this.client.getConfiguration();
 				Object connTimeout = config.getProperty(ClientProperties.CONNECT_TIMEOUT);
 				Object readTimeout = config.getProperty(ClientProperties.READ_TIMEOUT);
 				LOGGER.log(Level.CONFIG, "CONNECT_TIMEOUT: " + String.valueOf(connTimeout));
@@ -333,8 +341,8 @@ public abstract class HttpClientUtils {
 	 * @see: http://docs.guzzlephp.org/en/5.3/clients.html
 	 */
 	protected String resolveUrl(String restUrl) {
-		String baseUrl = this.getBaseUrl();
 		if (!restUrl.startsWith("http")) {
+			String baseUrl = getBaseUrl();
 			if (!isAbsoluteRoute(restUrl)) {
 				String lastChar = baseUrl.substring(baseUrl.length() - 1);
 				if (lastChar.equals("/")) {
@@ -370,6 +378,24 @@ public abstract class HttpClientUtils {
 		}
 
 		return baseUrl;
+	}
+	
+	int APP_FAMILY_PAGHE = 1;
+	
+	 
+
+	public  boolean checkMacBlacklist(String url) throws Exception{
+		boolean b = false;
+ 
+		JsonObject jsonObject = this.responseManager(this.get(url));
+		b = jsonObject.getBoolean("data");
+		if (b) {
+			LOGGER.log(Level.WARNING, "The mac address is black-listed");
+		} else {
+			LOGGER.log(Level.INFO, "The mac address is NOT black-listed");
+		}			
+
+		return b;
 	}
 	
 

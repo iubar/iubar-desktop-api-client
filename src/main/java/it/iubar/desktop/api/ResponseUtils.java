@@ -62,6 +62,9 @@ public class ResponseUtils {
 
 	public static JsonObject readAsStringToJson(Response response, boolean printOut) {
 		JsonObject json = null;
+		if(response==null) {
+			return JsonObject.EMPTY_JSON_OBJECT;
+		}
 		String jsonString = response.readEntity(String.class); 
 		json = JsonUtils.readObject(jsonString);
 		if(printOut) {

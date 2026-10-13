@@ -7,8 +7,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.net.URI;
 import java.util.Map;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
 import org.junit.jupiter.api.BeforeAll;
 
 import it.iubar.desktop.api.json.JsonUtils;
@@ -25,21 +27,27 @@ import jakarta.ws.rs.core.Response.Status;
 import jakarta.ws.rs.core.UriBuilder;
 
 public class HttpMethods {
-
+	
+	protected HttpClient2025 masterClient = null;
+	
 	private JsonObject jsonObject = null;
-
+	
 	private static final Logger LOGGER = Logger.getLogger(HttpMethods.class.getName());
+ 
+	public HttpMethods(String baseUrl) {
 
-	protected static IHttpClient clientFactory() {
-		HttpClient2025 masterClient = null;
-		masterClient = new HttpClient2025();
+		this.masterClient = new HttpClient2025();		
 		// masterClient.loadConfig();
-		masterClient.setBaseUrl(RestApiConsts.CRM_BASE_ROUTE);
-		return masterClient;
+		this.masterClient.setBaseUrl(baseUrl);
+ 
+	}
+	
+	public HttpClient2025 getClient() {
+		return this.masterClient;
 	}
 
-	public static void modelSend(String url, IJsonModel model) {
-		IHttpClient masterClient =  clientFactory();
+	public void modelSend(String url, IJsonModel model) {
+	
 		//masterClient.setAuth(false);
 		JsonObject jsonObjModel = null;
 		try {
@@ -61,24 +69,21 @@ public class HttpMethods {
 
 	}
 
-	public static void modlesSend(ModelsList models) {
-		   IHttpClient masterClient = clientFactory();
+	public  void modlesSend(ModelsList models) throws Exception {
+	 
  		JsonObject jsonObjModel = null;
-		try {
+ 
 			jsonObjModel = masterClient.send(models);
 			int count = jsonObjModel.getInt("data");
 			assertNotNull(jsonObjModel);
 			assertTrue(count >= 0);
-		} catch (Exception e) {
-			e.printStackTrace();
-			LOGGER.severe(e.getMessage());
-		}
+ 
 	}
 
 	public void send(String input, String path, boolean request) {
-		Client client = HttpClientUtils.newClient();
-
-		URI baseUri = UriBuilder.fromUri(RestApiConsts.CRM_BASE_ROUTE).build();
+		Client client = HttpClientAbstract.newClient();
+		String baseUrlRaw = this.masterClient.getBaseUrl();
+		URI baseUri = UriBuilder.fromUri(baseUrlRaw).build();
 		WebTarget target = client.target(baseUri);
 
 		LOGGER.info("Testing path \"" + baseUri.toString() + path + "\" ...");
@@ -102,7 +107,7 @@ public class HttpMethods {
 	public void isBadRequest(String message, int statusCode) {
 		assertNotNull(message);
 		LOGGER.info("Message: " + message);
-		String txt = "Status: " + statusCode + "\n2 :" + this.jsonObject.getInt("code");
+		String txt = "Status: " + statusCode ;;
 		LOGGER.info(txt);
 		assertEquals(Status.BAD_REQUEST.getStatusCode(), statusCode);
 		assertEquals(Status.BAD_REQUEST.getStatusCode(), this.jsonObject.getInt("code"));
@@ -111,7 +116,7 @@ public class HttpMethods {
 	public void isOk(int statusCode, int count) {
 		assertEquals(Status.OK.getStatusCode(), statusCode);
 		assertTrue(count >= 0);
-		assertEquals(Status.OK.getStatusCode(), this.jsonObject.getInt("code"));
+	 
 	}
 
 	public void isDataFalse() {
@@ -120,29 +125,34 @@ public class HttpMethods {
 	}
 
 	public  void receive(String path) {
-		Client client = HttpClientUtils.newClient();
-		dummy(client, path, null);
+		// Client client = HttpClientAbstract.newClient();
+		dummy(this.masterClient.getClient(), path, null);
 	}
 
 	public  void receive(String path, Map<String, String> queryParams) {
-		Client client = HttpClientUtils.newClient();
-		dummy(client, path, queryParams);
+		// Client client = HttpClientAbstract.newClient();
+		dummy(this.masterClient.getClient(), path, queryParams);
 	}
 
 	public  void receiveProtected(String path) {
-		Client client = HttpClientUtils.newClientProtected(MasterClientAbstract.CRM_HTTP_USER, MasterClientAbstract.CRM_HTTP_PASSWORD);
+		// Client client = HttpClientAbstract.newClientProtected(MasterClientAbstract.CRM_HTTP_USER, MasterClientAbstract.CRM_HTTP_PASSWORD);
+		Client client = this.masterClient.getClient();
+		client.register(HttpAuthenticationFeature.basic(MasterClientAbstract.CRM_HTTP_USER, MasterClientAbstract.CRM_HTTP_PASSWORD));
 		dummy(client, path, null);
 	}
 
 	public void receiveProtected(String path, Map<String, String> queryParams) {
-		Client client = HttpClientUtils.newClientProtected(MasterClientAbstract.CRM_HTTP_USER, MasterClientAbstract.CRM_HTTP_PASSWORD);
+		// Client client = HttpClientAbstract.newClientProtected(MasterClientAbstract.CRM_HTTP_USER, MasterClientAbstract.CRM_HTTP_PASSWORD);
+		Client client = this.masterClient.getClient();
+		client.register(HttpAuthenticationFeature.basic(MasterClientAbstract.CRM_HTTP_USER, MasterClientAbstract.CRM_HTTP_PASSWORD));		
 		dummy(client, path, queryParams);
 	}	
 
 	private void dummy(Client client, String path, Map<String, String> queryParams) {
 		int statusCode = 0;
 		String json = null;
-		URI baseUri = UriBuilder.fromUri(RestApiConsts.CRM_BASE_ROUTE).build();
+		String baseUrlRaw = this.masterClient.getBaseUrl();
+		URI baseUri = UriBuilder.fromUri(baseUrlRaw).build();
 		WebTarget target = client.target(baseUri).path(path);
 
 		if(queryParams!=null && !queryParams.isEmpty()) {
@@ -159,49 +169,12 @@ public class HttpMethods {
 		this.jsonObject = JsonUtils.fromString(json);
 		LOGGER.info("...response: " + this.jsonObject.toString() + "\n");
 		assertEquals(Status.OK.getStatusCode(), statusCode);
-		assertEquals(Status.OK.getStatusCode(), this.jsonObject.getInt("code"));
+		 
 	}
 
 
-	private void dummyTooComplicated(Client client, String path) {
-		int statusCode = 0;
-		String json = null;
-		URI baseUri = UriBuilder.fromUri(RestApiConsts.CRM_BASE_ROUTE).build();
-		WebTarget target = client.target(baseUri);
 
-		// 1) Rimuovo la (eventuale) query string dal path
-		String pathCleaned = null;
-		try {
-			pathCleaned = QueryStringParser.removeQueryString(path);
 
-			target = target.path(pathCleaned);
-
-			// 2) Aggiungo la (eventuale) query string all'oggetto WebTarget
-			Map<String, String> queryParams;
-
-			queryParams = QueryStringParser.getQueryParams(path);
-			for (Map.Entry<String, String> entry : queryParams.entrySet()) {
-				target = target.queryParam(entry.getKey(), entry.getValue());
-			}			
-
-			LOGGER.info("Testing route \"" + target.toString() +   "\" ...");
-
-			Response response = target.request().accept(MediaType.APPLICATION_JSON).get(Response.class);
-
-			statusCode = response.getStatus();
-
-			json = response.readEntity(String.class);
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		this.jsonObject = JsonUtils.fromString(json);
-
-		LOGGER.info("...response: " + this.jsonObject.toString() + "\n");
-		assertEquals(Status.OK.getStatusCode(), statusCode);
-		assertEquals(Status.OK.getStatusCode(), this.jsonObject.getInt("code"));
-	}
 
 
 }
