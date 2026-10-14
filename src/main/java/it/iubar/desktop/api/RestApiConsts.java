@@ -2,7 +2,8 @@ package it.iubar.desktop.api;
 
 public class RestApiConsts {
 
-	public static final String CRM_BASE_ROUTE = "https://common.iubar.it/crm/v1";
+	public static final String CRM_BASE_ROUTE_ROOT = "https://common.iubar.it";
+	public static final String CRM_BASE_ROUTE = CRM_BASE_ROUTE_ROOT + "/crm/v1";
 	public static final String CRM_BASE_ROUTE2 = "https://api.iubar.it/api/pagheopen/crm";
  
 	public static final String IUBAR_HR_BASE_URL = "https://hr.iubar.it";

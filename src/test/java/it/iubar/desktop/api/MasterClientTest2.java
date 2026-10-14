@@ -264,7 +264,7 @@ public class MasterClientTest2 extends MasterClientAbstract {
 	@Test
 	public void sendTestOnEchoServer() throws Exception{
 		// Test on Echo server        
-		String  SANDBOX_BASE_API_URL = RestApiConsts.CRM_BASE_ROUTE + "/sandbox";
+		String  SANDBOX_BASE_API_URL = RestApiConsts.CRM_BASE_ROUTE_ROOT + "/sandbox";
 		String  url1 = SANDBOX_BASE_API_URL + "/echo";
 		HttpMethods obj = new HttpMethods(RestApiConsts.CRM_BASE_ROUTE); 
 		JsonObject jsonObj = obj.masterClient.send(url1, MasterClientAbstract.client);
