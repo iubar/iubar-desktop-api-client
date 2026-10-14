@@ -68,7 +68,7 @@ public class MasterClientTest3  extends MasterClientAbstract {
 			obj.send(input, path, false);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
-		//	fail(e.getMessage());
+		//	fail(e.getMessage()); // FIXME
 		}
 	}
 
