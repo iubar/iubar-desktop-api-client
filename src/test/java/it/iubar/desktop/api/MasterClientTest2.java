@@ -55,16 +55,7 @@ public class MasterClientTest2 extends MasterClientAbstract {
 		}
 	}
 
-	@Test
-	public void sendIncrementDocumento() {
-		String input = "{" + "\"iddoctype\": \"1\", " + "\"qnt\": \"0\"" + "}";
-		try {
-			HttpMethods obj = new HttpMethods(RestApiConsts.CRM_BASE_ROUTE);
-			obj.send(input, AuthHttpClient.INCREMENT_DOC, true);
-		} catch (Exception e) {
-			fail(e.getMessage());
-		}
-	}
+ 
 
 	@Test
 	public void sendRegisterClientFail() {
@@ -108,19 +99,7 @@ public class MasterClientTest2 extends MasterClientAbstract {
 		}
 	}
 
-	@Test
-	public void receiveBlacklist() {
-		String path = "/public/" +  MasterClientAbstract.APP_FAMILY_PAGHE + "/blacklist/" + "mac/"
-				+ ClientModelTest.MAC;
-		try {
-			HttpMethods obj = new HttpMethods(RestApiConsts.CRM_BASE_ROUTE);
-			obj.receive(path);
-			obj.isDataFalse();
-		} catch (Exception e) {
-			fail(e.getMessage());
-		}
-	}
-	
+ 
 
 	@Test
 	public void receiveInfoMac() {
@@ -271,21 +250,7 @@ public class MasterClientTest2 extends MasterClientAbstract {
 		assertNotNull(jsonObj);
 	}
 	
-	@Test
-	public void testMacBlacklist_1() throws Exception{ 	
-		HttpMethods obj = new HttpMethods(RestApiConsts.CRM_BASE_ROUTE);
-		String url = "/public/" + APP_FAMILY_PAGHE + "/blacklist/mac/";
-		boolean b = obj.masterClient.checkMacBlacklist(url + MAC_1);
-		assertFalse(b);
-	}
-
-	@Test
-	public void testMacBlacklist_2() throws Exception{ 	
-		HttpMethods obj = new HttpMethods(RestApiConsts.CRM_BASE_ROUTE);
-		String url = "/public/" + APP_FAMILY_PAGHE + "/blacklist/mac/";
-		boolean b = obj.masterClient.checkMacBlacklist(url + MAC_2);
-		assertFalse(b);
-	}  
+ 
 	
 	@Test
 	public void sendTest( ) throws Exception {

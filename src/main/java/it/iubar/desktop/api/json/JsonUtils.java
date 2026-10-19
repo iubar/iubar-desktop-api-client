@@ -62,6 +62,7 @@ public class JsonUtils {
 
 	public static String prettyPrintFormat(JsonObject jsonObject) {
 		String jsonString = null;
+		if(jsonObject!=null) {
 		Map<String, Boolean> config = new HashMap<>();
 		config.put(JsonGenerator.PRETTY_PRINTING, true);
 		JsonWriterFactory writerFactory = Json.createWriterFactory(config);
@@ -70,6 +71,7 @@ public class JsonUtils {
 			jsonString = writer.toString();
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
 		}
 		return jsonString;
 	} 

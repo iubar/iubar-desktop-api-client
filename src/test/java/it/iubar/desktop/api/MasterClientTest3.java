@@ -51,7 +51,7 @@ public class MasterClientTest3  extends MasterClientAbstract {
 		String input = "{" + "\"iddoctype\": \"1\", " + "\"qnt\": \"0\"" + "}";
 		try {
 			HttpMethods obj = new HttpMethods(RestApiConsts.CRM_BASE_ROUTE2);
-			obj.send(input, AuthHttpClient.INCREMENT_DOC, true);
+			obj.send(input, "/api/pagheopen/telemetry/document", true);
 		} catch (Exception e) {
 			fail(e.getMessage());
 		}
@@ -102,7 +102,7 @@ public class MasterClientTest3  extends MasterClientAbstract {
 
 	@Test
 	public void receiveBlacklist() {
-		String path = "/public/blacklist/" + "mac/"
+		String path = "/api/pagheopen/telemetry/blacklist?mac="
 				+ ClientModelTest.MAC;
 		try {
 			HttpMethods obj = new HttpMethods(RestApiConsts.CRM_BASE_ROUTE2);
@@ -129,9 +129,9 @@ public class MasterClientTest3  extends MasterClientAbstract {
 
 	@Test
 	public void receiveNow() {
-		String path = "/public/now/europe/rome";
+		String path = "/now/europe/rome";
 		try {
-			HttpMethods obj = new HttpMethods(RestApiConsts.CRM_BASE_ROUTE2);
+			HttpMethods obj = new HttpMethods(RestApiConsts.API_BASE_ROUTE2);
 			obj.receive(path);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -269,16 +269,16 @@ public class MasterClientTest3  extends MasterClientAbstract {
 	@Test
 	public void testMacBlacklist_1() throws Exception{ 	
 		HttpMethods  obj = new HttpMethods (RestApiConsts.CRM_BASE_ROUTE2);
-		String url = "/public/blacklist/mac/";
-		boolean b = obj.masterClient.checkMacBlacklist(url + MAC_1);
+		String url = "/api/pagheopen/telemetry/blacklist?mac=" + MAC_1;
+		boolean b = obj.masterClient.checkMacBlacklist(url );
 		assertFalse(b);
 	}
 
 	@Test
 	public void testMacBlacklist_2() throws Exception{ 	
 		HttpMethods  obj = new HttpMethods (RestApiConsts.CRM_BASE_ROUTE2);
-		String url = "/public/blacklist/mac/";
-		boolean b = obj.masterClient.checkMacBlacklist(url + MAC_2);
+		String url = "/api/pagheopen/telemetry/blacklist?mac=" + MAC_2;
+		boolean b = obj.masterClient.checkMacBlacklist(url );
 		assertFalse(b);
 	}  
 	

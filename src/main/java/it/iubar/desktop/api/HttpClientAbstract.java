@@ -41,10 +41,9 @@ public abstract class HttpClientAbstract {
 
 	private static final Logger LOGGER = Logger.getLogger(HttpClientAbstract.class.getName());
  
-	public final static String INSERT_HR = "/public/hr"; 
 	public final static String INSERT_CLIENT = "/public/client";
 	public final static String INSERT_TITOLARI = "/public/titolari";
-	public static final String INCREMENT_DOC = "/public/increment-documento";
+ 
  
 	abstract public Response get(String restUrl);
  
@@ -203,6 +202,10 @@ public abstract class HttpClientAbstract {
 		}
 	}
 
+	/**
+	 * 
+	 * Restituisce l'url dell'endpoint in relazione alla classe del payload della richiesta
+	 */
 	private <T> String getRoute(T obj) throws Exception {
 		String urlToSend = getBaseUrl();
 		if (obj instanceof ClientModel) {
