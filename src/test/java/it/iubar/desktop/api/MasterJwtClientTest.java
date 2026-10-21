@@ -16,37 +16,17 @@ import jakarta.json.JsonObject;
 
 public class MasterJwtClientTest extends MasterClientAbstract {
  
-	public static final String SANDBOX_BASE_API_URL = RestApiConsts.CRM_BASE_ROUTE + "/sandbox";
-	
-	public static final String ECHO_API_3 = SANDBOX_BASE_API_URL + "/jwt/data"; // ANY
 	
 	@BeforeAll
     public static void setUpBeforeClass() throws Exception {
     	MasterClientAbstract.loadConfig();
     }
     
-    @Test
-    @Disabled
-    public void sendTestOnEchoJwtServer(){
-    	JwtClient masterClient = (JwtClient) clientFactory();
-        try {       	    
-        	// Test on Echo server        
-        	String url1 = ECHO_API_3;  
-        	masterClient.setAuth(true);
-        	masterClient.setUser(MasterClientAbstract.user);			
-        	masterClient.setApiKey(MasterClientAbstract.apiKey);         	
-        	JsonObject jsonObj = masterClient.send(url1, MasterClientAbstract.client);
-        	assertNotNull(jsonObj);
-        } catch (Exception e) {
-        	e.printStackTrace();
-        	fail();
-        }
-    }
+    
     
     @Test
-    @Disabled
     public void sendTestOnEchoJwtServer2(){
-    	String url1 = ECHO_API_3 + "?msg=HelloWorld";  	 
+    	String url1 = "https://api.iubar.it/api/echo" + "?msg=HelloWorld";  	 
    
     	JwtClient masterClient = (JwtClient) clientFactory();
     	
