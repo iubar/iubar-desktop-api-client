@@ -1,7 +1,9 @@
-package it.iubar.desktop.api;
+package it.iubar.desktop.api.deprecated;
 
 import org.apache.commons.codec.binary.Base64;
 
+import it.iubar.desktop.api.AuthHttpClient;
+import it.iubar.desktop.api.IHttpClient;
 import it.iubar.desktop.api.models.IJsonModel;
 import it.iubar.desktop.api.models.ModelsList;
 import jakarta.json.Json;

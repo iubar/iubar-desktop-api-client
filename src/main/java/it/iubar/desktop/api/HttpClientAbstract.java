@@ -47,7 +47,7 @@ public abstract class HttpClientAbstract {
  
 	abstract public Response get(String restUrl);
  
-	Client client = null; 
+	protected Client client = null; 
  
 	public HttpClientAbstract() {
 	 this.client =  newClient();
