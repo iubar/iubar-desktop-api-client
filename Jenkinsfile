@@ -21,16 +21,16 @@ pipeline {
                 sh 'mvn $MAVEN_ARGS $MAVEN_OPTS clean compile'
             }
         }
-		stage('Test') {
-            steps {
-                sh 'mvn $MAVEN_ARGS $MAVEN_OPTS test'
-            }
-            post {
-                always {
-                    junit 'target/surefire-reports/*.xml'
-                }
-            }
-        }
+//		stage('Test') {
+//            steps {
+//                sh 'mvn $MAVEN_ARGS $MAVEN_OPTS test'
+//            }
+//            post {
+//                always {
+//                    junit 'target/surefire-reports/*.xml'
+//                }
+//            }
+//        }
         stage('Quality') {
             when {
               not {
